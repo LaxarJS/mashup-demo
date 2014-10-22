@@ -1,23 +1,11 @@
 {
    "places": {
       "entry": {
-         "redirectTo": "page1"
+         "redirectTo": "chartDemo"
       },
 
-      "page1": {
-         "page":  "page1",
-         "targets": {
-            "cancel": "entry",
-            "next": "page2"
-         }
-      },
-
-      "page2": {
-         "page":  "page2",
-         "targets": {
-            "cancel": "entry",
-            "previous": "page1"
-         }
+      "chartDemo": {
+         "page":  "chart_demo"
       }
    }
 }

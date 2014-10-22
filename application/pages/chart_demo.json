@@ -1,0 +1,23 @@
+{
+   "layout": "application",
+
+   "areas": {
+
+      "header": [
+         {
+            "widget": "chart_demo/headline_widget",
+            "features": {
+               "headline": {
+                  "htmlText": "ChartDemo"
+               }
+            }
+         }
+      ],
+
+      "content1a": [
+      ],
+
+      "content1b": [
+      ]
+   }
+}
