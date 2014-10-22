@@ -5,9 +5,7 @@
  */
 define( [
    'angular',
-    //'jquery',
-    //'../../../../bower_components/handsontable/dist/jquery.handsontable.full'
-    'ngHandsontable'
+   'ngHandsontable'
 ], function( ng ) {
    'use strict';
 

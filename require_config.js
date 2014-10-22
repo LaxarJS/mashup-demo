@@ -47,6 +47,16 @@ var require = {
             'use strict';
             return this._.noConflict();
          }
+      },
+      ngHandsontable: {
+          deps: [
+              'jquery', 'angular', 'handsontable'
+          ]
+      },
+      handsontable: {
+          deps: [
+              'jquery'
+          ]
       }
    },
    packages: [
@@ -109,7 +119,7 @@ var require = {
       'laxar-path-flow': '../application/flow/flow.json',
 
       // Spreadsheet-like table
-      //'handsontable': 'handsontable/dist/jquery.handsontable.full',
+      'handsontable': 'handsontable/dist/jquery.handsontable.full',
       'ngHandsontable': 'nghandsontable/dist/ngHandsontable',
 
       portal_angular_dependencies: '../var/static/portal_angular_dependencies'
