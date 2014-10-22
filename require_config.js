@@ -108,6 +108,10 @@ var require = {
       'laxar-path-themes': '../includes/themes',
       'laxar-path-flow': '../application/flow/flow.json',
 
+      // Spreadsheet-like table
+      //'handsontable': 'handsontable/dist/jquery.handsontable.full',
+      'ngHandsontable': 'nghandsontable/dist/ngHandsontable',
+
       portal_angular_dependencies: '../var/static/portal_angular_dependencies'
    }
 };

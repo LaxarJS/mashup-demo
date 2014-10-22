@@ -15,6 +15,11 @@
       ],
 
       "content1a": [
+          {
+              "widget": "chart_demo/table_editor_widget",
+              "features": {
+              }
+          }
       ],
 
       "content1b": [
