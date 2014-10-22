@@ -16,12 +16,10 @@ define( [
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   Controller.$inject = [ '$scope', '$window', '$rootScope', 'ngHandsontable' ];
+   Controller.$inject = [ '$scope', '$window', '$rootScope' ];
 
-   function Controller( $scope, $window, $rootScope, nghot ) {
+   function Controller( $scope, $window, $rootScope ) {
 
-
-       console.log(nghot);
 
        $scope.db = {};
 
