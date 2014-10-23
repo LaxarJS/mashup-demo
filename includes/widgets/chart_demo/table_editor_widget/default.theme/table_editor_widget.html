@@ -1,19 +1,31 @@
 <link rel="stylesheet" media="screen" href="bower_components/handsontable/dist/jquery.handsontable.full.css">
 
-<hot-table
-        settings="{colHeaders: colHeaders, contextMenu: ['row_above', 'row_below', 'remove_row'], afterChange: afterChange }"
-        rowHeaders="false"
-        minSpareRows="minSpareRows"
+<hot-table id="my-table" settings="{rowHeaders: true, colHeaders: true, contextMenu: true, fillHandle: true, minRows: minRows, minCols: minCols}" datarows="data" width="1000" height="300">
+
+</hot-table>
+
+
+
+
+<!--
+<hot-table id="myTable"
+        settings="{colHeaders: true, rowHeaders: true, contextMenu: true, afterChange: afterChange, comments: comments}"
         datarows="db.items"
-        height="300"
-        width="700">
+        height="400"
+        width="1000"
+        >
     <hot-column data="id"                  title="'ID'"></hot-column>
-    <hot-column data="name.first"          title="'First Name'"  type="grayedOut"  readOnly></hot-column>
+    <hot-column data="name.first"          type="grayedOut"  readOnly></hot-column>
     <hot-column data="name.last"           title="'Last Name'"   type="grayedOut"  readOnly></hot-column>
     <hot-column data="address"             title="'Address'" width="150"></hot-column>
-    <hot-column data="product.description" title="'Favorite food'" type="'autocomplete'">
+    <hot-column data="product.description" title="'Favorite food'" type="'autocomplete'" value="foo">
         <hot-autocomplete datarows="description in product.options"></hot-autocomplete>
     </hot-column>
     <hot-column data="price"               title="'Price'"     type="'numeric'"  width="80"  format="'$ 0,0.00'" ></hot-column>
     <hot-column data="isActive"            title="'Is active'" type="'checkbox'" width="65"  checkedTemplate="'Yes'" uncheckedTemplate="'No'"></hot-column>
 </hot-table>
+-->
+
+<button type="button" ng-click="output()">Output Model</button>
+<button type="button" ng-click="createRandomData()">Create Random Data</button>
+<button type="button" ng-click="refresh()">Refresh ("Repair")</button>

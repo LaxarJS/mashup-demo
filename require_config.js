@@ -56,7 +56,8 @@ var require = {
       handsontable: {
           deps: [
               'jquery'
-          ]
+          ],
+          exports: 'Handsontable'
       }
    },
    packages: [
