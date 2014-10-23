@@ -1,6 +1,6 @@
 {
    "name": "TableEditorWidget",
-   "description": "Spreadsheet-like content editor",
+   "description": "A widget that provides a spreadsheet-like content editor.",
    "version": {
       "spec": "0.1.0"
    },
@@ -10,5 +10,48 @@
    },
 
    "features": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [ "data" ],
+      "properties": {
+
+         "display": {
+            "type": "object",
+            "description": "The display feature for resources.",
+            "properties": {
+               "i18nHtmlLabel": {
+                  "type": [ "string", "object" ],
+                  "description": "An optional (i18n) label to display above the resource."
+               }
+            }
+         },
+
+         "data": {
+            "type": "object",
+            "description": "Provide the data to display in another widget.",
+            "required": [ "resource" ],
+            "properties": {
+               "resource": {
+                  "type": "string",
+                  "description": "Name of the data resource which should refer to a 2-dimensional array.",
+                  "format": "topic"
+               }
+            }
+         },
+
+         "i18n": {
+            "description": "Which locale to use for displaying this widget.",
+            "type": "object",
+            "properties": {
+               "locale": {
+                  "type": "string",
+                  "description": "The topic under which to expect the locale for this widget.",
+                  "default": "default"
+               }
+            }
+         }
+
+      }
+
    }
 }
