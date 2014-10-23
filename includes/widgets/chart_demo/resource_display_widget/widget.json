@@ -1,0 +1,54 @@
+{
+   "name": "ResourceDisplayWidget",
+   "description": "A widget that displays the current state of a resource as formatted JSON string.",
+   "version": {
+      "spec": "0.1.0"
+   },
+
+   "integration": {
+      "type": "angular"
+   },
+
+   "compatibility": [ "json-patch" ],
+
+   "controls": [
+      "laxar_uikit/controls/i18n"
+   ],
+
+   "features": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "properties": {
+
+         "display": {
+            "type": "object",
+            "description": "The display feature for resources.",
+            "required": [ "resource" ],
+            "properties": {
+               "resource": {
+                  "type": "string",
+                  "format": "topic",
+                  "description": "Name of the resource to display."
+               },
+               "i18nHtmlLabel": {
+                  "type": [ "string", "object" ],
+                  "description": "An optional (i18n) label to display above the resource."
+               }
+            }
+         },
+
+         "i18n": {
+            "description": "Which locale to use for displaying this widget.",
+            "type": "object",
+            "properties": {
+               "locale": {
+                  "type": "string",
+                  "description": "The topic under which to expect the locale for this widget.",
+                  "default": "default"
+               }
+            }
+         }
+      }
+
+   }
+}

@@ -1,8 +1,15 @@
 <link rel="stylesheet" media="screen" href="bower_components/handsontable/dist/jquery.handsontable.full.css">
 
+<div
+        data-ng-show="features.display.i18nHtmlLabel"
+        data-ng-bind-html="features.display.i18nHtmlLabel | axLocalize:i18n"></div>
+
 <!-- Content must be completely dynamic. That's why we don't specify columns here. -->
-<hot-table id="my-table" settings="{rowHeaders: true, colHeaders: true, contextMenu: true, fillHandle: true, minRows: minRows, minCols: minCols}" datarows="matrix" width="1000" height="300">
+<hot-table id="my-table" settings="{rowHeaders: true, colHeaders: true, contextMenu: true, fillHandle: true, type: 'numeric'}" datarows="matrix">
 </hot-table>
+
+<div style="margin-top: 20px">
+</div>
 
 <!-- Just for demo purposes. Will result in styling errors due to word wrapping and/or manually settings column widths. -->
 <!--
