@@ -11,7 +11,7 @@ define( [
    'use strict';
 
    var moduleName = 'widgets.chart_demo.resource_display_widget';
-   var module     = ng.module( moduleName, [ 'ngSanitize' ] );
+   var module = ng.module( moduleName, [ 'ngSanitize' ] );
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 

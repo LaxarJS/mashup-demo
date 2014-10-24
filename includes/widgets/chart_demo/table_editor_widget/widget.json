@@ -15,17 +15,6 @@
       "required": [ "data" ],
       "properties": {
 
-         "display": {
-            "type": "object",
-            "description": "The display feature for resources.",
-            "properties": {
-               "i18nHtmlLabel": {
-                  "type": [ "string", "object" ],
-                  "description": "An optional (i18n) label to display above the resource."
-               }
-            }
-         },
-
          "data": {
             "type": "object",
             "description": "Provide the data to display in another widget.",
@@ -37,20 +26,7 @@
                   "format": "topic"
                }
             }
-         },
-
-         "i18n": {
-            "description": "Which locale to use for displaying this widget.",
-            "type": "object",
-            "properties": {
-               "locale": {
-                  "type": "string",
-                  "description": "The topic under which to expect the locale for this widget.",
-                  "default": "default"
-               }
-            }
          }
-
       }
 
    }

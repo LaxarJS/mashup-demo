@@ -16,14 +16,17 @@
 
       "content1a": [
          {
+            "widget": "chart_demo/headline_widget",
+            "features": {
+               "headline": {
+                  "htmlText": "Spreadsheet Data Input",
+                  "level": 2
+               }
+            }
+         },
+         {
             "widget": "chart_demo/table_editor_widget",
             "features": {
-               "display": {
-                  "i18nHtmlLabel": {
-                     "de_DE": "<h4>Kalkulationsdateneingabe</h4>",
-                     "en_US": "<h4>Spreadsheet Data Input</h4>"
-                  }
-               },
                "data": {
                   "resource": "spreadsheetData"
                }
@@ -33,14 +36,19 @@
 
       "content1b": [
          {
+            "widget": "chart_demo/headline_widget",
+            "features": {
+               "headline": {
+                  "htmlText": "Spreadsheet Data",
+                  "level": 2
+               }
+            }
+         },
+         {
             "widget": "chart_demo/resource_display_widget",
             "features": {
                "display": {
-                  "resource": "spreadsheetData",
-                  "i18nHtmlLabel": {
-                     "de_DE": "<h4>Kalkulationsdaten</h4>",
-                     "en_US": "<h4>Spreadsheet Data</h4>"
-                  }
+                  "resource": "spreadsheetData"
                }
             }
          }
