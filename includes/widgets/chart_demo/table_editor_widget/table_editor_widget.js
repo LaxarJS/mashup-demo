@@ -18,116 +18,35 @@ define( [
 
    function Controller( $scope, settingFactory, autoCompleteFactory ) {
 
-//      $scope.model.settings = {
-//         {colHeaders: colHeaders, contextMenu: ['row_above', 'row_below', 'remove_row'], afterChange: afterChange }
-//      };
-
-
-      $scope.db = {};
-      $scope.db.items = [
-         {
-            "id":1,
-            "name":{
-               "first":"John",
-               "last":"Schmidt"
-            },
-            "address":"45024 France",
-            "price":760.41,
-            "isActive":"Yes",
-            "product":{
-               "description":"Fried Potatoes",
-               "options":[
-                  {
-                     "description":"Fried Potatoes",
-                     "image":"//a248.e.akamai.net/assets.github.com/images/icons/emoji/fries.png",
-                     "Pick$":null
-                  },
-                  {
-                     "description":"Fried Onions",
-                     "image":"//a248.e.akamai.net/assets.github.com/images/icons/emoji/fries.png",
-                     "Pick$":null
-                  }
-               ]
-            }
-         },
-         {
-            "id":2,
-            "name":{
-               "first":"John",
-               "last":"Schmidt"
-            },
-            "address":"45024 France",
-            "price":760.41,
-            "isActive":"Yes",
-            "product":{
-               "description":"Fried Potatoes",
-               "options":[
-                  {
-                     "description":"Fried Potatoes",
-                     "image":"//a248.e.akamai.net/assets.github.com/images/icons/emoji/fries.png",
-                     "Pick$":null
-                  },
-                  {
-                     "description":"Fried Onions",
-                     "image":"//a248.e.akamai.net/assets.github.com/images/icons/emoji/fries.png",
-                     "Pick$":null
-                  }
-               ]
-            }
-         },
-         {
-            "id":3,
-            "name":{
-               "first":"John",
-               "last":"Schmidt"
-            },
-            "address":"45024 France",
-            "price":760.41,
-            "isActive":"Yes",
-            "product":{
-               "description":"Fried Potatoes",
-               "options":[
-                  {
-                     "description":"Fried Potatoes",
-                     "image":"//a248.e.akamai.net/assets.github.com/images/icons/emoji/fries.png",
-                     "Pick$":null
-                  },
-                  {
-                     "description":"Fried Onions",
-                     "image":"//a248.e.akamai.net/assets.github.com/images/icons/emoji/fries.png",
-                     "Pick$":null
-                  }
-               ]
-            }
-         }
-         //more items go here
-      ];
+      $scope.model = {};
+      $scope.model.mySettings =
+         {rowHeaders: true, colHeaders: true, contextMenu: true, fillHandle: true, type: 'numeric', format: '0.0[000]'}
+      ;
 
       // Initialize an empty 2-dimensional array of fixed size.
-      //$scope.matrix = createEmptyMatrix( 3, 5 );
-      $scope.matrix = createBuggyStylingMatrix(3, 6); //FIXME CSS: Provoke a styling error due to word wrapping.
+      $scope.matrix = createEmptyMatrix( 3, 5 );
+      //$scope.matrix = createBuggyStylingMatrix(3, 6); //FIXME CSS: Provoke a styling error due to word wrapping.
 
       // Check if the injection worked.
       //console.log(settingFactory);
       //console.log(autoCompleteFactory);
 
-      $scope.eventBus.subscribe( 'beginLifecycleRequest', function() {
-            settingFactory.renderHandsontable( ng.element( '#my-table' ) );
-            //settingFactory.updateHandsontableSettings( ng.element( '#my-table' ), { data: $scope.matrix, type: 'numeric', format: '0.0[000]' } );
-
-      } );
+//      $scope.eventBus.subscribe( 'beginLifecycleRequest', function() {
+//            settingFactory.renderHandsontable( ng.element( '#my-table' ) );
+//            //settingFactory.updateHandsontableSettings( ng.element( '#my-table' ), { data: $scope.matrix, type: 'numeric', format: '0.0[000]' } );
+//      } );
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       // Just a hack to visually "repair" the table by redrawing it.
       $scope.refresh = function () {
-         settingFactory.renderHandsontable( ng.element( '#my-table2' ) );
+         settingFactory.renderHandsontable( ng.element( '#my-table' ) );
       };
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      $scope.afterChange = function () {
-         console.log( 'afterChange()' );
+      $scope.$watch("matrix", function (nv, ov) {
+         //console.log("Watched: " + nv + " / " + ov);
 
          var resourceName = $scope.features.data.resource;
          $scope.eventBus.publish( 'didReplace.' + resourceName, {
@@ -137,22 +56,31 @@ define( [
                deliverToSender: false
             }
          );
-      };
+
+      }, true);
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//      $scope.createRandomData = function () {
-//         $scope.matrix = createRandomMatrix( 3, 5, 1, 10 );
-//         //settingFactory.renderHandsontable($('#my-table'));
-//         settingFactory.updateHandsontableSettings( ng.element( '#my-table' ),
-//            {
-//               data: $scope.matrix,
-//               type: 'numeric',
-//               format: '0.0[000]'
-//            }
-//         );
-//
-//      };
+      $scope.createRandomData = function () {
+
+         $scope.matrix = createRandomMatrix( 3, 5, 1, 10 );
+
+         //settingFactory.renderHandsontable($('#my-table'));
+         settingFactory.updateHandsontableSettings( ng.element( '#my-table' ),
+            {
+               data: $scope.matrix,
+               type: 'numeric',
+               format: '0.0[000]'
+            }
+         );
+
+         //$scope.model.mySettings.data = 'matrix';
+
+//        $scope.model.mySettings =
+//            "{rowHeaders: true, colHeaders: true, contextMenu: true, fillHandle: true, type: 'numeric', format: '0.0[000]', data: 'matrix'}"
+//         ;
+
+      };
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -162,16 +90,19 @@ define( [
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
       function createEmptyMatrix( rows, columns ) {
-         var array = new Array( rows );
-         for ( var i = 0; i < rows; ++i ) {
+        var array = new Array( rows );
+        for ( var i = 0; i < rows; ++i ) {
             array[ i ] = new Array( columns );
          }
+
+//         var items = [];
+//         for ( var i = 0; i < rows; ++i ) {
+//            items.push( new Array( columns ) );
+//         }
+//         console.log( items );
          return array;
       }
-
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -216,7 +147,7 @@ define( [
                }, 0 );
             } );
          }
-      }
+      };
    } ]
    );
 
