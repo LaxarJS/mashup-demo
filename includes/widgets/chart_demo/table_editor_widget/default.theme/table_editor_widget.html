@@ -1,33 +1,4 @@
-<!-- Content must be completely dynamic. That's why we don't specify columns here. -->
-<!--<link rel="stylesheet" media="screen" href="bower_components/handsontable/dist/jquery.handsontable.full.css">-->
-
-<!--
-<div ax-table-editor-if-visible></div>
-<hot-table id="my-table2" data-ng-if="isVisible"
-   settings="{colHeaders: colHeaders, contextMenu: ['row_above', 'row_below', 'remove_row'], afterChange: afterChange }"
-   rowHeaders="true"
-   minSpareRows="minSpareRows"
-   datarows="db.items"
-   height="300"
-   width="700">
-   <hot-column data="id"                  title="'ID'"></hot-column>
-   <hot-column data="name.first"          title="'First Name'"  type="grayedOut"  readOnly></hot-column>
-   <hot-column data="name.last"           title="'Last Name'"   type="grayedOut"  readOnly></hot-column>
-   <hot-column data="address"             title="'Address'" width="150"></hot-column>
-   <hot-column data="product.description" title="'Favorite food'" type="'autocomplete'">
-      <hot-autocomplete datarows="description in product.options"></hot-autocomplete>
-   </hot-column>
-   <hot-column data="price"               title="'Price'"     type="'numeric'"  width="80"  format="'$ 0,0.00'" ></hot-column>
-   <hot-column data="isActive"            title="'Is active'" type="'checkbox'" width="65"  checkedTemplate="'Yes'" uncheckedTemplate="'No'"></hot-column>
-</hot-table>
--->
-
-<hot-table id="my-table"
-           rowHeaders="model.handsontalbeSettings.rowHeaders"
-           colHeaders="model.handsontalbeSettings.colHeaders"
-           contextMenu="model.handsontalbeSettings.contextMenu"
-           fillHandle="model.handsontalbeSettings.fillHandle"
-           settings="{ type: 'numeric' }"
-           datarows="resources.spreadsheet">
-   <hot-column ng-repeat="row in resources.spreadsheet" settings="{ format: '0.0\[000\]'}" />
-</hot-table>
+<div data-ax-table-editor-rows="resources.spreadsheet.entries"
+     data-ax-table-editor-columns="model.columns"
+     data-ax-table-editor="model.settings">
+</div>

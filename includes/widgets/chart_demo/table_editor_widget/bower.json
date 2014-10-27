@@ -4,7 +4,7 @@
    "description": "Spreadsheet-like content editor",
    "license": "MIT",
    "dependencies": {
-      "laxar": "LaxarJS/laxar#0.16",
+      "laxar": "LaxarJS/laxar#^0.16.2",
       "laxar_patterns": "LaxarJS/laxar_patterns#0.16",
       "laxar_uikit": "LaxarJS/laxar_uikit#0.16",
       "nghandsontable": "#0.4.0"

@@ -7,92 +7,53 @@ define( [
    'angular',
    'laxar',
    'laxar_patterns',
-   'ngHandsontable'
-], function ( ng, ax, patterns, ngHandsontable ) {
+   'css!handsontable',
+   'handsontable'
+], function( ng, ax, patterns ) {
    'use strict';
 
    var moduleName = 'widgets.chart_demo.table_editor_widget';
-   var module = ng.module( moduleName, [ 'ngHandsontable' ] );
+   var module = ng.module( moduleName, [] );
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   Controller.$inject = [ '$scope', 'settingFactory', 'autoCompleteFactory' ];
+   var EVENT_AFTER_CHANGE = 'axTableEditor.afterChange';
 
-   function Controller( $scope, settingFactory, autoCompleteFactory ) {
+   Controller.$inject = [ '$scope' ];
+
+   function Controller( $scope ) {
 
       $scope.resources = {};
+
       $scope.model = {};
-      $scope.model.handsontalbeSettings = {
+      $scope.model.settings = {
          rowHeaders: true,
          colHeaders: true,
          contextMenu: true,
          fillHandle: true
       };
-
+      $scope.model.columns = [];
 
       patterns.resources.handlerFor( $scope )
-         .registerResourceFromFeature( 'spreadsheet', { onUpdateReplace: refreshTable } );
+         .registerResourceFromFeature( 'spreadsheet', {} );
 
-      // Initialize an empty 2-dimensional array of fixed size.
-      //$scope.model.matrix = createEmptyMatrix( 3, 5 );
-      //$scope.model.matrix = createRandomMatrix( 3, 5, 1, 10 );
-      // Check if the injection worked.
-      //console.log(settingFactory);
-      //console.log(autoCompleteFactory);
+      $scope.$on( EVENT_AFTER_CHANGE, function( event, changes ) {
+         var ROW = 0, COL = 1, NEW_VAL = 3;
+         var patches = changes.map( function( change ) {
+            var path = '/entries/' + change[ ROW ] + '/' + change[ COL ];
+            var value = parseInt( change[ NEW_VAL ] );
+            return { op: 'replace', path: path, value: value };
+         } );
 
-//      $scope.eventBus.subscribe( 'beginLifecycleRequest', function() {
-//            settingFactory.renderHandsontable( ng.element( '#my-table' ) );
-//            //settingFactory.updateHandsontableSettings( ng.element( '#my-table' ), { data: $scope.matrix, type: 'numeric', format: '0.0[000]' } );
-//      } );
-
-
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-      // Only fire watchers for changes caused in this widget
-      var spreadsheetFromEventBus = null;
-      $scope.$watch( 'resources.spreadsheet', function (nv, ov) {
-         if( spreadsheetFromEventBus && ng.equals( nv, spreadsheetFromEventBus ) ) {
-            return;
-         }
-         if( nv && ov ) {
-            spreadsheetFromEventBus = null;
-            var patch = patterns.patches.create( nv, ov );
-            var resourceName = $scope.features.spreadsheet.resource;
-            $scope.eventBus.publish( 'didUpdate.' + resourceName, {
-                  resource: resourceName,
-                  updates: patch
-               }, {
-                  deliverToSender: false
-               }
-            );
-         }
-      }, true);
-
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-      function refreshTable() {
-
-         spreadsheetFromEventBus = ax.object.deepClone( $scope.resources.spreadsheet );
-
-         //$scope.model.matrix = createRandomMatrix( 3, 5, 1, 10 );
-
-         settingFactory.renderHandsontable($('#my-table'));
-         settingFactory.updateHandsontableSettings( ng.element( '#my-table' ),
-            {
-               // The ngHandsontable watcher is broken:
-               data: $scope.resources.spreadsheet,
-               // format: '0.0[000]',
-               type: 'numeric'
+         var resourceName = $scope.features.spreadsheet.resource;
+         $scope.eventBus.publish( 'didUpdate.' + resourceName, {
+               resource: resourceName,
+               patches: patches
+            }, {
+               deliverToSender: false
             }
          );
-
-         //$scope.model.mySettings.data = 'matrix';
-
-//        $scope.model.mySettings =
-//            "{rowHeaders: true, colHeaders: true, contextMenu: true, fillHandle: true, type: 'numeric', format: '0.0[000]', data: 'matrix'}"
-//         ;
-
-      }
+      } );
 
    }
 
@@ -100,24 +61,55 @@ define( [
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  /* module.directive( 'axTableEditorRefresh', [ 'settingFactory', function( settingFactory ) {
+   var directiveName = 'axTableEditor';
+   module.directive( directiveName, [ function() {
       return {
+         scope: {
+            axTableEditor: '=',
+            axTableEditorColumns: '=',
+            axTableEditorRows: '='
+         },
          link: function( $scope, $element ) {
-            $scope.$watch( 'resources.spreadsheet', function (nv, ov) {
 
-               settingFactory.updateHandsontableSettings( ng.element( '#my-table' ),
-                  {
-                     data: $scope.resources.spreadsheet,
-                     type: 'numeric',
-                     format: '0.0[000]'
+            var baseSettings = {
+               afterChange: function( changes ) {
+                  // changes is defined if loadData was not used:
+                  if( changes ) {
+                     $scope.$emit( EVENT_AFTER_CHANGE, changes );
                   }
-               );
-            } );
+               }
+            };
+
+            $element.handsontable( completeSettings() );
+
+            $scope.$watch( directiveName, function( newSettings ) {
+               if( newSettings ) {
+                  $element.handsontable( 'updateSettings', completeSettings() );
+               }
+            }, true );
+
+            $scope.$watch( directiveName + 'Rows', function( newRows ) {
+               $element.handsontable( 'loadData', newRows );
+            }, true );
+
+            $scope.$watch( directiveName + 'Columns', function() {
+               $element.handsontable( 'updateSettings', completeSettings() );
+            }, true );
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////
+
+            function completeSettings() {
+               var settings = ax.object.options( $scope[ directiveName ], baseSettings );
+               var columnSettings = $scope[ directiveName + 'Columns' ];
+               return ax.object.options( {
+                  data: $scope[ directiveName + 'Rows' ] || [],
+                  columns: columnSettings.length ? columnSettings : undefined
+               }, settings );
+            }
          }
       };
-   } ]
-   );
-*/
+   } ] );
+
    return module;
 
 } );
