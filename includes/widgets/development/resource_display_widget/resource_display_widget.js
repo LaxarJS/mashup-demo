@@ -4,7 +4,7 @@
  * http://laxarjs.org/license
  */
 define( [
-   '../../../.',
+   'angular',
    'laxar_patterns',
    'angular-sanitize'
 ], function( ng, patterns ) {

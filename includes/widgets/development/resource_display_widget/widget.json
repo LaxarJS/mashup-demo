@@ -16,8 +16,9 @@
    ],
 
    "features": {
-
+      "$schema": "http://json-schema.org/draft-04/schema#",
       "display": {
+
          "type": "object",
          "description": "The display feature for resources.",
          "properties": {
