@@ -19,6 +19,7 @@ define( [
 
    var EVENT_AFTER_CHANGE = 'axTableEditor.afterChange';
    var EVENT_AFTER_REMOVE_COL = 'axTableEditor.afterRemoveCol';
+   var EVENT_AFTER_REMOVE_ROW = 'axTableEditor.afterRemoveRow';
 
    Controller.$inject = [ '$scope' ];
 
@@ -42,7 +43,7 @@ define( [
          var ROW = 0, COL = 1, NEW_VAL = 3;
          var patches = changes.map( function( change ) {
             var path = '/entries/' + change[ ROW ] + '/' + change[ COL ];
-            var value = parseInt( change[ NEW_VAL ] );
+            var value = parseInt( change[ NEW_VAL ], 10 );
             return { op: 'replace', path: path, value: value };
          } );
          updateSpreadsheetResource( patches );
@@ -50,10 +51,24 @@ define( [
 
       $scope.$on( EVENT_AFTER_REMOVE_COL, function( event, index, amount ) {
          var patches = [];
-         for( var i = 0; i < amount; ++i ){
-            var indexInResource = i + index;
-            patches.push( { op: 'remove', path: '/entries/' + indexInResource } );
+         for( var row = 0; row < $scope.resources.spreadsheet.entries.length; ++row ){
+            for( var i = index; i < index + amount; ++i ) {
+               patches.push( { op: 'remove', path: '/entries/' + row + '/' + i } );
+            }
          }
+         console.log('afterRemoveCol', patches);
+         updateSpreadsheetResource( patches );
+      } );
+
+      $scope.$on( EVENT_AFTER_REMOVE_ROW, function( event, index, amount ) {
+         var patches = [];
+         for( var i = index + amount - 1; i >= index; --i ) {
+          patches.push( { op: 'remove', path: '/entries/' + i } );
+          }
+         /*for( var i = index; i < index + amount; ++i ) {
+            patches.push( { op: 'remove', path: '/entries/' + i } );
+         }*/
+         console.log( 'afterRemoveRow', patches );
          updateSpreadsheetResource( patches );
       } );
 
@@ -91,9 +106,12 @@ define( [
                   }
                },
                afterRemoveCol: function( index, amount ) {
-                  console.log('afterRemoveCol');
                   $scope.$emit( EVENT_AFTER_REMOVE_COL, index, amount );
+               },
+               afterRemoveRow: function( index, amount ) {
+                  $scope.$emit( EVENT_AFTER_REMOVE_ROW, index, amount );
                }
+
             };
 
             $element.handsontable( completeSettings() );
