@@ -5,7 +5,7 @@
  */
 
 .table-editor-widget {
-   overflow: scroll;
+   overflow-x: auto;
 }
 
 /*!

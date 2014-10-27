@@ -1,0 +1,70 @@
+{
+   "name": "DummyDataActivity",
+   "description": "Publishes statically configured resources.",
+   "version": {
+      "spec": "1.1"
+   },
+
+   "integration": {
+      "type": "angular"
+   },
+
+   "compatibility": [ "json-patch" ],
+
+   "features": {
+      "resources": {
+         "type": "array",
+         "description": "Provide static resources.",
+         "items": {
+            "type": "object",
+            "properties": {
+               "resource": {
+                  "type": "string",
+                  "required": true,
+                  "description": "ID of dummy resource."
+               },
+               "location": {
+                  "type": "string",
+                  "description": "URL to load the resource from on beginLifecycleRequest, which is then published using didReplace."
+               },
+               "data": {
+                  "type": "any",
+                  "description": "Resource content to publish on beginLifecycleRequest."
+               }
+            }
+         }
+      },
+      "actions": {
+         "type": "object",
+         "description": "Respond to this set of action requests by publishing or updating preconfigured resources.",
+         "patternProperties": {
+            "^[a-zA-Z_][a-zA-Z_0-9]*$": {
+               "type": "object",
+               "properties": {
+                  "resource": {
+                     "type": "string",
+                     "description": "ID of dummy resource.",
+                     "required": true
+                  },
+                  "data": {
+                     "type": "any",
+                     "description": "Resource content to publish with didReplace on takeActionRequest."
+                  },
+                  "location": {
+                     "type": "string",
+                     "description": "URL to load the resource from on takeActionRequest, which is then published using didReplace."
+                  },
+                  "updates": {
+                     "type": "any",
+                     "description": "Resource updates to publish with didUpdate on takeActionRequest."
+                  },
+                  "patches": {
+                     "type": "any",
+                     "description": "Resource patches to publish with didUpdate on takeActionRequest."
+                  }
+               }
+            }
+         }
+      }
+   }
+}

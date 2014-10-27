@@ -12,10 +12,10 @@
    "features": {
       "$schema": "http://json-schema.org/draft-04/schema#",
       "type": "object",
-      "required": [ "data" ],
+      "required": [ "spreadsheet" ],
       "properties": {
 
-         "data": {
+         "spreadsheet": {
             "type": "object",
             "description": "Provide the data to display in another widget.",
             "required": [ "resource" ],

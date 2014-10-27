@@ -3,6 +3,30 @@
 
    "areas": {
 
+      "activities": [
+         {
+            "widget": "development/dummy_data_activity",
+            "features": {
+               "resources": [
+                  {
+                     "resource": "spreadsheetData",
+                     "location": "/application/pages/spreadsheet_data.json"
+                  }
+               ],
+               "actions": {
+                  "spreadsheet1": {
+                     "resource": "spreadsheetData",
+                     "location": "/application/pages/spreadsheet_data.json"
+                  },
+                  "spreadsheet2": {
+                     "resource": "spreadsheetData",
+                     "location": "/application/pages/spreadsheet_data_2.json"
+                  }
+               }
+            }
+         }
+      ],
+
       "header": [
          {
             "widget": "chart_demo/headline_widget",
@@ -27,9 +51,24 @@
          {
             "widget": "chart_demo/table_editor_widget",
             "features": {
-               "data": {
+               "spreadsheet": {
                   "resource": "spreadsheetData"
                }
+            }
+         },
+         {
+            "widget": "portal/command_bar_widget",
+            "features": {
+               "buttons": [
+                  {
+                     "action": "spreadsheet1",
+                     "i18nHtmlLabel": "Data 1"
+                  },
+                  {
+                     "action": "spreadsheet2",
+                     "i18nHtmlLabel": "Data 2"
+                  }
+               ]
             }
          }
       ],

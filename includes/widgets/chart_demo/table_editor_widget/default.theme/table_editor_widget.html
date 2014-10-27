@@ -22,26 +22,12 @@
 </hot-table>
 -->
 
-<div ax-table-editor-if-visible></div>
-<div data-ng-if="isVisible">
 <hot-table id="my-table"
-           rowHeaders="model.mySettings.rowHeaders"
-           colHeaders="model.mySettings.colHeaders"
-           contextMenu="model.mySettings.contextMenu"
-           fillHandle="model.mySettings.fillHandle"
-           type="model.mySettings.type"
-           format="model.mySettings.format"
-           datarows="matrix"
-   >
-
+           rowHeaders="model.handsontalbeSettings.rowHeaders"
+           colHeaders="model.handsontalbeSettings.colHeaders"
+           contextMenu="model.handsontalbeSettings.contextMenu"
+           fillHandle="model.handsontalbeSettings.fillHandle"
+           settings="{ type: 'numeric' }"
+           datarows="resources.spreadsheet">
+   <hot-column ng-repeat="row in resources.spreadsheet" settings="{ format: '0.0\[000\]'}" />
 </hot-table>
-</div>
-
-   <!-- -->
-
-<div style="margin-top: 20px">
-</div>
-
-<button type="button" id="output" ng-click="output()">Output Model</button>
-<button type="button" ng-click="createRandomData()">Create Random Data</button>
-<button type="button" ng-click="refresh()">Refresh ("Repair")</button>
