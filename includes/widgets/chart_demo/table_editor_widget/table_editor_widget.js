@@ -18,6 +18,7 @@ define( [
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    var EVENT_AFTER_CHANGE = 'axTableEditor.afterChange';
+   var EVENT_AFTER_REMOVE_COL = 'axTableEditor.afterRemoveCol';
 
    Controller.$inject = [ '$scope' ];
 
@@ -44,7 +45,19 @@ define( [
             var value = parseInt( change[ NEW_VAL ] );
             return { op: 'replace', path: path, value: value };
          } );
+         updateSpreadsheetResource( patches );
+      } );
 
+      $scope.$on( EVENT_AFTER_REMOVE_COL, function( event, index, amount ) {
+         var patches = [];
+         for( var i = 0; i < amount; ++i ){
+            var indexInResource = i + index;
+            patches.push( { op: 'remove', path: '/entries/' + indexInResource } );
+         }
+         updateSpreadsheetResource( patches );
+      } );
+
+      function updateSpreadsheetResource( patches ) {
          var resourceName = $scope.features.spreadsheet.resource;
          $scope.eventBus.publish( 'didUpdate.' + resourceName, {
                resource: resourceName,
@@ -53,8 +66,7 @@ define( [
                deliverToSender: false
             }
          );
-      } );
-
+      }
    }
 
    module.controller( moduleName + '.Controller', Controller );
@@ -77,6 +89,10 @@ define( [
                   if( changes ) {
                      $scope.$emit( EVENT_AFTER_CHANGE, changes );
                   }
+               },
+               afterRemoveCol: function( index, amount ) {
+                  console.log('afterRemoveCol');
+                  $scope.$emit( EVENT_AFTER_REMOVE_COL, index, amount );
                }
             };
 

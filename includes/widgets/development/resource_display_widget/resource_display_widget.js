@@ -1,17 +1,17 @@
 /**
- * Copyright 2014 LaxarJS
+ * Copyright 2014 aixigo AG
  * Released under the MIT license.
- * www.laxarjs.org
+ * http://laxarjs.org/license
  */
 define( [
-   'angular',
+   '../../../.',
    'laxar_patterns',
    'angular-sanitize'
 ], function( ng, patterns ) {
    'use strict';
 
-   var moduleName = 'widgets.chart_demo.resource_display_widget';
-   var module = ng.module( moduleName, [ 'ngSanitize' ] );
+   var moduleName = 'widgets.development.resource_display_widget';
+   var module     = ng.module( moduleName, [ 'ngSanitize' ] );
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 

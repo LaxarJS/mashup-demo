@@ -84,7 +84,7 @@
             }
          },
          {
-            "widget": "chart_demo/resource_display_widget",
+            "widget": "development/resource_display_widget",
             "features": {
                "display": {
                   "resource": "spreadsheetData"
