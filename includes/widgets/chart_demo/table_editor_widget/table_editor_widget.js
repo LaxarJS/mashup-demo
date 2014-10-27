@@ -52,7 +52,7 @@ define( [
       $scope.$on( EVENT_AFTER_REMOVE_COL, function( event, index, amount ) {
          var patches = [];
          for( var row = 0; row < $scope.resources.spreadsheet.entries.length; ++row ){
-            for( var i = index; i < index + amount; ++i ) {
+            for( var i = index + amount - 1; i >= index; --i ) {
                patches.push( { op: 'remove', path: '/entries/' + row + '/' + i } );
             }
          }
@@ -65,10 +65,6 @@ define( [
          for( var i = index + amount - 1; i >= index; --i ) {
           patches.push( { op: 'remove', path: '/entries/' + i } );
           }
-         /*for( var i = index; i < index + amount; ++i ) {
-            patches.push( { op: 'remove', path: '/entries/' + i } );
-         }*/
-         console.log( 'afterRemoveRow', patches );
          updateSpreadsheetResource( patches );
       } );
 
