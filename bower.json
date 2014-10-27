@@ -9,7 +9,8 @@
     "laxar": "LaxarJS/laxar#^0.16.2",
     "laxar_uikit": "LaxarJS/laxar_uikit#0.16",
     "laxar_patterns": "LaxarJS/laxar_patterns#0.16",
-    "require-css": "#0.1.x"
+    "require-css": "#0.1.x",
+     "handsontable": "#0.11.4"
   },
   "devDependencies": {
     "es5-shim": "2.3.x",

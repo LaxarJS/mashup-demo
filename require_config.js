@@ -48,11 +48,6 @@ var require = {
             return this._.noConflict();
          }
       },
-      ngHandsontable: {
-          deps: [
-              'jquery', 'angular', 'handsontable'
-          ]
-      },
       handsontable: {
           deps: [
               'jquery'
