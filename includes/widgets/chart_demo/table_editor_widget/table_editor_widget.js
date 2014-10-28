@@ -18,8 +18,6 @@ define( [
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    var EVENT_AFTER_CHANGE = 'axTableEditor.afterChange';
-   var EVENT_AFTER_REMOVE_COL = 'axTableEditor.afterRemoveCol';
-   var EVENT_AFTER_REMOVE_ROW = 'axTableEditor.afterRemoveRow';
 
    Controller.$inject = [ '$scope' ];
 
@@ -36,37 +34,23 @@ define( [
       };
       $scope.model.columns = [];
 
+      var model = $scope.model;
+      var resources = $scope.resources;
+
       patterns.resources.handlerFor( $scope )
-         .registerResourceFromFeature( 'spreadsheet', {} );
+         .registerResourceFromFeature( 'spreadsheet', { onUpdateReplace: createDeepClone } );
 
-      $scope.$on( EVENT_AFTER_CHANGE, function( event, changes ) {
-         var ROW = 0, COL = 1, NEW_VAL = 3;
-         var patches = changes.map( function( change ) {
-            var path = '/entries/' + change[ ROW ] + '/' + change[ COL ];
-            var value = parseInt( change[ NEW_VAL ], 10 );
-            return { op: 'replace', path: path, value: value };
-         } );
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      $scope.$on( EVENT_AFTER_CHANGE, function() {
+         var spreadsheetModelObject =  { entries: $scope.model.spreadsheet };
+         var patches = patterns.json.createPatch( $scope.resources.spreadsheet, spreadsheetModelObject );
+         patterns.json.applyPatch( $scope.resources.spreadsheet, patches );
+         createDeepClone();
          updateSpreadsheetResource( patches );
       } );
 
-      $scope.$on( EVENT_AFTER_REMOVE_COL, function( event, index, amount ) {
-         var patches = [];
-         for( var row = 0; row < $scope.resources.spreadsheet.entries.length; ++row ){
-            for( var i = index + amount - 1; i >= index; --i ) {
-               patches.push( { op: 'remove', path: '/entries/' + row + '/' + i } );
-            }
-         }
-         console.log('afterRemoveCol', patches);
-         updateSpreadsheetResource( patches );
-      } );
-
-      $scope.$on( EVENT_AFTER_REMOVE_ROW, function( event, index, amount ) {
-         var patches = [];
-         for( var i = index + amount - 1; i >= index; --i ) {
-          patches.push( { op: 'remove', path: '/entries/' + i } );
-          }
-         updateSpreadsheetResource( patches );
-      } );
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function updateSpreadsheetResource( patches ) {
          var resourceName = $scope.features.spreadsheet.resource;
@@ -77,6 +61,12 @@ define( [
                deliverToSender: false
             }
          );
+      }
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      function createDeepClone() {
+         $scope.model.spreadsheet = ax.object.deepClone( $scope.resources.spreadsheet.entries );
       }
    }
 
@@ -98,16 +88,21 @@ define( [
                afterChange: function( changes ) {
                   // changes is defined if loadData was not used:
                   if( changes ) {
-                     $scope.$emit( EVENT_AFTER_CHANGE, changes );
+                     $scope.$emit( EVENT_AFTER_CHANGE );
                   }
                },
-               afterRemoveCol: function( index, amount ) {
-                  $scope.$emit( EVENT_AFTER_REMOVE_COL, index, amount );
+               afterRemoveCol: function() {
+                  $scope.$emit( EVENT_AFTER_CHANGE );
                },
-               afterRemoveRow: function( index, amount ) {
-                  $scope.$emit( EVENT_AFTER_REMOVE_ROW, index, amount );
+               afterRemoveRow: function() {
+                  $scope.$emit( EVENT_AFTER_CHANGE );
+               },
+               afterCreateCol : function() {
+                  $scope.$emit( EVENT_AFTER_CHANGE );
+               },
+               afterCreateRow : function() {
+                  $scope.$emit( EVENT_AFTER_CHANGE );
                }
-
             };
 
             $element.handsontable( completeSettings() );
