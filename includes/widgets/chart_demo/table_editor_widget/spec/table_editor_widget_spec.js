@@ -5,8 +5,9 @@
  */
 define( [
    '../table_editor_widget',
-   'laxar/laxar_testing'
-], function( widgetModule, ax ) {
+   'laxar/laxar_testing',
+   'json!./spec_data.json'
+], function( widgetModule, ax, resourceData ) {
    'use strict';
 
    describe( 'A TableEditorWidget', function() {
@@ -15,7 +16,11 @@ define( [
 
       beforeEach( function setup() {
          testBed_ = ax.testing.portalMocksAngular.createControllerTestBed( widgetModule.name );
-         testBed_.featuresMock = {};
+         testBed_.featuresMock = {
+            spreadsheet: {
+               resource: 'spreadsheetData'
+            }
+         };
 
          testBed_.useWidgetJson();
          testBed_.setup();
@@ -29,7 +34,33 @@ define( [
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      it( 'still needs some tests.' );
+      describe( 'with feature spreadsheet', function() {
+
+         beforeEach( function() {
+
+            testBed_.eventBusMock.publish( 'didReplace.spreadsheetData', {
+               resource: 'spreadsheetData',
+               data: resourceData
+            } );
+            jasmine.Clock.tick( 0 );
+         } );
+
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+         it( 'acts as a slave for a configured resource.', function() {
+            expect( testBed_.scope.eventBus.subscribe )
+               .toHaveBeenCalledWith( 'didReplace.spreadsheetData', jasmine.any( Function ) );
+            expect( testBed_.scope.eventBus.subscribe )
+               .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', jasmine.any( Function ) );
+         } );
+
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+         it( 'shows the published resource as the data model of the table.', function() {
+            expect( testBed_.scope.resources.spreadsheet ).toEqual( resourceData );
+         } );
+
+      } );
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
