@@ -34,9 +34,6 @@ define( [
       };
       $scope.model.columns = [];
 
-      var model = $scope.model;
-      var resources = $scope.resources;
-
       patterns.resources.handlerFor( $scope )
          .registerResourceFromFeature( 'spreadsheet', { onUpdateReplace: createDeepClone } );
 

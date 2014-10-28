@@ -10,13 +10,13 @@
                "resources": [
                   {
                      "resource": "spreadsheetData",
-                     "location": "/application/pages/spreadsheet_data.json"
+                     "location": "/application/pages/spreadsheet_data_1.json"
                   }
                ],
                "actions": {
                   "spreadsheet1": {
                      "resource": "spreadsheetData",
-                     "location": "/application/pages/spreadsheet_data.json"
+                     "location": "/application/pages/spreadsheet_data_1.json"
                   },
                   "spreadsheet2": {
                      "resource": "spreadsheetData",
