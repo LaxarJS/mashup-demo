@@ -10,17 +10,17 @@
                "resources": [
                   {
                      "resource": "spreadsheetData",
-                     "location": "/application/pages/spreadsheet_data_1.json"
+                     "location": "application/pages/spreadsheet_data_1.json"
                   }
                ],
                "actions": {
                   "spreadsheet1": {
                      "resource": "spreadsheetData",
-                     "location": "/application/pages/spreadsheet_data_1.json"
+                     "location": "application/pages/spreadsheet_data_1.json"
                   },
                   "spreadsheet2": {
                      "resource": "spreadsheetData",
-                     "location": "/application/pages/spreadsheet_data_2.json"
+                     "location": "application/pages/spreadsheet_data_2.json"
                   }
                }
             }
@@ -80,6 +80,14 @@
                "headline": {
                   "htmlText": "Spreadsheet Data",
                   "level": 2
+               }
+            }
+         },
+         {
+            "widget": "chart_demo/chart_widget",
+            "features": {
+               "series": {
+                  "resource": "spreadsheetData"
                }
             }
          },

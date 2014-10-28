@@ -11,6 +11,28 @@ var require = {
          ],
          exports: 'angular'
       },
+      d3: {
+         exports: 'd3',
+         init: function () {
+            'use strict';
+            return this.d3;
+         }
+      },
+      nvd3: {
+         deps: [ 'd3' ],
+         exports: 'nvd3',
+         init: function () {
+            'use strict';
+            return this.nv;
+         }
+      },
+      'angular-nvd3': {
+         deps: [ 'nvd3', 'angular' ],
+         init: function ( angular ) {
+            'use strict';
+            return angular;
+         }
+      },
       'angular-mocks': {
          deps: [
             'angular'
@@ -106,6 +128,11 @@ var require = {
       'bootstrap-tooltip': 'bootstrap-sass-official/assets/javascripts/bootstrap/tooltip',
       'bootstrap-affix': 'bootstrap-sass-official/assets/javascripts/bootstrap/affix',
       trunk8: 'trunk8/trunk8',
+
+      // Charts
+      d3: 'd3/d3',
+      nvd3: 'nvd3/nv.d3',
+      'angular-nvd3': 'angular-nvd3/dist/angular-nvd3',
 
       // App Parts:
       'laxar-path-root': '..',

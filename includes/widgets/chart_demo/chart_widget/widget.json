@@ -1,0 +1,33 @@
+{
+   "name": "ChartWidget",
+   "description": "Widget to display a chart from time series data",
+   "version": {
+      "spec": "0.1.0"
+   },
+
+   "integration": {
+      "type": "angular"
+   },
+
+   "features": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [ "series" ],
+      "properties": {
+
+         "series": {
+            "type": "object",
+            "description": "Provide the data to display in another widget.",
+            "required": [ "resource" ],
+            "properties": {
+               "resource": {
+                  "type": "string",
+                  "description": "Name of the data resource which should refer to a 2-dimensional array.",
+                  "format": "topic"
+               }
+            }
+         }
+      }
+
+   }
+}
