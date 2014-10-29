@@ -7,7 +7,7 @@ define( [
    '../table_editor_widget',
    'laxar/laxar_testing',
    'json!./spec_data.json'
-], function( widgetModule, ax, resourceData ) {
+], function( widgetModule, ax, specData ) {
    'use strict';
 
    describe( 'A TableEditorWidget', function() {
@@ -40,7 +40,7 @@ define( [
 
             testBed_.eventBusMock.publish( 'didReplace.spreadsheetData', {
                resource: 'spreadsheetData',
-               data: resourceData
+               data: specData.sourceData
             } );
             jasmine.Clock.tick( 0 );
          } );
@@ -52,12 +52,13 @@ define( [
                .toHaveBeenCalledWith( 'didReplace.spreadsheetData', jasmine.any( Function ) );
             expect( testBed_.scope.eventBus.subscribe )
                .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', jasmine.any( Function ) );
+            expect( testBed_.scope.resources.spreadsheet ).toEqual( specData.sourceData );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'shows the published resource as the data model of the table.', function() {
-            expect( testBed_.scope.resources.spreadsheet ).toEqual( resourceData );
+            expect( testBed_.scope.model.tableModel ).toEqual( specData.expectedData );
          } );
 
       } );
