@@ -6,8 +6,10 @@
 define( [
    'angular',
    'laxar',
-   'laxar_patterns'
-], function( ng, ax, patterns ) {
+   'laxar_patterns',
+   'css!handsontable',
+   'handsontable'
+], function( ng, ax, patterns, handsontable ) {
    'use strict';
 
    var moduleName = 'widgets.chart_demo.table_editor_widget';
@@ -22,18 +24,66 @@ define( [
    function Controller( $scope ) {
 
       $scope.model = {};
+      $scope.model.settings = {
+         rowHeaders: true,
+         colHeaders: true,
+         contextMenu: true,
+         fillHandle: true
+      };
+      $scope.model.columns = [];
+
+
       $scope.resources = {};
       patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'spreadsheet', {onUpdateReplace: convertToTableModel} );
 
       $scope.$on( EVENT_AFTER_CHANGE, function( event ) {
-         console.log( event );
 
-         var modifiedResource = ax.object.deepClone( specData.sourceData );
-         modifiedResource.series[ 0 ].data[ 0 ] = 11;
-         var patch = patterns.json.createPatch( specData.sourceData, modifiedResource );
+         var modifiedResource = convertToResource();
+         var patch = patterns.json.createPatch( $scope.resources.spreadsheet, modifiedResource );
 
+         var resourceName = $scope.features.spreadsheet.resource;
+         $scope.eventBus.publish( 'didUpdate.' + resourceName, {
+            resource: resourceName,
+            patches: patch
+         }, {
+            deliverToSender: false
+         });
+
+         $scope.resources.spreadsheet = modifiedResource;
       } );
 
+      function convertToResource() {
+         var tableModel = $scope.model.tableModel;
+
+         var resource = {};
+         resource.grid = [];
+         resource.series = [];
+
+         var i;
+         var j;
+         if( tableModel.length > 0 ) {
+            // Row of column headers exists.
+            for( j = 0; j < tableModel[0].length; ++j ) {
+               if( j > 0 ) {
+                  resource.series.push( {label: tableModel[0][j], data: []} );
+               }
+            }
+            for( i = 1; i < tableModel.length; ++i ) {
+               for( j = 0; j < tableModel[i].length; ++j ) {
+                  if( j === 0 ) {
+                     // Row header
+                     resource.grid.push( tableModel[i][0] );
+                  }
+                  else {
+                     // Data
+                     resource.series[j - 1].data.push( parseFloat(tableModel[i][j]) );
+                  }
+               }
+            }
+         }
+
+         return resource;
+      }
 
       function convertToTableModel() {
          $scope.model.tableModel = [];
