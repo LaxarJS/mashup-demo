@@ -41,78 +41,74 @@ define( [
 
             testBed_.eventBusMock.publish( 'didReplace.spreadsheetData', {
                resource: 'spreadsheetData',
-               data: specData.sourceData
+               data: specData.originalResource
             } );
             jasmine.Clock.tick( 0 );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         it( 'acts as a slave for a configured resource.', function() {
+         it( 'acts as a slave for the configured resource.', function() {
             expect( testBed_.scope.eventBus.subscribe )
                .toHaveBeenCalledWith( 'didReplace.spreadsheetData', jasmine.any( Function ) );
             expect( testBed_.scope.eventBus.subscribe )
                .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', jasmine.any( Function ) );
-            expect( testBed_.scope.resources.spreadsheet ).toEqual( specData.sourceData );
+            expect( testBed_.scope.resources.spreadsheet ).toEqual( specData.originalResource );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'shows the published resource as the data model of the table.', function() {
-            expect( testBed_.scope.model.tableModel ).toEqual( specData.expectedData );
+            expect( testBed_.scope.model.tableModel ).toEqual( specData.expectedTableModel );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'publishes a didUpdate event after the user changed a data value.', function() {
-
             testBed_.scope.model.tableModel[1][1] = 11;
             testBed_.scope.$emit( 'axTableEditor.afterChange' );
 
-            var modifiedResource = ax.object.deepClone( specData.sourceData );
-            modifiedResource.series[ 0 ].data[ 0 ] = 11;
-            var patch = patterns.json.createPatch( specData.sourceData, modifiedResource );
+            var expectedResource = ax.object.deepClone( specData.originalResource );
+            expectedResource.series[ 0 ].values[ 0 ] = 11;
+            var patch = patterns.json.createPatch( specData.originalResource, expectedResource );
+            console.log(patch);
 
             expect( testBed_.scope.eventBus.publish )
                .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', {
                   resource: 'spreadsheetData',
                   patches: patch
-               },{
-                  deliverToSender: false
-               } );
+               }, jasmine.any( Object ) );
          } );
 
          it( 'ignores rows on which the time grid tick is removed in the didUpdate event data.', function() {
-
             testBed_.scope.model.tableModel[2][0] = null;
             testBed_.scope.$emit( 'axTableEditor.afterChange' );
 
-            var modifiedResource = ax.object.deepClone( specData.sourceData );
-            modifiedResource.series[ 0 ].data[ 0 ] = 11;
-            var patch = patterns.json.createPatch( specData.sourceData, modifiedResource );
+            var expectedResource = specData.expectedResourceWithRemovedTimeGridTick;
+            var patch = patterns.json.createPatch( specData.originalResource, expectedResource );
+            console.log(patch);
 
             expect( testBed_.scope.eventBus.publish )
                .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', {
                   resource: 'spreadsheetData',
                   patches: patch
-               },{
-                  deliverToSender: false
-               } );
-
-            var sourceDataWithMissingTickLabel = ax.object.deepClone(specData.sourceData);
-            sourceDataWithMissingTickLabel.grid[2] = null;
-
-
-
-
-
-
-         });
+               }, jasmine.any( Object ) );
+         } );
 
          it( 'ignores columns on which the series label is removed in the didUpdate event data.', function() {
-            var sourceDataWithMissingSeriesLabel = ax.object.deepClone(specData.sourceData);
-            sourceDataWithMissingSeriesLabel.series[2].label = null;
-         });
+            testBed_.scope.model.tableModel[0][2] = null;
+            testBed_.scope.$emit( 'axTableEditor.afterChange' );
+
+            var expectedResource = specData.expectedResourceWithRemovedSeriesLabel;
+            var patch = patterns.json.createPatch( specData.originalResource, expectedResource );
+            console.log(patch);
+
+            expect( testBed_.scope.eventBus.publish )
+               .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', {
+                  resource: 'spreadsheetData',
+                  patches: patch
+               }, jasmine.any( Object ) );
+         } );
 
       } );
 
