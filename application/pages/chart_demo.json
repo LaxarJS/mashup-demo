@@ -86,14 +86,6 @@
          {
             "widget": "chart_demo/chart_widget",
             "features": {
-               "series": {
-                  "resource": "spreadsheetData"
-               }
-            }
-         },
-         {
-            "widget": "development/resource_display_widget",
-            "features": {
                "display": {
                   "resource": "spreadsheetData"
                }

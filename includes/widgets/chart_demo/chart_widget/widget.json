@@ -12,17 +12,17 @@
    "features": {
       "$schema": "http://json-schema.org/draft-04/schema#",
       "type": "object",
-      "required": [ "series" ],
+      "required": [ "display" ],
       "properties": {
 
-         "series": {
+         "display": {
             "type": "object",
             "description": "Provide the data to display in another widget.",
             "required": [ "resource" ],
             "properties": {
                "resource": {
                   "type": "string",
-                  "description": "Name of the data resource which should refer to a 2-dimensional array.",
+                  "description": "Name of the data resource",
                   "format": "topic"
                }
             }

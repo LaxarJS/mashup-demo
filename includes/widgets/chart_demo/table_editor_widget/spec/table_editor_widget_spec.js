@@ -64,18 +64,25 @@ define( [
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         it( 'shows the published resource as the data model of the table.', function() {
+         it( 'publishes a didUpdate event after the user changed a data value.', function() {
 
             testBed_.scope.model.tableModel[1][1] = 11;
-            testBed_.scope.$emit('axTableEditor.afterChange');
+            testBed_.scope.$emit( 'axTableEditor.afterChange' );
 
-            var modifiedResource= ax.object.deepClone( specData.sourceData );
+            var modifiedResource = ax.object.deepClone( specData.sourceData );
             modifiedResource.series[ 0 ].data[ 0 ] = 11;
             var patch = patterns.json.createPatch( specData.sourceData, modifiedResource );
 
             expect( testBed_.scope.eventBus.publish )
-               .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', patch );
+               .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', {
+                  resource: 'spreadsheetData',
+                  patches: patch
+               },{
+                  deliverToSender: false
+               } );
          } );
+
+
       } );
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
