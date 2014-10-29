@@ -77,6 +77,8 @@ define( [
                .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', {
                   resource: 'spreadsheetData',
                   patches: patch
+               },{
+                  deliverToSender: false
                } );
          } );
       } );
