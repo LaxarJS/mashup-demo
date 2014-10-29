@@ -38,9 +38,9 @@ define( [
       $scope.resources = {};
       patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'spreadsheet', {onUpdateReplace: convertToTableModel} );
 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
       $scope.$on( EVENT_AFTER_CHANGE, function( event ) {
-
-
          var modifiedResource = convertToResource();
          var patch = patterns.json.createPatch( $scope.resources.spreadsheet, modifiedResource );
 
@@ -55,6 +55,8 @@ define( [
          $scope.resources.spreadsheet = modifiedResource;
 
       } );
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function convertToResource() {
          var tableModel = $scope.model.tableModel;
@@ -88,6 +90,8 @@ define( [
 
          return resource;
       }
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function convertToTableModel() {
          $scope.model.tableModel = [];

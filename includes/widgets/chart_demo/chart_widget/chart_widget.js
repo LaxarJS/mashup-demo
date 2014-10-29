@@ -24,27 +24,6 @@ define( [
       $scope.resources = {};
       patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'series', {onUpdateReplace: convertToChartModel} );
 
-      function convertToChartModel() {
-         $scope.model.data = [];
-         $scope.resources.series.series.forEach( function( timeSeries, key ){
-            var values= [];
-            timeSeries.data.forEach( function( x, yKey ) {
-               values.push( {
-                  x: x,
-                  y:  $scope.resources.series.grid[ yKey ]
-               } );
-            } );
-
-            $scope.model.data.push({
-               values: values,
-               key: timeSeries.label
-            });
-         } );
-         console.log($scope.model.data);
-
-      }
-
-
       $scope.model.options = {
          chart: {
             type: 'lineChart',
@@ -64,30 +43,27 @@ define( [
             useInteractiveGuideline: true,
             dispatch: {
                stateChange: function() {
-                  ax.log.debug('stateChange');
+                  //ax.log.debug('stateChange');
                },
                changeState: function() {
-                  ax.log.debug('changeState');
+                  //ax.log.debug('changeState');
                },
                tooltipShow: function() {
-                  ax.log.debug('tooltipShow');
+                  //ax.log.debug('tooltipShow');
                },
                tooltipHide: function() {
-                  ax.log.debug('tooltipHide');
+                  //ax.log.debug('tooltipHide');
                }
             },
             xAxis: {
-               axisLabel: 'Time (ms)'
+               axisLabel: 'Time'
             },
             yAxis: {
-               axisLabel: 'Voltage (v)',
-               tickFormat: function(d) {
-                  return d3.format('.02f')(d);
-               },
+               axisLabel: 'Stockvalue',
                axisLabelDistance: 30
             },
             callback: function() {
-               ax.log.debug('!!! lineChart callback !!!');
+               //ax.log.debug('!!! lineChart callback !!!');
             }
          },
          title: {
@@ -112,46 +88,25 @@ define( [
          }
       };
 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   //   $scope.model.data = sinAndCos();
+      function convertToChartModel() {
+         $scope.model.data = [];
+         $scope.resources.series.series.forEach( function( timeSeries, key ){
+            var values= [];
+            timeSeries.data.forEach( function( x, yKey ) {
+               values.push( {
+                  x: $scope.resources.series.grid[ yKey ],
+                  y: x
+               } );
+            } );
 
-      /*Random Data Generator */
-      function sinAndCos() {
-         var sin = [],
-            sin2 = [],
-            cos = [];
-
-         //Data is represented as an array of {x,y} pairs.
-         for (var i = 0; i < 100; i++) {
-            sin.push({
-               x: i,
-               y: Math.sin(i / 10)
+            $scope.model.data.push({
+               values: values,
+               key: timeSeries.label
             });
-            sin2.push({
-               x: i,
-               y: i % 10 == 5 ? null : Math.sin(i / 10) * 0.25 + 0.5
-            });
-            cos.push({
-               x: i,
-               y: .5 * Math.cos(i / 10 + 2) + Math.random() / 10
-            });
-         }
-
-         //Line chart data should be sent as an array of series objects.
-         return [{
-            values: sin, //values - represents the array of {x,y} data points
-            key: 'Sine Wave', //key  - the name of the series.
-            color: '#ff7f0e' //color - optional: choose your own line color.
-         }, {
-            values: cos,
-            key: 'Cosine Wave',
-            color: '#2ca02c'
-         }, {
-            values: sin2,
-            key: 'Another sine wave',
-            color: '#7777ff',
-            area: true //area - set to true if you want this line to turn into a filled area chart.
-         }];
+         } );
+         $scope.model.options.chart.xAxis.tickValues = $scope.resources.series.grid;
       }
 
 
