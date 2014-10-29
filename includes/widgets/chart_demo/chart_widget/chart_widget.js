@@ -6,9 +6,10 @@
 define( [
    'angular',
    'laxar',
+   'laxar_patterns',
    'angular-nvd3',
    'css!nvd3'
-], function( ng, ax ) {
+], function( ng, ax, patterns ) {
    'use strict';
 
    var moduleName = 'widgets.chart_demo.chart_widget';
@@ -19,9 +20,30 @@ define( [
    Controller.$inject = [ '$scope' ];
 
    function Controller( $scope ) {
-
-
       $scope.model = {};
+      $scope.resources = {};
+      patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'series', {onUpdateReplace: convertToChartModel} );
+
+      function convertToChartModel() {
+         $scope.model.data = [];
+         $scope.resources.series.series.forEach( function( timeSeries, key ){
+            var values= [];
+            timeSeries.data.forEach( function( x, yKey ) {
+               values.push( {
+                  x: x,
+                  y:  $scope.resources.series.grid[ yKey ]
+               } );
+            } );
+
+            $scope.model.data.push({
+               values: values,
+               key: timeSeries.label
+            });
+         } );
+         console.log($scope.model.data);
+
+      }
+
 
       $scope.model.options = {
          chart: {
@@ -91,7 +113,7 @@ define( [
       };
 
 
-      $scope.model.data = sinAndCos();
+   //   $scope.model.data = sinAndCos();
 
       /*Random Data Generator */
       function sinAndCos() {

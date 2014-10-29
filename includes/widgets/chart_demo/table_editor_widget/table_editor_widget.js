@@ -9,7 +9,9 @@ define( [
    'laxar_patterns',
    'css!handsontable',
    'handsontable'
-], function( ng, ax, patterns, handsontable ) {
+
+], function( ng, ax, patterns ) {
+
    'use strict';
 
    var moduleName = 'widgets.chart_demo.table_editor_widget';
@@ -38,6 +40,7 @@ define( [
 
       $scope.$on( EVENT_AFTER_CHANGE, function( event ) {
 
+
          var modifiedResource = convertToResource();
          var patch = patterns.json.createPatch( $scope.resources.spreadsheet, modifiedResource );
 
@@ -47,9 +50,10 @@ define( [
             patches: patch
          }, {
             deliverToSender: false
-         });
+         } );
 
          $scope.resources.spreadsheet = modifiedResource;
+
       } );
 
       function convertToResource() {
