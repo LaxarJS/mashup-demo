@@ -82,7 +82,41 @@ define( [
                } );
          } );
 
-         
+         it( 'ignores rows on which the time grid tick is removed in the didUpdate event data.', function() {
+
+            testBed_.scope.model.tableModel[2][0] = null;
+            testBed_.scope.$emit( 'axTableEditor.afterChange' );
+
+            var modifiedResource = ax.object.deepClone( specData.sourceData );
+            modifiedResource.series[ 0 ].data[ 0 ] = 11;
+            var patch = patterns.json.createPatch( specData.sourceData, modifiedResource );
+
+            expect( testBed_.scope.eventBus.publish )
+               .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', {
+                  resource: 'spreadsheetData',
+                  patches: patch
+               },{
+                  deliverToSender: false
+               } );
+
+            var sourceDataWithMissingTickLabel = ax.object.deepClone(specData.sourceData);
+            sourceDataWithMissingTickLabel.grid[2] = null;
+
+
+
+
+
+
+         });
+
+         it( 'ignores columns on which the series label is removed in the didUpdate event data.', function() {
+            var sourceDataWithMissingSeriesLabel = ax.object.deepClone(specData.sourceData);
+            sourceDataWithMissingSeriesLabel.series[2].label = null;
+         });
+
+
+
+
       } );
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
