@@ -62,7 +62,7 @@ define( [
          var tableModel = $scope.model.tableModel;
 
          var resource = {};
-         resource.grid = [];
+         resource.timeGrid = [];
          resource.series = [];
 
          var i;
@@ -71,18 +71,18 @@ define( [
             // Row of column headers exists.
             for( j = 0; j < tableModel[0].length; ++j ) {
                if( j > 0 ) {
-                  resource.series.push( {label: tableModel[0][j], data: []} );
+                  resource.series.push( {label: tableModel[0][j], values: []} );
                }
             }
             for( i = 1; i < tableModel.length; ++i ) {
                for( j = 0; j < tableModel[i].length; ++j ) {
                   if( j === 0 ) {
                      // Row header
-                     resource.grid.push( tableModel[i][0] );
+                     resource.timeGrid.push( tableModel[i][0] );
                   }
                   else {
                      // Data
-                     resource.series[j - 1].data.push( parseFloat(tableModel[i][j]) );
+                     resource.series[j - 1].values.push( parseFloat(tableModel[i][j]) );
                   }
                }
             }
@@ -106,13 +106,13 @@ define( [
          $scope.model.tableModel.push( colHeaders );
 
          // Data area
-         spreadsheet.grid.forEach( function( rowHeader, row ) {
+         spreadsheet.timeGrid.forEach( function( rowHeader, row ) {
             var tableDataRow = row + 1;
             var rowData = [];
             rowData.push( rowHeader );
             $scope.model.tableModel.push( rowData );
             spreadsheet.series.forEach( function( value, col ) {
-               $scope.model.tableModel[ tableDataRow ].push( value.data[ row ] );
+               $scope.model.tableModel[ tableDataRow ].push( value.values[ row ] );
             } );
          } );
       }

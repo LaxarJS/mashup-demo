@@ -1,29 +1,32 @@
 {
-   "grid": ["1990", "1991", "1992", "1993", "1994"],
+   "timeLabel": "Time",
+   "valueLabel": "Stock Value",
+   "timeGrid": ["1990", "1991", "1992", "1993", "1994"],
    "series": [
       {
          "label": "Company A",
-         "data": [
+         "values": [
             10, 20, 25, 40, 50
          ]
       },
       {
          "label": "Company B",
-         "data": [
+         "values": [
             20, 15, 13, 18, 70
          ]
       },
       {
          "label": "Company C",
-         "data": [
+         "values": [
             8, 16, 32, 64, 128
          ]
       },
       {
          "label": "Company D",
-         "data": [
+         "values": [
             8, 16, 16, 33, 16
          ]
       }
    ]
 }
+

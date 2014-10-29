@@ -22,7 +22,7 @@ define( [
    function Controller( $scope ) {
       $scope.model = {};
       $scope.resources = {};
-      patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'series', {onUpdateReplace: convertToChartModel} );
+      patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'display', {onUpdateReplace: convertToChartModel} );
 
       $scope.model.options = {
          chart: {
@@ -65,26 +65,6 @@ define( [
             callback: function() {
                //ax.log.debug('!!! lineChart callback !!!');
             }
-         },
-         title: {
-            enable: true,
-            text: 'Title for Line Chart'
-         },
-         subtitle: {
-            enable: true,
-            text: 'Subtitle for simple line chart. Lorem ipsum dolor sit amet, at eam blandit sadipscing, vim adhuc sanctus disputando ex, cu usu affert alienum urbanitas.',
-            css: {
-               'text-align': 'center',
-               'margin': '10px 13px 0px 7px'
-            }
-         },
-         caption: {
-            enable: true,
-            html: '<b>Figure 1.</b> Lorem ipsum dolor sit amet, at eam blandit sadipscing, <span style="text-decoration: underline;">vim adhuc sanctus disputando ex</span>, cu usu affert alienum urbanitas. <i>Cum in purto erat, mea ne nominavi persecuti reformidans.</i> Docendi blandit abhorreant ea has, minim tantas alterum pro eu. <span style="color: darkred;">Exerci graeci ad vix, elit tacimates ea duo</span>. Id mel eruditi fuisset. Stet vidit patrioque in pro, eum ex veri verterem abhorreant, id unum oportere intellegam nec<sup>[1, <a href="https://github.com/krispo/angular-nvd3" target="_blank">2</a>, 3]</sup>.',
-            css: {
-               'text-align': 'justify',
-               'margin': '10px 13px 0px 7px'
-            }
          }
       };
 
@@ -92,11 +72,11 @@ define( [
 
       function convertToChartModel() {
          $scope.model.data = [];
-         $scope.resources.series.series.forEach( function( timeSeries, key ){
+         $scope.resources.display.series.forEach( function( timeSeries, key ){
             var values= [];
-            timeSeries.data.forEach( function( x, yKey ) {
+            timeSeries.values.forEach( function( x, yKey ) {
                values.push( {
-                  x: $scope.resources.series.grid[ yKey ],
+                  x: $scope.resources.display.timeGrid[ yKey ],
                   y: x
                } );
             } );
@@ -106,7 +86,7 @@ define( [
                key: timeSeries.label
             });
          } );
-         $scope.model.options.chart.xAxis.tickValues = $scope.resources.series.grid;
+         $scope.model.options.chart.xAxis.tickValues = $scope.resources.display.timeGrid;
       }
 
 
