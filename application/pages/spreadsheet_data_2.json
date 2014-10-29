@@ -1,6 +1,6 @@
 {
-   "timeLabel": "Time",
-   "valueLabel": "Stock Value",
+   "timeLabel": "The Nineties",
+   "valueLabel": "Stock Exchange Value",
    "timeGrid": ["1990", "1991", "1992", "1993", "1994"],
    "series": [
       {

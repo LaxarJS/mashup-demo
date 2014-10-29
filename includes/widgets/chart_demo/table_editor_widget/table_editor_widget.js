@@ -26,6 +26,7 @@ define( [
    function Controller( $scope ) {
 
       $scope.model = {};
+
       $scope.model.settings = {
          rowHeaders: true,
          colHeaders: true,
@@ -94,27 +95,27 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function convertToTableModel() {
-         $scope.model.tableModel = [];
-         var spreadsheet = $scope.resources.spreadsheet;
-
-         // Column headers
-         var colHeaders = [];
-         colHeaders.push( null );
-         spreadsheet.series.forEach( function( value, key ) {
-            colHeaders.push( value.label );
-         } );
-         $scope.model.tableModel.push( colHeaders );
-
-         // Data area
-         spreadsheet.timeGrid.forEach( function( rowHeader, row ) {
-            var tableDataRow = row + 1;
-            var rowData = [];
-            rowData.push( rowHeader );
-            $scope.model.tableModel.push( rowData );
-            spreadsheet.series.forEach( function( value, col ) {
-               $scope.model.tableModel[ tableDataRow ].push( value.values[ row ] );
-            } );
-         } );
+//         $scope.model.tableModel = [];
+//         var spreadsheet = $scope.resources.spreadsheet;
+//
+//         // Column headers
+//         var colHeaders = [];
+//         colHeaders.push( null );
+//         spreadsheet.series.forEach( function( value, key ) {
+//            colHeaders.push( value.label );
+//         } );
+//         $scope.model.tableModel.push( colHeaders );
+//
+//         // Data area
+//         spreadsheet.timeGrid.forEach( function( rowHeader, row ) {
+//            var tableDataRow = row + 1;
+//            var rowData = [];
+//            rowData.push( rowHeader );
+//            $scope.model.tableModel.push( rowData );
+//            spreadsheet.series.forEach( function( value, col ) {
+//               $scope.model.tableModel[ tableDataRow ].push( value.values[ row ] );
+//            } );
+//         } );
       }
    }
 
@@ -153,7 +154,9 @@ define( [
                }
             };
 
-            $element.handsontable( completeSettings() );
+            var a = completeSettings();
+            console.log( a );
+            $element.handsontable( a );
 
             $scope.$watch( directiveName, function( newSettings ) {
                if( newSettings ) {
@@ -174,8 +177,11 @@ define( [
             function completeSettings() {
                var settings = ax.object.options( $scope[ directiveName ], baseSettings );
                var columnSettings = $scope[ directiveName + 'Columns' ];
+               var dummy = [];
+
+               console.log( dummy );
                return ax.object.options( {
-                  data: $scope[ directiveName + 'Rows' ] || [],
+                  data: dummy,
                   columns: columnSettings.length ? columnSettings : undefined
                }, settings );
             }
