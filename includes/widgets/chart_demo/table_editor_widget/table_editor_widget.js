@@ -15,6 +15,8 @@ define( [
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+   var EVENT_AFTER_CHANGE = 'axTableEditor.afterChange';
+
    Controller.$inject = [ '$scope' ];
 
    function Controller( $scope ) {
@@ -23,52 +25,36 @@ define( [
       $scope.resources = {};
       patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'spreadsheet', {onUpdateReplace: convertToTableModel} );
 
+      $scope.$on( EVENT_AFTER_CHANGE, function( event ) {
+         console.log( event );
+
+         var modifiedResource = ax.object.deepClone( specData.sourceData );
+         modifiedResource.series[ 0 ].data[ 0 ] = 11;
+         var patch = patterns.json.createPatch( specData.sourceData, modifiedResource );
+
+      } );
+
+
       function convertToTableModel() {
          $scope.model.tableModel = [];
-
-
-         // Column headers
-//         var colHeaders = [];
-//         colHeaders.push( null );
-//         var spreadsheet = $scope.resources.spreadsheet;
-//         spreadsheet.series.forEach( function( value, key ) {
-//            colHeaders.push( value.label );
-//         } );
-//         $scope.model.tableModel.push( colHeaders );
-//
-//
-//
-//         // Data area
-//         spreadsheet.grid.forEach( function( rowHeader, row ) {
-//            var rowData = [];
-//            rowData.push( rowHeader );
-//            $scope.model.tableModel.push( rowData );
-//            spreadsheet.series.forEach( function( value, col ) {
-//               $scope.model.tableModel[ row + 1 ].push( value.data[ row ] );
-//            } );
-//         } );
-
+         var spreadsheet = $scope.resources.spreadsheet;
 
          // Column headers
          var colHeaders = [];
          colHeaders.push( null );
-         var spreadsheet = $scope.resources.spreadsheet;
          spreadsheet.series.forEach( function( value, key ) {
             colHeaders.push( value.label );
          } );
          $scope.model.tableModel.push( colHeaders );
 
-         // Row headers
-         spreadsheet.grid.forEach( function( value, key ) {
-            var rowData = [];
-            rowData.push( value );
-            $scope.model.tableModel.push( rowData );
-         } );
-
          // Data area
          spreadsheet.grid.forEach( function( rowHeader, row ) {
+            var tableDataRow = row + 1;
+            var rowData = [];
+            rowData.push( rowHeader );
+            $scope.model.tableModel.push( rowData );
             spreadsheet.series.forEach( function( value, col ) {
-               $scope.model.tableModel[ row + 1 ].push( value.data[ row ] );
+               $scope.model.tableModel[ tableDataRow ].push( value.data[ row ] );
             } );
          } );
       }
@@ -77,6 +63,67 @@ define( [
    module.controller( moduleName + '.Controller', Controller );
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+   var directiveName = 'axTableEditor';
+   module.directive( directiveName, [ function() {
+      return {
+         scope: {
+            axTableEditor: '=',
+            axTableEditorColumns: '=',
+            axTableEditorRows: '='
+         },
+         link: function( $scope, $element ) {
+
+            var baseSettings = {
+               afterChange: function( changes ) {
+                  // changes is defined if loadData was not used:
+                  if( changes ) {
+                     $scope.$emit( EVENT_AFTER_CHANGE );
+                  }
+               },
+               afterRemoveCol: function() {
+                  $scope.$emit( EVENT_AFTER_CHANGE );
+               },
+               afterRemoveRow: function() {
+                  $scope.$emit( EVENT_AFTER_CHANGE );
+               },
+               afterCreateCol: function() {
+                  $scope.$emit( EVENT_AFTER_CHANGE );
+               },
+               afterCreateRow: function() {
+                  $scope.$emit( EVENT_AFTER_CHANGE );
+               }
+            };
+
+            $element.handsontable( completeSettings() );
+
+            $scope.$watch( directiveName, function( newSettings ) {
+               if( newSettings ) {
+                  $element.handsontable( 'updateSettings', completeSettings() );
+               }
+            }, true );
+
+            $scope.$watch( directiveName + 'Rows', function( newRows ) {
+               $element.handsontable( 'loadData', newRows );
+            }, true );
+
+            $scope.$watch( directiveName + 'Columns', function() {
+               $element.handsontable( 'updateSettings', completeSettings() );
+            }, true );
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////
+
+            function completeSettings() {
+               var settings = ax.object.options( $scope[ directiveName ], baseSettings );
+               var columnSettings = $scope[ directiveName + 'Columns' ];
+               return ax.object.options( {
+                  data: $scope[ directiveName + 'Rows' ] || [],
+                  columns: columnSettings.length ? columnSettings : undefined
+               }, settings );
+            }
+         }
+      };
+   } ] );
 
    return module;
 

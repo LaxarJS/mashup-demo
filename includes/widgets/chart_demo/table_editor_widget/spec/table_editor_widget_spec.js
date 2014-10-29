@@ -6,8 +6,9 @@
 define( [
    '../table_editor_widget',
    'laxar/laxar_testing',
+   'laxar_patterns',
    'json!./spec_data.json'
-], function( widgetModule, ax, specData ) {
+], function( widgetModule, ax, patterns, specData ) {
    'use strict';
 
    describe( 'A TableEditorWidget', function() {
@@ -61,6 +62,20 @@ define( [
             expect( testBed_.scope.model.tableModel ).toEqual( specData.expectedData );
          } );
 
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+         it( 'shows the published resource as the data model of the table.', function() {
+
+            testBed_.scope.model.tableModel[1][1] = 11;
+            testBed_.scope.$emit('axTableEditor.afterChange');
+
+            var modifiedResource= ax.object.deepClone( specData.sourceData );
+            modifiedResource.series[ 0 ].data[ 0 ] = 11;
+            var patch = patterns.json.createPatch( specData.sourceData, modifiedResource );
+
+            expect( testBed_.scope.eventBus.publish )
+               .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', patch );
+         } );
       } );
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
