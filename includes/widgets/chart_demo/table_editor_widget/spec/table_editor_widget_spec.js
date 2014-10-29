@@ -71,7 +71,6 @@ define( [
             var expectedResource = ax.object.deepClone( specData.originalResource );
             expectedResource.series[ 0 ].values[ 0 ] = 11;
             var patch = patterns.json.createPatch( specData.originalResource, expectedResource );
-            console.log(patch);
 
             expect( testBed_.scope.eventBus.publish )
                .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', {
@@ -86,7 +85,6 @@ define( [
 
             var expectedResource = specData.expectedResourceWithRemovedTimeGridTick;
             var patch = patterns.json.createPatch( specData.originalResource, expectedResource );
-            console.log(patch);
 
             expect( testBed_.scope.eventBus.publish )
                .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', {
@@ -101,7 +99,6 @@ define( [
 
             var expectedResource = specData.expectedResourceWithRemovedSeriesLabel;
             var patch = patterns.json.createPatch( specData.originalResource, expectedResource );
-            console.log(patch);
 
             expect( testBed_.scope.eventBus.publish )
                .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', {

@@ -67,8 +67,6 @@ define( [
          spreadsheet.timeGrid = [];
          spreadsheet.series = [];
 
-         console.log(tableModel);
-
          var i;
          var j;
          if( tableModel.length > 0 ) {
