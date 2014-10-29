@@ -6,7 +6,9 @@
 define( [
    'angular',
    'laxar',
-   'laxar_patterns'
+   'laxar_patterns',
+   'css!handsontable',
+   'handsontable'
 ], function( ng, ax, patterns ) {
    'use strict';
 
@@ -22,16 +24,24 @@ define( [
    function Controller( $scope ) {
 
       $scope.model = {};
+      $scope.model.settings = {
+         rowHeaders: true,
+         colHeaders: true,
+         contextMenu: true,
+         fillHandle: true
+      };
+      $scope.model.columns = [];
+
       $scope.resources = {};
       patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'spreadsheet', {onUpdateReplace: convertToTableModel} );
 
       $scope.$on( EVENT_AFTER_CHANGE, function( event ) {
-         console.log( event );
+         /*console.log( event );
 
          var modifiedResource = ax.object.deepClone( specData.sourceData );
          modifiedResource.series[ 0 ].data[ 0 ] = 11;
          var patch = patterns.json.createPatch( specData.sourceData, modifiedResource );
-
+*/
       } );
 
 
