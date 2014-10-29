@@ -26,7 +26,6 @@ define( [
    function Controller( $scope ) {
 
       $scope.model = {};
-
       $scope.model.settings = {
          rowHeaders: true,
          colHeaders: true,
@@ -112,30 +111,6 @@ define( [
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-<<<<<<< HEAD
-      function convertToTableModel() {
-//         $scope.model.tableModel = [];
-//         var spreadsheet = $scope.resources.spreadsheet;
-//
-//         // Column headers
-//         var colHeaders = [];
-//         colHeaders.push( null );
-//         spreadsheet.series.forEach( function( value, key ) {
-//            colHeaders.push( value.label );
-//         } );
-//         $scope.model.tableModel.push( colHeaders );
-//
-//         // Data area
-//         spreadsheet.timeGrid.forEach( function( rowHeader, row ) {
-//            var tableDataRow = row + 1;
-//            var rowData = [];
-//            rowData.push( rowHeader );
-//            $scope.model.tableModel.push( rowData );
-//            spreadsheet.series.forEach( function( value, col ) {
-//               $scope.model.tableModel[ tableDataRow ].push( value.values[ row ] );
-//            } );
-//         } );
-=======
       function updateTableModel() {
          var spreadsheet = $scope.resources.spreadsheet;
 
@@ -157,7 +132,6 @@ define( [
                $scope.model.tableModel[ tableDataRow ].push( value.values[ row ] );
             } );
          } );
->>>>>>> master
       }
    }
 
@@ -196,9 +170,7 @@ define( [
                }
             };
 
-            var a = completeSettings();
-            console.log( a );
-            $element.handsontable( a );
+            $element.handsontable( completeSettings() );
 
             $scope.$watch( directiveName, function( newSettings ) {
                if( newSettings ) {
@@ -219,11 +191,8 @@ define( [
             function completeSettings() {
                var settings = ax.object.options( $scope[ directiveName ], baseSettings );
                var columnSettings = $scope[ directiveName + 'Columns' ];
-               var dummy = [];
-
-               console.log( dummy );
                return ax.object.options( {
-                  data: dummy,
+                  data: $scope[ directiveName + 'Rows' ] || [],
                   columns: columnSettings.length ? columnSettings : undefined
                }, settings );
             }
