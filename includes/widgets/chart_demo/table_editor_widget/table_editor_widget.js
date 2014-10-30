@@ -26,15 +26,15 @@ define( [
    function Controller( $scope ) {
 
       $scope.model = {};
-      var model = $scope.model;
-      model.settings = {
+
+      $scope.model.settings = {
          rowHeaders: true,
          colHeaders: true,
          contextMenu: true,
          fillHandle: true
       };
-      model.columns = [];
-      model.tableModel = [];
+      $scope.model.columns = [];
+      $scope.model.tableModel = [];
 
       $scope.resources = {};
       patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'spreadsheet', {onUpdateReplace: updateTableModel} );
