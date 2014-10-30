@@ -38,26 +38,31 @@
 
                "publish": {
                   "resource": "spreadsheetData",
-                  "location": "application/pages/spreadsheet_data_1.json"
+                  "location": "application/data/example_data_1.json"
                },
 
                "display": {
                   "dataSets": [
                      {
-                        "title": "Data Set 1",
-                        "description": "First example data set.",
-                        "location": "application/pages/spreadsheet_data_1.json"
+                        "title": "Stock Value Example 1",
+                        "description": "This example shows 4 series on yearly grid spanning 5 years.",
+                        "location": "application/data/example_data_1.json"
                      },
                      {
-                        "title": "Data Set 2",
-                        "description": "Second example data set.",
-                        "location": "application/pages/spreadsheet_data_2.json"
+                        "title": "Stock Value Example 2",
+                        "description": "This example shows 10 series on yearly grid spanning 5 years.",
+                        "location": "application/data/example_data_2.json"
 
                      },
                      {
-                        "title": "Data Set 3",
-                        "description": "Third example data set.",
-                        "location": "application/pages/spreadsheet_data_3.json"
+                        "title": "Stock Value Example 3",
+                        "description": "This example shows 4 series on yearly grid spanning 12 years.",
+                        "location": "application/data/example_data_3.json"
+                     },
+                     {
+                        "title": "Stock Value Example 4",
+                        "description": "This example shows 4 series on monthly grid spanning 60 months.",
+                        "location": "application/data/example_data_4.json"
                      }
                   ],
                   "submitButtonLabel": "Show"
