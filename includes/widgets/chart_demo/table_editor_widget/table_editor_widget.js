@@ -36,8 +36,6 @@ define( [
       model.columns = [];
       model.tableModel = [];
 
-
-      console.log( $scope.model );
       $scope.resources = {};
       patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'spreadsheet', {onUpdateReplace: updateTableModel} );
 
