@@ -1,5 +1,22 @@
-<div data-ng-repeat="dataSet in features.display.dataSets">
+<!-- Alt. 1 -->
+<!--
+<div class="margin-bottom-md" data-ng-repeat="dataSet in features.display.dataSets">
    <div class="h3">{{dataSet.title}}</div>
    <div class="small">{{dataSet.description}}</div>
    <button class="btn btn-primary btn-sm" type="button" data-ng-click="useDataSet(dataSet)">{{features.display.submitButtonLabel}}</button>
 </div>
+-->
+
+<!-- Alt. 2 -->
+<table class="table table-hover table-striped">
+   <tbody>
+   <tr class="selectable"
+       data-ng-repeat="dataSet in features.display.dataSets"
+       data-ng-class="{selected: dataSet === selectedDataSet }">
+      <td data-ng-click="useDataSet(dataSet)">
+         {{dataSet.title}}
+         <p><small>{{dataSet.description}}</small></p>
+      </td>
+   </tr>
+   </tbody>
+</table>

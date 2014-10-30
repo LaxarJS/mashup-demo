@@ -19,6 +19,8 @@ define( [
 
    function Controller( $scope, $http ) {
 
+      $scope.selectedDataSet = null;
+
       // Initially publish the resource if the location has been provided.
       $scope.eventBus.subscribe( 'beginLifecycleRequest', function() {
          var publish = $scope.features.publish;
@@ -32,6 +34,7 @@ define( [
       $scope.useDataSet = function( dataSet ) {
          var publish = $scope.features.publish;
          if( dataSet.location !== undefined ) {
+            $scope.selectedDataSet = dataSet;
             publishResource(publish.resource, dataSet.location);
          }
       };
@@ -39,18 +42,14 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function publishResource( resourceId, location ) {
-         console.log(resourceId);
-         console.log(location);
             $http.get( location )
                .success( function( data ) {
-                  console.log("SUCCESS");
                   $scope.eventBus.publish( 'didReplace.' + resourceId, {
                      resource: resourceId,
                      data: data
                   }, { deliverToSender: false } );
                } )
                .error( function(data) {
-                  console.log("ERROR: didEncounterError.HTTP_GET: " + data);
                   $scope.eventBus.publish( 'didEncounterError.HTTP_GET' );
                } );
       }
