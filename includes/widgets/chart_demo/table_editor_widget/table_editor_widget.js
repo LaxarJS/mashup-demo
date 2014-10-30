@@ -112,26 +112,24 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function updateTableModel() {
-         $scope.model.tableModel = [];
          var spreadsheet = $scope.resources.spreadsheet;
-         // Column headers
-         var colHeaders = [];
-         colHeaders.push( null );
-         spreadsheet.series.forEach( function( value, key ) {
-            colHeaders.push( value.label );
-         } );
-         $scope.model.tableModel.push( colHeaders );
 
          // Data area
-         spreadsheet.timeGrid.forEach( function( rowHeader, row ) {
-            var tableDataRow = row + 1;
-            var rowData = [];
-            rowData.push( rowHeader );
-            $scope.model.tableModel.push( rowData );
-            spreadsheet.series.forEach( function( value, col ) {
-               $scope.model.tableModel[ tableDataRow ].push( value.values[ row ] );
+         $scope.model.tableModel = spreadsheet.timeGrid.map( function( rowHeader, row ) {
+            var rowData = spreadsheet.series.map( function( value, col ) {
+               return value.values[ row ];
             } );
+            rowData.unshift( rowHeader );
+            return rowData;
          } );
+
+         // Column headers
+         var colHeaders = [];
+         colHeaders = spreadsheet.series.map( function( value ) {
+            return value.label;
+         } );
+         colHeaders.unshift( null );
+         $scope.model.tableModel.unshift( colHeaders );
       }
    }
 
