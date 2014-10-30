@@ -79,6 +79,8 @@ define( [
                }, jasmine.any( Object ) );
          } );
 
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
+
          it( 'ignores rows on which the time grid tick is removed in the didUpdate event data.', function() {
             testBed_.scope.model.tableModel[2][0] = null;
             testBed_.scope.$emit( 'axTableEditor.afterChange' );
@@ -92,6 +94,8 @@ define( [
                   patches: patch
                }, jasmine.any( Object ) );
          } );
+
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'ignores columns on which the series label is removed in the didUpdate event data.', function() {
             testBed_.scope.model.tableModel[0][2] = null;
@@ -107,6 +111,17 @@ define( [
                }, jasmine.any( Object ) );
          } );
 
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+         it( 'replaces the resource and model after receiving a new resource.', function() {
+            testBed_.eventBusMock.publish( 'didReplace.spreadsheetData', {
+               resource: 'spreadsheetData',
+               data: specData.otherResource
+            } );
+            jasmine.Clock.tick( 0 );
+            expect( testBed_.scope.resources.spreadsheet ).toEqual( specData.otherResource );
+            expect( testBed_.scope.model.tableModel ).toEqual( specData.expectedTableModelForOtherResource );
+         } );
       } );
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////

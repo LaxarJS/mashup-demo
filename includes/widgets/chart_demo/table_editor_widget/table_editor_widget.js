@@ -26,16 +26,18 @@ define( [
    function Controller( $scope ) {
 
       $scope.model = {};
-      $scope.model.settings = {
+      var model = $scope.model;
+      model.settings = {
          rowHeaders: true,
          colHeaders: true,
          contextMenu: true,
          fillHandle: true
       };
-      $scope.model.columns = [];
+      model.columns = [];
+      model.tableModel = [];
 
-      $scope.model.tableModel = [];
 
+      console.log( $scope.model );
       $scope.resources = {};
       patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'spreadsheet', {onUpdateReplace: updateTableModel} );
 
@@ -112,8 +114,8 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function updateTableModel() {
+         $scope.model.tableModel = [];
          var spreadsheet = $scope.resources.spreadsheet;
-
          // Column headers
          var colHeaders = [];
          colHeaders.push( null );
@@ -179,7 +181,7 @@ define( [
             }, true );
 
             $scope.$watch( directiveName + 'Rows', function( newRows ) {
-               $element.handsontable( 'loadData', newRows );
+                $element.handsontable( 'loadData', newRows );
             }, true );
 
             $scope.$watch( directiveName + 'Columns', function() {

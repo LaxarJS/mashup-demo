@@ -22,51 +22,15 @@ define( [
    function Controller( $scope ) {
       $scope.model = {};
       $scope.resources = {};
-      patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'display', {onUpdateReplace: convertToChartModel} );
+      patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'display', {onUpdateReplace: [ convertToChartModel, setOptionsFromResource ]} );
 
-      $scope.model.options = {
-         chart: {
-            type: 'lineChart',
-            height: 450,
-            margin: {
-               top: 20,
-               right: 20,
-               bottom: 40,
-               left: 55
-            },
-            x: function(d) {
-               return d.x;
-            },
-            y: function(d) {
-               return d.y;
-            },
-            useInteractiveGuideline: true,
-            dispatch: {
-               stateChange: function() {
-                  //ax.log.debug('stateChange');
-               },
-               changeState: function() {
-                  //ax.log.debug('changeState');
-               },
-               tooltipShow: function() {
-                  //ax.log.debug('tooltipShow');
-               },
-               tooltipHide: function() {
-                  //ax.log.debug('tooltipHide');
-               }
-            },
-            xAxis: {
-               axisLabel: 'Time'
-            },
-            yAxis: {
-               axisLabel: 'Stockvalue',
-               axisLabelDistance: 30
-            },
-            callback: function() {
-               //ax.log.debug('!!! lineChart callback !!!');
-            }
-         }
-      };
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      function setOptionsFromResource() {
+         $scope.model.options.chart.xAxis.tickValues = $scope.resources.display.timeGrid;
+         $scope.model.options.chart.xAxis.axisLabel = $scope.resources.display.timeLabel;
+         $scope.model.options.chart.yAxis.axisLabel =  $scope.resources.display.valueLabel;
+      }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -86,9 +50,42 @@ define( [
                key: timeSeries.label
             });
          } );
-         $scope.model.options.chart.xAxis.tickValues = $scope.resources.display.timeGrid;
       }
 
+      $scope.model.options = {
+         chart: {
+            type: 'lineChart',
+            height: 450,
+            margin: {
+               top: 20,
+               right: 20,
+               bottom: 40,
+               left: 55
+            },
+            useInteractiveGuideline: true,
+            dispatch: {
+               stateChange: function() {
+                  //ax.log.debug('stateChange');
+               },
+               changeState: function() {
+                  //ax.log.debug('changeState');
+               },
+               tooltipShow: function() {
+                  //ax.log.debug('tooltipShow');
+               },
+               tooltipHide: function() {
+                  //ax.log.debug('tooltipHide');
+               }
+            },
+            xAxis: {},
+            yAxis: {
+               axisLabelDistance: 30
+            },
+            callback: function() {
+               //ax.log.debug('!!! lineChart callback !!!');
+            }
+         }
+      };
 
    }
 

@@ -87,7 +87,8 @@
             "widget": "chart_demo/chart_widget",
             "features": {
                "display": {
-                  "resource": "spreadsheetData"
+                  "resource": "spreadsheetData",
+                  "chart": {}
                }
             }
          }

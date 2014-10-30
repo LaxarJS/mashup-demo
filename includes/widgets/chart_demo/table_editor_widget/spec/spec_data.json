@@ -74,5 +74,30 @@
             ]
          }
       ]
-   }
+   },
+   "otherResource": {
+      "timeLabel": "The Nineties",
+      "valueLabel": "Stock Exchange Value",
+      "timeGrid": [ "1990", "1991", "1992" ],
+      "series": [
+         {
+            "label": "Company A",
+            "values": [
+               1, 2, 3
+            ]
+         },
+         {
+            "label": "Company B",
+            "values": [
+               2, 3, 2
+            ]
+         }
+      ]
+   },
+   "expectedTableModelForOtherResource": [
+      [ null, "Company A", "Company B" ],
+      [ "1990", 1, 2 ],
+      [ "1991", 2, 3 ],
+      [ "1992", 3, 2 ]
+   ]
 }
