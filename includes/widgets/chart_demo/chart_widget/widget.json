@@ -18,7 +18,7 @@
          "display": {
             "type": "object",
             "description": "Provide the data to display in another widget.",
-            "required": [ "resource" ],
+            "required": [ "resource", "chart" ],
             "properties": {
                "resource": {
                   "type": "string",
