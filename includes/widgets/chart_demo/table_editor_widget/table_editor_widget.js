@@ -111,6 +111,44 @@ define( [
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//      function getSpreadsheetFromTableModel() {
+//         var tableModel = $scope.model.tableModel;
+//
+//         // Clone original resource to keep attributes that cannot be reproduced by the table model.
+//         var spreadsheet = ax.object.deepClone( $scope.resources.spreadsheet );
+//
+//         var firstColumn = 0;
+//         spreadsheet.timeGrid = tableModel.map( function( row ) {
+//            return row[ firstColumn ];
+//         } );
+//         spreadsheet.timeGrid = spreadsheet.timeGrid.filter( function( timeTick ) {
+//            return timeTick !== null && timeTick !== '';
+//         } );
+//
+//         var firstRow = 0;
+//         spreadsheet.series = tableModel[ firstRow ].map( function( columnLabel ) {
+//            return {
+//               label: columnLabel
+//            };
+//         } );
+//         spreadsheet.series.forEach( function( timeSeries, timeSeriesKey ) {
+//            var columnOfTimeSeries = timeSeriesKey;
+//            timeSeries.values = tableModel.map( function( row ) {
+//               return row[ columnOfTimeSeries ];
+//            } );
+//            timeSeries.values = timeSeries.values.filter( function( value, key ) {
+//               return tableModel[ key ][ 0 ] !== null && tableModel[ key ][ 0 ] !== '';
+//            } );
+//         } );
+//         spreadsheet.series = spreadsheet.series.filter( function( timeSeries ) {
+//            return timeSeries.label !== null && timeSeries.label !== '';
+//         } );
+//
+//         return spreadsheet;
+//      }
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
       function updateTableModel() {
          var spreadsheet = $scope.resources.spreadsheet;
 

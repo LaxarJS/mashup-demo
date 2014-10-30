@@ -5,8 +5,8 @@
  */
 @charset "UTF-8";
 
-@import "variables_all";
 
 .table-editor-widget {
    overflow-x: auto;
+   overflow-y: hidden;
 }
