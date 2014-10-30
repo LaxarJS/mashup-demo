@@ -1,0 +1,68 @@
+{
+   "name": "DataProviderWidget",
+   "description": "Widget that provides other widgets with data.",
+   "version": {
+      "spec": "0.1.0"
+   },
+
+   "integration": {
+      "type": "angular"
+   },
+
+   "features": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [ "publish" ],
+      "properties": {
+
+         "publish": {
+            "type": "object",
+            "required": [ "resource" ],
+            "properties": {
+               "resource": {
+                  "type": "string",
+                  "description": "ID of resource to publish."
+               },
+               "location": {
+                  "type": "string",
+                  "description": "URL to load the resource from on beginLifecycleRequest, which is then published using didReplace."
+               }
+            }
+         },
+
+         "display": {
+            "type": "object",
+            "properties": {
+               "dataSets": {
+                  "type": "array",
+                  "description": "An array of data sets of which a user can choose one to be published.",
+                  "default": [],
+                  "items": {
+                     "type": "object",
+                     "properties": {
+                        "title": {
+                           "type": "string",
+                           "description": "Title of the data set."
+                        },
+                        "description": {
+                           "type": "string",
+                           "description": "Short description of the data set that is displayed below the title."
+                        },
+                        "location": {
+                           "type": "string",
+                           "description": "URL to load the resource from when the submit button is pressed."
+                        }
+                     }
+                  }
+               },
+               "submitButtonLabel": {
+                  "type": "string",
+                  "description": "Label for the button that triggers the didReplace event for each data set.",
+                  "default": "Submit"
+               }
+
+            }
+         }
+      }
+   }
+}
