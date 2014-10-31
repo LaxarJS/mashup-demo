@@ -86,7 +86,31 @@
             "features": {
                "display": {
                   "resource": "spreadsheetData",
-                  "chart": {}
+                  "chart": {
+                     "type": "pieChart"
+                  }
+               }
+            }
+         },
+         {
+            "widget": "chart_demo/chart_widget",
+            "features": {
+               "display": {
+                  "resource": "spreadsheetData",
+                  "chart": {
+                     "type": "multiBarChart"
+                  }
+               }
+            }
+         },
+         {
+            "widget": "chart_demo/chart_widget",
+            "features": {
+               "display": {
+                  "resource": "spreadsheetData",
+                  "chart": {
+
+                  }
                }
             }
          }
