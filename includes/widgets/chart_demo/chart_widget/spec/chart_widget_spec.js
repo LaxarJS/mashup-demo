@@ -82,7 +82,7 @@ define( [
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         it( 'replaces the resource and model after receiving a new resource.', function() {
+         it( 'replaces the resource and model after receiving a new resource', function() {
             testBed_.eventBusMock.publish( 'didReplace.spreadsheetData', {
                resource: 'spreadsheetData',
                data: specData.otherResource

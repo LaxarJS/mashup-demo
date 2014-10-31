@@ -6,9 +6,9 @@
 ( function( global ) {
    'use strict';
    global.laxarSpec = {
-      title: 'TableEditorWidget Specification',
+      title: 'DataProviderWidget Specification',
       tests: [
-         'table_editor_widget_spec'
+         'data_provider_widget_spec'
       ]
    };
 } )( this );

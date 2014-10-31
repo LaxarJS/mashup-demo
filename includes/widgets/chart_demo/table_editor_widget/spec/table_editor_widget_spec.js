@@ -58,13 +58,13 @@ define( [
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         it( 'shows the published resource as the data model of the table.', function() {
+         it( 'shows the published resource as the data model of the table', function() {
             expect( testBed_.scope.model.tableModel ).toEqual( specData.expectedTableModel );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         it( 'publishes a didUpdate event after the user changed a data value.', function() {
+         it( 'publishes a didUpdate event after the user changed a data value', function() {
             testBed_.scope.model.tableModel[1][1] = 11;
             testBed_.scope.$emit( 'axTableEditor.afterChange' );
 
@@ -81,7 +81,7 @@ define( [
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         it( 'ignores rows on which the time grid tick is removed in the didUpdate event data.', function() {
+         it( 'ignores rows on which the time grid tick is removed in the didUpdate event data', function() {
             testBed_.scope.model.tableModel[2][0] = null;
             testBed_.scope.$emit( 'axTableEditor.afterChange' );
 
@@ -97,7 +97,7 @@ define( [
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         it( 'ignores columns on which the series label is removed in the didUpdate event data.', function() {
+         it( 'ignores columns on which the series label is removed in the didUpdate event data', function() {
             testBed_.scope.model.tableModel[0][2] = null;
             testBed_.scope.$emit( 'axTableEditor.afterChange' );
 
@@ -113,7 +113,7 @@ define( [
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         it( 'replaces the resource and model after receiving a new resource.', function() {
+         it( 'replaces the resource and model after receiving a new resource', function() {
             testBed_.eventBusMock.publish( 'didReplace.spreadsheetData', {
                resource: 'spreadsheetData',
                data: specData.otherResource

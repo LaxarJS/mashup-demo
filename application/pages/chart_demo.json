@@ -3,30 +3,6 @@
 
    "areas": {
 
-      "activities": [
-         {
-            "widget": "development/dummy_data_activity",
-            "features": {
-               "resources": [
-                  {
-                     "resource": "spreadsheetData",
-                     "location": "application/pages/spreadsheet_data_1.json"
-                  }
-               ],
-               "actions": {
-                  "spreadsheet1": {
-                     "resource": "spreadsheetData",
-                     "location": "application/pages/spreadsheet_data_1.json"
-                  },
-                  "spreadsheet2": {
-                     "resource": "spreadsheetData",
-                     "location": "application/pages/spreadsheet_data_2.json"
-                  }
-               }
-            }
-         }
-      ],
-
       "header": [
          {
             "widget": "chart_demo/headline_widget",
@@ -49,26 +25,48 @@
             }
          },
          {
+            "widget": "chart_demo/data_provider_widget",
+            "features": {
+
+               "publish": {
+                  "resource": "spreadsheetData",
+                  "location": "application/data/example_data_1.json"
+               },
+
+               "display": {
+                  "dataSets": [
+                     {
+                        "title": "Stock Value Example 1",
+                        "description": "This example shows 4 series on yearly grid spanning 5 years.",
+                        "location": "application/data/example_data_1.json"
+                     },
+                     {
+                        "title": "Stock Value Example 2",
+                        "description": "This example shows 10 series on yearly grid spanning 5 years.",
+                        "location": "application/data/example_data_2.json"
+
+                     },
+                     {
+                        "title": "Stock Value Example 3",
+                        "description": "This example shows 4 series on yearly grid spanning 12 years.",
+                        "location": "application/data/example_data_3.json"
+                     },
+                     {
+                        "title": "Stock Value Example 4",
+                        "description": "This example shows 4 series on monthly grid spanning 60 months.",
+                        "location": "application/data/example_data_4.json"
+                     }
+                  ],
+                  "submitButtonLabel": "Show"
+               }
+            }
+         },
+         {
             "widget": "chart_demo/table_editor_widget",
             "features": {
                "spreadsheet": {
                   "resource": "spreadsheetData"
                }
-            }
-         },
-         {
-            "widget": "portal/command_bar_widget",
-            "features": {
-               "buttons": [
-                  {
-                     "action": "spreadsheet1",
-                     "i18nHtmlLabel": "Data 1"
-                  },
-                  {
-                     "action": "spreadsheet2",
-                     "i18nHtmlLabel": "Data 2"
-                  }
-               ]
             }
          }
       ],
