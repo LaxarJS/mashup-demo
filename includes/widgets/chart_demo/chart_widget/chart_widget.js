@@ -17,76 +17,83 @@ define( [
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+   // Chart Styling
+
+   var MARGIN_TOP = 20;
+   var MARGIN_RIGHT = 20;
+   var MARGIN_BOTTOM = 40;
+   var MARGIN_LEFT = 55;
+   var Y_AXIS_LABEL_DISTANCE = 30;
+
+   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
    Controller.$inject = [ '$scope' ];
 
    function Controller( $scope ) {
       $scope.model = {};
       $scope.resources = {};
-      patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'display', {onUpdateReplace: [ convertToChartModel, setOptionsFromResource ]} );
+      var model = $scope.model;
+      var resources = $scope.resources;
+      var features = $scope.features;
 
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+      patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'display',
+         { onUpdateReplace: [ convertToChartModel, setOptionsFromResource ] } );
 
-      function setOptionsFromResource() {
-         $scope.model.options.chart.xAxis.tickValues = $scope.resources.display.timeGrid;
-         $scope.model.options.chart.xAxis.axisLabel = $scope.resources.display.timeLabel;
-         $scope.model.options.chart.yAxis.axisLabel =  $scope.resources.display.valueLabel;
-      }
+      setOptions();
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function convertToChartModel() {
-         $scope.model.data = [];
-         $scope.resources.display.series.forEach( function( timeSeries, key ){
+         model.data = [];
+         resources.display.series.forEach( function( seriesObject, key ) {
             var values= [];
-            timeSeries.values.forEach( function( x, yKey ) {
+            seriesObject.values.forEach( function( value, timeTickKey ) {
                values.push( {
-                  x: $scope.resources.display.timeGrid[ yKey ],
-                  y: x
+                  x: resources.display.timeGrid[ timeTickKey ],
+                  y: value
                } );
             } );
 
-            $scope.model.data.push({
+            model.data.push( {
                values: values,
-               key: timeSeries.label
-            });
+               key: seriesObject.label
+            } );
          } );
       }
 
-      $scope.model.options = {
-         chart: {
-            type: 'lineChart',
-            height: 450,
-            margin: {
-               top: 20,
-               right: 20,
-               bottom: 40,
-               left: 55
-            },
-            useInteractiveGuideline: true,
-            dispatch: {
-               stateChange: function() {
-                  //ax.log.debug('stateChange');
-               },
-               changeState: function() {
-                  //ax.log.debug('changeState');
-               },
-               tooltipShow: function() {
-                  //ax.log.debug('tooltipShow');
-               },
-               tooltipHide: function() {
-                  //ax.log.debug('tooltipHide');
-               }
-            },
-            xAxis: {},
-            yAxis: {
-               axisLabelDistance: 30
-            },
-            callback: function() {
-               //ax.log.debug('!!! lineChart callback !!!');
-            }
-         }
-      };
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+      function setOptionsFromResource() {
+         model.options.chart.xAxis.tickValues = resources.display.timeGrid;
+         model.options.chart.xAxis.axisLabel = resources.display.timeLabel;
+         model.options.chart.yAxis.axisLabel =  resources.display.valueLabel;
+      }
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      function setOptions() {
+         model.options = {
+            chart: {
+               type: 'lineChart',
+               margin: {
+                  top: MARGIN_TOP,
+                  right: MARGIN_RIGHT,
+                  bottom: MARGIN_BOTTOM,
+                  left: MARGIN_LEFT
+               },
+               useInteractiveGuideline: true,
+               xAxis: {
+               },
+               yAxis: {
+                  axisLabelDistance: Y_AXIS_LABEL_DISTANCE
+               },
+               callback: function() {
+                  //ax.log.debug('!!! lineChart callback !!!');
+               }
+            }
+         };
+         model.options.chart.height = features.display.chart.height;
+      }
    }
 
    module.controller( moduleName + '.Controller', Controller );

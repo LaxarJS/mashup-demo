@@ -26,15 +26,15 @@ define( [
    function Controller( $scope ) {
 
       $scope.model = {};
-      var model = $scope.model;
-      model.settings = {
+
+      $scope.model.settings = {
          rowHeaders: true,
          colHeaders: true,
          contextMenu: true,
          fillHandle: true
       };
-      model.columns = [];
-      model.tableModel = [];
+      $scope.model.columns = [];
+      $scope.model.tableModel = [];
 
       $scope.resources = {};
       patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'spreadsheet', {onUpdateReplace: updateTableModel} );
@@ -111,27 +111,63 @@ define( [
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//      function getSpreadsheetFromTableModel() {
+//         var tableModel = $scope.model.tableModel;
+//
+//         // Clone original resource to keep attributes that cannot be reproduced by the table model.
+//         var spreadsheet = ax.object.deepClone( $scope.resources.spreadsheet );
+//
+//         var firstColumn = 0;
+//         spreadsheet.timeGrid = tableModel.map( function( row ) {
+//            return row[ firstColumn ];
+//         } );
+//         spreadsheet.timeGrid = spreadsheet.timeGrid.filter( function( timeTick ) {
+//            return timeTick !== null && timeTick !== '';
+//         } );
+//
+//         var firstRow = 0;
+//         spreadsheet.series = tableModel[ firstRow ].map( function( columnLabel ) {
+//            return {
+//               label: columnLabel
+//            };
+//         } );
+//         spreadsheet.series.forEach( function( timeSeries, timeSeriesKey ) {
+//            var columnOfTimeSeries = timeSeriesKey;
+//            timeSeries.values = tableModel.map( function( row ) {
+//               return row[ columnOfTimeSeries ];
+//            } );
+//            timeSeries.values = timeSeries.values.filter( function( value, key ) {
+//               return tableModel[ key ][ 0 ] !== null && tableModel[ key ][ 0 ] !== '';
+//            } );
+//         } );
+//         spreadsheet.series = spreadsheet.series.filter( function( timeSeries ) {
+//            return timeSeries.label !== null && timeSeries.label !== '';
+//         } );
+//
+//         return spreadsheet;
+//      }
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
       function updateTableModel() {
-         $scope.model.tableModel = [];
          var spreadsheet = $scope.resources.spreadsheet;
-         // Column headers
-         var colHeaders = [];
-         colHeaders.push( null );
-         spreadsheet.series.forEach( function( value, key ) {
-            colHeaders.push( value.label );
-         } );
-         $scope.model.tableModel.push( colHeaders );
 
          // Data area
-         spreadsheet.timeGrid.forEach( function( rowHeader, row ) {
-            var tableDataRow = row + 1;
-            var rowData = [];
-            rowData.push( rowHeader );
-            $scope.model.tableModel.push( rowData );
-            spreadsheet.series.forEach( function( value, col ) {
-               $scope.model.tableModel[ tableDataRow ].push( value.values[ row ] );
+         $scope.model.tableModel = spreadsheet.timeGrid.map( function( rowHeader, row ) {
+            var rowData = spreadsheet.series.map( function( value, col ) {
+               return value.values[ row ];
             } );
+            rowData.unshift( rowHeader );
+            return rowData;
          } );
+
+         // Column headers
+         var colHeaders = [];
+         colHeaders = spreadsheet.series.map( function( value ) {
+            return value.label;
+         } );
+         colHeaders.unshift( null );
+         $scope.model.tableModel.unshift( colHeaders );
       }
    }
 

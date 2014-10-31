@@ -3,7 +3,10 @@
  * Released under the MIT license.
  * www.laxarjs.org
  */
+@charset "UTF-8";
+
 
 .table-editor-widget {
    overflow-x: auto;
+   overflow-y: hidden;
 }

@@ -1,0 +1,147 @@
+{
+   "originalResource": {
+      "timeLabel": "Time",
+      "valueLabel": "Stock Value",
+      "timeGrid": ["2011", "2012", "2013", "2014"],
+      "series": [
+         {
+            "label": "Company A",
+            "values": [
+               1, 2, 3, 4
+            ]
+         },
+         {
+            "label": "Company B",
+            "values": [
+               1.0000001, 2.0000002, 3.0000003, 4.0000004
+            ]
+         },
+         {
+            "label": "Company C",
+            "values": [
+               1000000.1, 1000000.2, 1000000.3, 1000000.4
+            ]
+         }
+      ]
+   },
+   "expectedChartModel": [
+      {
+         "values": [
+            {
+               "x": "2011",
+               "y": 1
+            },
+            {
+               "x": "2012",
+               "y": 2
+            },
+            {
+               "x": "2013",
+               "y": 3
+            },
+            {
+               "x": "2014",
+               "y": 4
+            }
+         ],
+         "key": "Company A"
+      },
+      {
+         "values": [
+            {
+               "x": "2011",
+               "y": 1.0000001
+            },
+            {
+               "x": "2012",
+               "y": 2.0000002
+            },
+            {
+               "x": "2013",
+               "y": 3.0000003
+            },
+            {
+               "x": "2014",
+               "y": 4.0000004
+            }
+         ],
+         "key": "Company B"
+      },
+      {
+         "values": [
+            {
+               "x": "2011",
+               "y": 1000000.1
+            },
+            {
+               "x": "2012",
+               "y": 1000000.2
+            },
+            {
+               "x": "2013",
+               "y": 1000000.3
+            },
+            {
+               "x": "2014",
+               "y": 1000000.4
+            }
+         ],
+         "key": "Company C"
+      }
+   ],
+   "otherResource": {
+      "timeLabel": "The Nineties",
+      "valueLabel": "Stock Exchange Value",
+      "timeGrid": [ "1990", "1991", "1992" ],
+      "series": [
+         {
+            "label": "Company A",
+            "values": [
+               1, 2, 3
+            ]
+         },
+         {
+            "label": "Company B",
+            "values": [
+               2, 3, 2
+            ]
+         }
+      ]
+   },
+   "expectedChartModelForOtherResource": [
+      {
+         "values": [
+            {
+               "x": "1990",
+               "y": 1
+            },
+            {
+               "x": "1991",
+               "y": 2
+            },
+            {
+               "x": "1992",
+               "y": 3
+            }
+         ],
+         "key": "Company A"
+      },
+      {
+         "values": [
+            {
+               "x": "1990",
+               "y": 2
+            },
+            {
+               "x": "1991",
+               "y": 3
+            },
+            {
+               "x": "1992",
+               "y": 2
+            }
+         ],
+         "key": "Company B"
+      }
+   ]
+}
