@@ -25,6 +25,12 @@
                   "description": "Name of the data resource",
                   "format": "topic"
                },
+               "title": {
+                  "type": "string"
+               },
+               "caption": {
+                  "type": "string"
+               },
                "chart": {
                   "type": "object",
                   "description": "Set options for the chart representation.",
@@ -35,7 +41,7 @@
                      },
                      "height": {
                         "type": "number",
-                        "default": 250
+                        "default": 260
                      }
                   }
                }

@@ -26,6 +26,8 @@ define( [
    var TRANSITION_DURATION = 250;
    var Y_AXIS_LABEL_DISTANCE = 30;
 
+   var FORCE_Y = 0;
+
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    Controller.$inject = [ '$scope' ];
@@ -102,7 +104,7 @@ define( [
             var values= [];
             seriesObject.values.forEach( function( value, timeTickKey ) {
                values.push( {
-                  x: resources.display.timeGrid[ timeTickKey ],
+                  x: new Date( resources.display.timeGrid[ timeTickKey ] ),
                   y: value
                } );
             } );
@@ -127,6 +129,10 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function setOptionsFromResource() {
+         model.options.chart.xAxis.tickFormat = function( d ) {
+            return d3.time.format( '%Y-%m-%d' )( new Date( d ) );
+            //return d3.time.format( '%x' )( new Date( d ) );
+         };
          model.options.chart.xAxis.axisLabel = resources.display.timeLabel;
          model.options.chart.yAxis.axisLabel =  resources.display.valueLabel;
          if( $scope.api ) {
@@ -152,10 +158,23 @@ define( [
                },
                yAxis: {
                   axisLabelDistance: Y_AXIS_LABEL_DISTANCE
-               }
+               },
+               forceY: [ FORCE_Y ]
             }
          };
          model.options.chart.height = features.display.chart.height;
+         if( features.display.title ) {
+            model.options.title = {
+               enable: true,
+               text: features.display.title
+            };
+         }
+         if( features.display.caption ) {
+            model.options.caption = {
+               enable: true,
+               text: features.display.caption
+            };
+         }
       }
    }
 

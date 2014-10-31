@@ -160,8 +160,6 @@ define( [
             var rowData = spreadsheet.series.map( function( value, col ) {
                return value.values[ row ];
             } );
-            //var d = new Date(rowHeader);
-            console.log(rowHeader);
             rowData.unshift( rowHeader );
             return rowData;
          } );
@@ -178,9 +176,7 @@ define( [
            type: 'date',
            dateFormat: 'yy-mm-dd'
          } );
-         console.log("TableModel: ");
-         console.log($scope.model.tableModel);
-      };
+      }
    }
 
    module.controller( moduleName + '.Controller', Controller );

@@ -78,22 +78,13 @@
 
       "content1b": [
          {
-            "widget": "chart_demo/headline_widget",
-            "features": {
-               "headline": {
-                  "htmlText": "Spreadsheet Data",
-                  "level": 2
-               }
-            }
-         },
-         {
             "widget": "chart_demo/chart_widget",
             "features": {
                "display": {
                   "resource": "spreadsheetData",
                   "chart": {
-
-                  }
+                  },
+                  "title": "Line Chart"
                }
             }
          },
@@ -104,7 +95,9 @@
                   "resource": "spreadsheetData",
                   "chart": {
                      "type": "pieChart"
-                  }
+                  },
+                  "title": "Pie Chart",
+                  "caption": "The average of all values of the time series."
                }
             }
          },
@@ -115,7 +108,8 @@
                   "resource": "spreadsheetData",
                   "chart": {
                      "type": "multiBarChart"
-                  }
+                  },
+                  "title": "Multi Bar Chart"
                }
             }
          }
