@@ -5,8 +5,6 @@
  */
 @charset "UTF-8";
 
-@import "variables_all";
-
 .chart-widget {
   margin-bottom: 40px;
 }
