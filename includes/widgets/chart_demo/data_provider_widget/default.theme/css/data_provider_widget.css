@@ -1,0 +1,27 @@
+/**
+ * Copyright 2014 LaxarJS
+ * Released under the MIT license.
+ * www.laxarjs.org
+ */
+
+.data-provider-widget {
+   position: relative;
+}
+
+.data-provider-widget tbody > tr.selected > td {
+   color: white;
+   background: #5bc0de;
+}
+
+.data-provider-widget .table-hover > tbody > tr:hover > td {
+   background-color: #b5deea;
+   color: #037a9d;
+}
+
+.data-provider-widget .selectable {
+   cursor: pointer;
+}
+
+.data-provider-widget .clickable {
+   cursor: auto;
+}
