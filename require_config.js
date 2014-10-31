@@ -118,7 +118,6 @@ var require = {
       // LaxarJS Core Legacy:
       text: 'requirejs-plugins/lib/text',
       json: 'requirejs-plugins/src/json',
-      css: 'require-css/css',
 
       // LaxarJS Patterns:
       'json-patch': 'fast-json-patch/src/json-patch-duplex',
@@ -146,5 +145,10 @@ var require = {
       'handsontable': 'handsontable/dist/jquery.handsontable.full',
 
       portal_angular_dependencies: '../var/static/portal_angular_dependencies'
+   },
+   map: {
+      '*': {
+         'css': 'require-css/css' // or whatever the path to require-css is
+      }
    }
 };
