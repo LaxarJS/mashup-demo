@@ -97,8 +97,7 @@ module.exports = function( grunt ) {
             options: {
                mainConfigFile: 'require_config.js',
                name: '../init',
-               out: 'var/build/optimized_init.js',
-               optimize: 'none' //TODO Uglifier funktioniert nicht. Aber so ist das nicht der Sinn der Sache.
+               out: 'var/build/optimized_init.js'
             }
          }
       },

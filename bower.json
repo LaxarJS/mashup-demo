@@ -10,9 +10,9 @@
     "laxar_uikit": "LaxarJS/laxar_uikit#0.16",
     "laxar_patterns": "LaxarJS/laxar_patterns#0.16",
     "require-css": "#0.1.x",
-     "handsontable": "#0.11.4",
-     "nvd3": "~v1.1.15-beta",
-     "angular-nvd3": "0.0.9"
+    "handsontable": "#0.11.4",
+    "nvd3": "~v1.1.15-beta",
+    "angular-nvd3": "0.0.9"
   },
   "devDependencies": {
     "es5-shim": "2.3.x",
