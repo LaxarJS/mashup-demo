@@ -23,6 +23,7 @@ define( [
    var MARGIN_RIGHT = 20;
    var MARGIN_BOTTOM = 40;
    var MARGIN_LEFT = 55;
+   var TRANSITION_DURATION = 250;
    var Y_AXIS_LABEL_DISTANCE = 30;
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,70 +37,81 @@ define( [
       var resources = $scope.resources;
       var features = $scope.features;
 
-      patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'display', {
+      var resourceHandler = patterns.resources.handlerFor( $scope );
+
+      if( features.display.chart.type === 'pieChart' ) {
+         resourceHandler.registerResourceFromFeature( 'display', {
+            onReplace: [ updatePie, setOptionsFromResource ],
+            onUpdate: [ updatePie ]
+         } );
+      }
+      else {
+         resourceHandler.registerResourceFromFeature( 'display', {
             onReplace: [ convertToChartModel, setOptionsFromResource ],
-            onUpdate: [ applyPatches ]} );
+            onUpdate: [ applyPatches ]
+         } );
+      }
 
       setOptions();
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+      function updatePie() {
+         var data = model.data = model.data || [];
+         data.splice.apply( data, [ 0, data.length ].concat( resources.display.series.map( function( ts ) {
+            return {
+               x: ts.label,
+               y: calculateAverageValue( ts.values )
+            };
+         } ) ) );
+      }
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      function isIncremental( patches ) {
+         return patches.every( function( patch ) {
+            return patch.op === 'replace' && patch.path.indexOf( '/series/' ) === 0;
+         } );
+      }
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
       function applyPatches( event ) {
-         if( features.display.chart.type === 'pieChart' ) {
-            convertToChartModel();
-            setOptionsFromResource();
-         }
-         else {
+         if( isIncremental( event.patches ) ) {
             event.patches.forEach( function ( patch ) {
-               if( patch.op !== 'replace' ) {
-                  return;
-               }
-               var keys = patch.path.split( '/' ).slice( 1 );
-               if( keys[ 0 ] === 'series' ) {
-                  var seriesKey = keys[ 1 ];
-                  var timetick = keys[ 3 ];
-                  model.data[ seriesKey ].values[ timetick ].y = patch.value;
-               }
-               else if( keys[ 0 ] === 'timeLabel' ) {
-                  model.options.chart.xAxis.axisLabel = patch.value;
-               }
-               else if( keys[ 0 ] === 'valueLabel' ) {
-                  model.options.chart.yAxis.axisLabel = patch.value;
+               var path = patch.path.split( '/' ).slice( 1 );
+               if( path[ 0 ] === 'series' ) {
+                  var seriesKey = path[ 1 ];
+                  var valueKey = path[ 3 ];
+                  model.data[ seriesKey ].values[ valueKey ].y = patch.value;
                }
             } );
+         }
+         else {
+            convertToChartModel();
+            setOptionsFromResource();
          }
       }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function convertToChartModel() {
-         if( features.display.chart.type === 'pieChart' ) {
-            model.data = resources.display.series.map( function( seriesObject ) {
-               var averageValue = calculateAverageValue( seriesObject.values );
-               var obj = {
-                  x: seriesObject.label,
-                  y: averageValue
-               };
-               return obj;
-            } );
-         }
-         else {
-            model.data = [];
-            resources.display.series.forEach( function( seriesObject, key ) {
-               var values= [];
-               seriesObject.values.forEach( function( value, timeTickKey ) {
-                  values.push( {
-                     x: resources.display.timeGrid[ timeTickKey ],
-                     y: value
-                  } );
+         var data = model.data = model.data || [];
+         data.splice( 0, data.length );
+         resources.display.series.forEach( function( seriesObject, key ) {
+            var values= [];
+            seriesObject.values.forEach( function( value, timeTickKey ) {
+               values.push( {
+                  x: resources.display.timeGrid[ timeTickKey ],
+                  y: value
                } );
+            } );
 
-               model.data.push( {
-                  values: values,
-                  key: seriesObject.label
-               } );
+            data.push( {
+               values: values,
+               key: seriesObject.label
             } );
-         }
+         } );
       }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -117,6 +129,9 @@ define( [
       function setOptionsFromResource() {
          model.options.chart.xAxis.axisLabel = resources.display.timeLabel;
          model.options.chart.yAxis.axisLabel =  resources.display.valueLabel;
+         if( $scope.api ) {
+            $scope.api.updateWithOptions( model.options );
+         }
       }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,14 +147,11 @@ define( [
                   left: MARGIN_LEFT
                },
                useInteractiveGuideline: true,
-               transitionDuration: 250,
+               transitionDuration: TRANSITION_DURATION,
                xAxis: {
                },
                yAxis: {
                   axisLabelDistance: Y_AXIS_LABEL_DISTANCE
-               },
-               callback: function() {
-                  //ax.log.debug('!!! lineChart callback !!!');
                }
             }
          };
