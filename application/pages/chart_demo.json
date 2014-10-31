@@ -30,31 +30,36 @@
 
                "publish": {
                   "resource": "spreadsheetData",
-                  "location": "application/data/example_data_1.json"
+                  "location": "application/data/stock_price_example_1.json"
                },
 
                "display": {
                   "dataSets": [
                      {
-                        "title": "Stock Value Example 1",
-                        "description": "This example shows 4 series on yearly grid spanning 5 years.",
-                        "location": "application/data/example_data_1.json"
+                        "title": "Stock Price Example 1",
+                        "description": "This example shows 4 series on a grid spanning 5 years.",
+                        "location": "application/data/stock_price_example_1.json"
                      },
                      {
-                        "title": "Stock Value Example 2",
-                        "description": "This example shows 10 series on yearly grid spanning 5 years.",
-                        "location": "application/data/example_data_2.json"
+                        "title": "Stock Price Example 2",
+                        "description": "This example shows 10 series on a grid spanning 5 years.",
+                        "location": "application/data/stock_price_example_2.json"
 
                      },
                      {
-                        "title": "Stock Value Example 3",
-                        "description": "This example shows 4 series on yearly grid spanning 12 years.",
-                        "location": "application/data/example_data_3.json"
+                        "title": "Stock Price Example 3",
+                        "description": "This example shows 4 series on a grid spanning 12 years.",
+                        "location": "application/data/stock_price_example_3.json"
                      },
                      {
-                        "title": "Stock Value Example 4",
-                        "description": "This example shows 4 series on monthly grid spanning 60 months.",
-                        "location": "application/data/example_data_4.json"
+                        "title": "Stock Price Example 4",
+                        "description": "This example shows 4 series on a grid spanning 12 years.",
+                        "location": "application/data/stock_price_example_4.json"
+                     },
+                     {
+                        "title": "Stock Price Example 5",
+                        "description": "This example shows 4 series on a grid spanning 50 years.",
+                        "location": "application/data/stock_price_example_5.json"
                      }
                   ],
                   "submitButtonLabel": "Show"
