@@ -86,7 +86,7 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function setOptionsFromResource() {
-         model.options.chart.xAxis.tickValues = resources.display.timeGrid;
+         //model.options.chart.xAxis.tickValues = resources.display.timeGrid;
          model.options.chart.xAxis.axisLabel = resources.display.timeLabel;
          model.options.chart.yAxis.axisLabel =  resources.display.valueLabel;
       }
