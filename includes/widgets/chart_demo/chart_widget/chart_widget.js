@@ -44,21 +44,43 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function convertToChartModel() {
-         model.data = [];
-         resources.display.series.forEach( function( seriesObject, key ) {
-            var values= [];
-            seriesObject.values.forEach( function( value, timeTickKey ) {
-               values.push( {
-                  x: resources.display.timeGrid[ timeTickKey ],
-                  y: value
+         if( features.display.chart.type === 'pieChart' ) {
+            model.data = resources.display.series.map( function( seriesObject ) {
+               var averageValue = calculateAverageValue( seriesObject.values );
+               var obj = {
+                  x: seriesObject.label,
+                  y: averageValue
+               };
+               return obj;
+            } );
+         }
+         else {
+            model.data = [];
+            resources.display.series.forEach( function( seriesObject, key ) {
+               var values= [];
+               seriesObject.values.forEach( function( value, timeTickKey ) {
+                  values.push( {
+                     x: resources.display.timeGrid[ timeTickKey ],
+                     y: value
+                  } );
+               } );
+
+               model.data.push( {
+                  values: values,
+                  key: seriesObject.label
                } );
             } );
+         }
+      }
 
-            model.data.push( {
-               values: values,
-               key: seriesObject.label
-            } );
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      function calculateAverageValue( values ){
+         var sum = 0;
+         values.forEach( function( value ) {
+            sum = sum + value;
          } );
+         return Math.round( sum * 10 / values.length ) / 10;
       }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,7 +96,7 @@ define( [
       function setOptions() {
          model.options = {
             chart: {
-               type: 'lineChart',
+               type: features.display.chart.type,
                margin: {
                   top: MARGIN_TOP,
                   right: MARGIN_RIGHT,
@@ -93,6 +115,9 @@ define( [
             }
          };
          model.options.chart.height = features.display.chart.height;
+         if(  features.display.chart.type === 'pieChart' ) {
+            model.options.chart.pie = {};
+         }
       }
    }
 

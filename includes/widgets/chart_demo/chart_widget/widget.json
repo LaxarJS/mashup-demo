@@ -29,9 +29,13 @@
                   "type": "object",
                   "description": "Set options for the chart representation.",
                   "properties": {
+                     "type": {
+                        "type": "string",
+                        "default": "lineChart"
+                     },
                      "height": {
                         "type": "number",
-                        "default": 450
+                        "default": 250
                      }
                   }
                }
