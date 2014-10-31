@@ -27,20 +27,10 @@ define( [
 
       $scope.model = {};
 
-      var dateRenderer = function (instance, td, row, col, prop, value, cellProperties) {
-         //FIXME Do the content modification here. Is this legal?
-         value = formatDate(new Date(value)); // Value must conform to RFC 2822 or ISO 8601.
-         Handsontable.DateCell.renderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
-      };
-
-      function formatDate( date ) {
-         var dd = date.getDate();
-         dd = '' + (dd < 10 ? '0' : '') + dd;
-         var mm = date.getMonth() + 1;
-         mm = '' + (mm < 10 ? '0' : '') + mm;
-         var yyyy = date.getFullYear();
-         return (dd + '.' + mm + '.' + yyyy);
-      }
+      //FIXME: Content modification by callback legal here?
+      //var dateRenderer = function (instance, td, row, col, prop, value, cellProperties) {
+      //   Handsontable.DateCell.renderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
+      //};
 
       $scope.model.settings = {
          rowHeaders: true,
@@ -51,9 +41,9 @@ define( [
             if (row > 0 && col === 0) {
                return {
                   type: 'date',
-                  renderer: dateRenderer,
+                  renderer: Handsontable.DateCell.renderer, //FIXME: Content modification by callback legal here?
                   // We can simply pass any options to jquery-ui-datepicker here.
-                  dateFormat: 'yy-mm-dd' // Format to be returned by jquery-ui-datepicker (ISO 8601).
+                  dateFormat: 'mm/dd/yy' // Format to be returned by jquery-ui-datepicker.
                };
             }
          }
@@ -117,7 +107,7 @@ define( [
                         // Missing time grid tick: drop the tick and all corresponding values.
                         break;
                      }
-                     spreadsheet.timeGrid.push( tableModel[i][0] );
+                     spreadsheet.timeGrid.push( dateToIso8601( parseAngloAmerican(tableModel[i][0]) ) );
                   }
                   else {
                      if( tableModel[0][j] !== null && tableModel[0][j] !== '' ) {
@@ -182,7 +172,7 @@ define( [
             var rowData = spreadsheet.series.map( function( value, col ) {
                return value.values[ row ];
             } );
-            rowData.unshift( rowHeader );
+            rowData.unshift( dateToAngloAmerican( parseIso8601(rowHeader) ) );
             return rowData;
          } );
 
@@ -194,6 +184,53 @@ define( [
          colHeaders.unshift( null );
          $scope.model.tableModel.unshift( colHeaders );
       }
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      function parseAngloAmerican(dateString) {
+         // Try to parse by Date.parse() first.
+         var date = new Date(dateString);
+         if (!(date instanceof Object)) {
+            var parts = dateString.split('-');
+            date = new Date(parts[0], parts[1]-1, parts[2]);
+         }
+         return date;
+      }
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      function parseIso8601(dateString) {
+         // Try to parse by Date.parse() first.
+         var date = new Date(dateString);
+         if (!(date instanceof Object)) {
+            var parts = dateString.split('/');
+            date = new Date(parts[2], parts[0]-1, parts[1]);
+         }
+         return date;
+      }
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      function dateToAngloAmerican( date ) {
+         var dd = date.getDate();
+         dd = '' + (dd < 10 ? '0' : '') + dd;
+         var mm = date.getMonth() + 1;
+         mm = '' + (mm < 10 ? '0' : '') + mm;
+         var yy = date.getFullYear();
+         return (mm + '/' + dd + '/' + yy);
+      }
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      function dateToIso8601( date ) {
+         var dd = date.getDate();
+         dd = '' + (dd < 10 ? '0' : '') + dd;
+         var mm = date.getMonth() + 1;
+         mm = '' + (mm < 10 ? '0' : '') + mm;
+         var yy = date.getFullYear();
+         return (yy + '-' + mm + '-' + dd);
+      }
+
    }
 
    module.controller( moduleName + '.Controller', Controller );
