@@ -7,8 +7,8 @@ define( [
    'angular',
    'laxar',
    'laxar_patterns',
-   'css!handsontable',
    'handsontable',
+   'css!handsontable',
    'jquery_ui/datepicker'
 ], function( ng, ax, patterns ) {
 
@@ -27,11 +27,36 @@ define( [
 
       $scope.model = {};
 
+      var dateRenderer = function (instance, td, row, col, prop, value, cellProperties) {
+         //FIXME Do the content modification here. Is this legal?
+         value = formatDate(new Date(value)); // Value must conform to RFC 2822 or ISO 8601.
+         Handsontable.DateCell.renderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
+      };
+
+      function formatDate( date ) {
+         var dd = date.getDate();
+         dd = '' + (dd < 10 ? '0' : '') + dd;
+         var mm = date.getMonth() + 1;
+         mm = '' + (mm < 10 ? '0' : '') + mm;
+         var yyyy = date.getFullYear();
+         return (dd + '.' + mm + '.' + yyyy);
+      }
+
       $scope.model.settings = {
          rowHeaders: true,
          colHeaders: true,
          contextMenu: true,
-         fillHandle: true
+         fillHandle: true,
+         cells: function (row, col, prop) {
+            if (row > 0 && col === 0) {
+               return {
+                  type: 'date',
+                  renderer: dateRenderer,
+                  // We can simply pass any options to jquery-ui-datepicker here.
+                  dateFormat: 'yy-mm-dd' // Format to be returned by jquery-ui-datepicker (ISO 8601).
+               };
+            }
+         }
       };
       $scope.model.columns = [];
       $scope.model.tableModel = [];
@@ -72,12 +97,12 @@ define( [
          if( tableModel.length > 0 ) {
             // First row is expected to be a row of column headers.
             for( j = 0; j < tableModel[0].length; ++j ) {
-               if (j === 0) {
+               if( j === 0 ) {
                   // Upper left corner: ignore.
                }
                else {
                   // Column header
-                  if (tableModel[0][j] !== null && tableModel[0][j] !== '') {
+                  if( tableModel[0][j] !== null && tableModel[0][j] !== '' ) {
                      spreadsheet.series.push( { label: tableModel[0][j], values: [] } );
                   }
                   // Otherwise (missing column header): drop the series.
@@ -92,12 +117,10 @@ define( [
                         // Missing time grid tick: drop the tick and all corresponding values.
                         break;
                      }
-                     //console.log(tableModel[i][0] + " -> " + Date.parse(tableModel[i][0]));
-                     //spreadsheet.timeGrid.push( Date.parse(tableModel[i][0]) );
                      spreadsheet.timeGrid.push( tableModel[i][0] );
                   }
                   else {
-                     if (tableModel[0][j] !== null && tableModel[0][j] !== '') {
+                     if( tableModel[0][j] !== null && tableModel[0][j] !== '' ) {
                         // Data cell: convert to number.
                         spreadsheet.series[seriesIndex].values.push( parseFloat( tableModel[i][j] ) );
                         seriesIndex++;
@@ -152,7 +175,6 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function updateTableModel() {
-         $scope.model.columns = [];
          var spreadsheet = $scope.resources.spreadsheet;
 
          // Data area
@@ -167,15 +189,10 @@ define( [
          // Column headers
          var colHeaders = [];
          colHeaders = spreadsheet.series.map( function( value ) {
-            $scope.model.columns.push({});
             return value.label;
          } );
          colHeaders.unshift( null );
          $scope.model.tableModel.unshift( colHeaders );
-         $scope.model.columns.unshift( {
-           type: 'date',
-           dateFormat: 'yy-mm-dd'
-         } );
       }
    }
 
@@ -223,7 +240,7 @@ define( [
             }, true );
 
             $scope.$watch( directiveName + 'Rows', function( newRows ) {
-                $element.handsontable( 'loadData', newRows );
+               $element.handsontable( 'loadData', newRows );
             }, true );
 
             $scope.$watch( directiveName + 'Columns', function() {
