@@ -8,8 +8,8 @@ define( [
    'laxar',
    'laxar_patterns',
    'css!handsontable',
-   'handsontable'
-
+   'handsontable',
+   'jquery_ui/datepicker'
 ], function( ng, ax, patterns ) {
 
    'use strict';
@@ -92,6 +92,8 @@ define( [
                         // Missing time grid tick: drop the tick and all corresponding values.
                         break;
                      }
+                     //console.log(tableModel[i][0] + " -> " + Date.parse(tableModel[i][0]));
+                     //spreadsheet.timeGrid.push( Date.parse(tableModel[i][0]) );
                      spreadsheet.timeGrid.push( tableModel[i][0] );
                   }
                   else {
@@ -150,6 +152,7 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function updateTableModel() {
+         $scope.model.columns = [];
          var spreadsheet = $scope.resources.spreadsheet;
 
          // Data area
@@ -157,6 +160,8 @@ define( [
             var rowData = spreadsheet.series.map( function( value, col ) {
                return value.values[ row ];
             } );
+            //var d = new Date(rowHeader);
+            console.log(rowHeader);
             rowData.unshift( rowHeader );
             return rowData;
          } );
@@ -164,11 +169,18 @@ define( [
          // Column headers
          var colHeaders = [];
          colHeaders = spreadsheet.series.map( function( value ) {
+            $scope.model.columns.push({});
             return value.label;
          } );
          colHeaders.unshift( null );
          $scope.model.tableModel.unshift( colHeaders );
-      }
+         $scope.model.columns.unshift( {
+           type: 'date',
+           dateFormat: 'yy-mm-dd'
+         } );
+         console.log("TableModel: ");
+         console.log($scope.model.tableModel);
+      };
    }
 
    module.controller( moduleName + '.Controller', Controller );

@@ -9,6 +9,10 @@
       "type": "angular"
    },
 
+   "controls": [
+      "laxar_uikit/controls/date_picker"
+   ],
+
    "compatibility": [ "json-patch" ],
 
    "features": {
