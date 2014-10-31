@@ -92,6 +92,17 @@
                "display": {
                   "resource": "spreadsheetData",
                   "chart": {
+
+                  }
+               }
+            }
+         },
+         {
+            "widget": "chart_demo/chart_widget",
+            "features": {
+               "display": {
+                  "resource": "spreadsheetData",
+                  "chart": {
                      "type": "pieChart"
                   }
                }
@@ -104,17 +115,6 @@
                   "resource": "spreadsheetData",
                   "chart": {
                      "type": "multiBarChart"
-                  }
-               }
-            }
-         },
-         {
-            "widget": "chart_demo/chart_widget",
-            "features": {
-               "display": {
-                  "resource": "spreadsheetData",
-                  "chart": {
-
                   }
                }
             }

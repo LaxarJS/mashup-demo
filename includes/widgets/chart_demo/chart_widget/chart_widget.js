@@ -36,10 +36,39 @@ define( [
       var resources = $scope.resources;
       var features = $scope.features;
 
-      patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'display',
-         { onUpdateReplace: [ convertToChartModel, setOptionsFromResource ] } );
+      patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'display', {
+            onReplace: [ convertToChartModel, setOptionsFromResource ],
+            onUpdate: [ applyPatches ]} );
 
       setOptions();
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      function applyPatches( event ) {
+         if( features.display.chart.type === 'pieChart' ) {
+            convertToChartModel();
+            setOptionsFromResource();
+         }
+         else {
+            event.patches.forEach( function ( patch ) {
+               if( patch.op !== 'replace' ) {
+                  return;
+               }
+               var keys = patch.path.split( '/' ).slice( 1 );
+               if( keys[ 0 ] === 'series' ) {
+                  var seriesKey = keys[ 1 ];
+                  var timetick = keys[ 3 ];
+                  model.data[ seriesKey ].values[ timetick ].y = patch.value;
+               }
+               else if( keys[ 0 ] === 'timeLabel' ) {
+                  model.options.chart.xAxis.axisLabel = patch.value;
+               }
+               else if( keys[ 0 ] === 'valueLabel' ) {
+                  model.options.chart.yAxis.axisLabel = patch.value;
+               }
+            } );
+         }
+      }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -86,7 +115,6 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function setOptionsFromResource() {
-         //model.options.chart.xAxis.tickValues = resources.display.timeGrid;
          model.options.chart.xAxis.axisLabel = resources.display.timeLabel;
          model.options.chart.yAxis.axisLabel =  resources.display.valueLabel;
       }
@@ -104,6 +132,7 @@ define( [
                   left: MARGIN_LEFT
                },
                useInteractiveGuideline: true,
+               transitionDuration: 250,
                xAxis: {
                },
                yAxis: {
@@ -115,9 +144,6 @@ define( [
             }
          };
          model.options.chart.height = features.display.chart.height;
-         if(  features.display.chart.type === 'pieChart' ) {
-            model.options.chart.pie = {};
-         }
       }
    }
 
