@@ -80,7 +80,7 @@ define( [
             var columnOfTimeSeries = timeSeriesKey;
             timeSeries.values = tableModel
                .map( function( row ) {
-                  return parseInt( row[ columnOfTimeSeries ], 10 );
+                  return parseFloat( row[ columnOfTimeSeries ] );
                } )
                .filter( function( value, key ) {
                   return tableModel[ key ][ 0 ] !== null && tableModel[ key ][ 0 ] !== '';

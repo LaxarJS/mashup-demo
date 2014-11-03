@@ -76,7 +76,9 @@ define( [
 
       function isIncremental( patches ) {
          return patches.every( function( patch ) {
-            return patch.op === 'replace' && patch.path.indexOf( '/series/' ) === 0;
+            //FIXME: Should not include label updates, so we do a regex check to match as tight as possible.
+            //return patch.op === 'replace' && patch.path.indexOf( '/series/') && patch.path.indexOf('/series/label' ) === -1;
+            return patch.op === 'replace' && patch.path.match(/\/series\/(\d+)\/values\/(\d+)/) !== null;
          } );
       }
 
@@ -85,11 +87,16 @@ define( [
       function applyPatches( event ) {
          if( isIncremental( event.patches ) ) {
             event.patches.forEach( function ( patch ) {
-               var path = patch.path.split( '/' ).slice( 1 );
-               if( path[ 0 ] === 'series' ) {
-                  var seriesKey = path[ 1 ];
-                  var valueKey = path[ 3 ];
-                  model.data[ seriesKey ].values[ valueKey ].y = patch.value;
+               //FIXME: Should not include label updates, so we do a regex check to match as tight as possible.
+               //var path = patch.path.split( '/' ).slice( 1 );
+               //if( path[ 0 ] === 'series' ) {
+               //   var seriesKey = path[ 1 ];
+               //   var valueKey = path[ 3 ];
+               //   model.data[ seriesKey ].values[ valueKey ].y = patch.value;
+               //}
+               var matches = patch.path.match(/\/series\/(\d+)\/values\/(\d+)/);
+               if (matches !== null) {
+                  model.data[ matches[1] ].values[ matches[2] ].y = patch.value;
                }
             } );
          }
