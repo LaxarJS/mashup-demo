@@ -44,7 +44,7 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       $scope.$on( EVENT_AFTER_CHANGE, function( event ) {
-         var modifiedResource = getSpreadsheetFromTableModel();
+         var modifiedResource = getTimeSeriesFromTableModel();
          var patch = patterns.json.createPatch( $scope.resources.timeSeries, modifiedResource );
 
          var resourceName = $scope.features.timeSeries.resource;
@@ -61,26 +61,22 @@ define( [
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      function getSpreadsheetFromTableModel() {
+      function getTimeSeriesFromTableModel() {
          var tableModel = $scope.model.tableModel;
 
          // Clone original resource to keep attributes that cannot be reproduced by the table model.
-         var spreadsheet = ax.object.deepClone( $scope.resources.timeSeries );
-         spreadsheet.timeGrid = [];
-         spreadsheet.series = [];
+         var timeSeries = ax.object.deepClone( $scope.resources.timeSeries );
+         timeSeries.timeGrid = [];
+         timeSeries.series = [];
 
          var i;
          var j;
          if( tableModel.length > 0 ) {
-            // First row is expected to be a row of column headers.
             for( j = 0; j < tableModel[0].length; ++j ) {
-               if( j === 0 ) {
-                  // Upper left corner: ignore.
-               }
-               else {
-                  // Column header
+               if( j > 0 ) {
+                  // First row is expected to be a row of column headers.
                   if( tableModel[0][j] !== null && tableModel[0][j] !== '' ) {
-                     spreadsheet.series.push( { label: tableModel[0][j], values: [] } );
+                     timeSeries.series.push( { label: tableModel[0][j], values: [] } );
                   }
                   // Otherwise (missing column header): drop the series.
                }
@@ -89,17 +85,16 @@ define( [
                var seriesIndex = 0;
                for( j = 0; j < tableModel[i].length; ++j ) {
                   if( j === 0 ) {
-                     // Row header
+                     // First column is expected to be a column of row headers.
                      if( tableModel[i][0] === null || tableModel[i][0] === '' ) {
                         // Missing time grid tick: drop the tick and all corresponding values.
                         break;
                      }
-                     spreadsheet.timeGrid.push( dateToIso8601( parseAngloAmerican(tableModel[i][0]) ) );
+                     timeSeries.timeGrid.push( dateToIso8601( parseAngloAmerican( tableModel[i][0] ) ) );
                   }
                   else {
                      if( tableModel[0][j] !== null && tableModel[0][j] !== '' ) {
-                        // Data cell: convert to number.
-                        spreadsheet.series[seriesIndex].values.push( parseFloat( tableModel[i][j] ) );
+                        timeSeries.series[seriesIndex].values.push( parseFloat( tableModel[i][j] ) );
                         seriesIndex++;
                      }
                      // Otherwise (missing column header): drop the series.
@@ -108,7 +103,7 @@ define( [
             }
          }
 
-         return spreadsheet;
+         return timeSeries;
       }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,21 +147,20 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function updateTableModel() {
-         var spreadsheet = $scope.resources.timeSeries;
+         var timeSeries = $scope.resources.timeSeries;
 
-         console.log( spreadsheet );
          // Data area
-         $scope.model.tableModel = spreadsheet.timeGrid.map( function( rowHeader, row ) {
-            var rowData = spreadsheet.series.map( function( value, col ) {
+         $scope.model.tableModel = timeSeries.timeGrid.map( function( rowHeader, row ) {
+            var rowData = timeSeries.series.map( function( value, col ) {
                return value.values[ row ];
             } );
-            rowData.unshift( dateToAngloAmerican( parseIso8601(rowHeader) ) );
+            rowData.unshift( dateToAngloAmerican( parseIso8601( rowHeader ) ) );
             return rowData;
          } );
 
          // Column headers
          var colHeaders = [];
-         colHeaders = spreadsheet.series.map( function( value ) {
+         colHeaders = timeSeries.series.map( function( value ) {
             return value.label;
          } );
          colHeaders.unshift( null );
@@ -175,24 +169,24 @@ define( [
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      function parseAngloAmerican(dateString) {
+      function parseAngloAmerican( dateString ) {
          // Try to parse by Date.parse() first.
-         var date = new Date(dateString);
-         if (!(date instanceof Object)) {
-            var parts = dateString.split('-');
-            date = new Date(parts[0], parts[1]-1, parts[2]);
+         var date = new Date( dateString );
+         if( !(date instanceof Object) ) {
+            var parts = dateString.split( '-' );
+            date = new Date( parts[0], parts[1] - 1, parts[2] );
          }
          return date;
       }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      function parseIso8601(dateString) {
+      function parseIso8601( dateString ) {
          // Try to parse by Date.parse() first.
-         var date = new Date(dateString);
-         if (!(date instanceof Object)) {
-            var parts = dateString.split('/');
-            date = new Date(parts[2], parts[0]-1, parts[1]);
+         var date = new Date( dateString );
+         if( !(date instanceof Object) ) {
+            var parts = dateString.split( '/' );
+            date = new Date( parts[2], parts[0] - 1, parts[1] );
          }
          return date;
       }
@@ -218,7 +212,6 @@ define( [
          var yy = date.getFullYear();
          return (yy + '-' + mm + '-' + dd);
       }
-
    }
 
    module.controller( moduleName + '.Controller', Controller );
@@ -277,11 +270,11 @@ define( [
             function completeSettings() {
                var settings = ax.object.options( $scope[ directiveName ], baseSettings );
                var columnSettings = $scope[ directiveName + 'Columns' ];
-               settings.cells = function (row, col, prop) {
-                  if (row > 0 && col === 0) {
+               settings.cells = function( row, col, prop ) {
+                  if( row > 0 && col === 0 ) {
                      return {
                         type: 'date',
-                        renderer: Handsontable.DateCell.renderer, //FIXME: Content modification by callback legal here?
+                        renderer: Handsontable.DateCell.renderer,
                         // We can simply pass any options to jquery-ui-datepicker here.
                         dateFormat: 'mm/dd/yy' // Format to be returned by jquery-ui-datepicker.
                      };
