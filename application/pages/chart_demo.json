@@ -19,14 +19,13 @@
             "widget": "chart_demo/data_provider_widget",
             "features": {
 
-               "publish": {
-                  "resource": "spreadsheetData",
-                  "location": "application/data/stock_price_example_1.json"
+               "title": {
+                  "htmlLabel": "<i class='fa fa-database'></i>Select a Data Source"
                },
 
-               "display": {
-                  "htmlTitle": "<i class='fa fa-database'></i>Select a Data Source",
-                  "dataSets": [
+               "data": {
+                  "resource": "timeSeriesData",
+                  "items": [
                      {
                         "title": "Stock Price Example 1",
                         "description": "This example shows 4 series on a grid spanning 5 years.",
@@ -62,7 +61,7 @@
             "features": {
                "htmlTitle": "<i class='fa fa-table'></i>Edit the Data",
                "timeSeries": {
-                  "resource": "spreadsheetData"
+                  "resource": "timeSeriesData"
                }
             }
          }
@@ -73,7 +72,7 @@
             "widget": "chart_demo/chart_widget",
             "features": {
                "display": {
-                  "resource": "spreadsheetData",
+                  "resource": "timeSeriesData",
                   "chart": {
                   },
                   "htmlTitle": "<i class='fa fa-line-chart'></i>Line Chart"
@@ -84,7 +83,7 @@
             "widget": "chart_demo/chart_widget",
             "features": {
                "display": {
-                  "resource": "spreadsheetData",
+                  "resource": "timeSeriesData",
                   "chart": {
                      "type": "pieChart"
                   },
@@ -97,7 +96,7 @@
             "widget": "chart_demo/chart_widget",
             "features": {
                "display": {
-                  "resource": "spreadsheetData",
+                  "resource": "timeSeriesData",
                   "chart": {
                      "type": "multiBarChart"
                   },

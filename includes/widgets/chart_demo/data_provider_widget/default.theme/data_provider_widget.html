@@ -1,12 +1,12 @@
-<h3 data-ng-if="features.display.htmlTitle" data-ng-bind-html="features.display.htmlTitle"></h3>
+<h3 data-ng-if="features.title.htmlLabel" data-ng-bind-html="features.title.htmlLabel"></h3>
 <table class="table table-hover table-striped">
    <tbody>
    <tr class="selectable"
-       data-ng-repeat="dataSet in features.display.dataSets"
-       data-ng-class="{selected: dataSet === selectedDataSet }">
-      <td data-ng-click="useDataSet(dataSet)">
-         {{dataSet.title}}
-         <p><small>{{dataSet.description}}</small></p>
+       data-ng-repeat="item in features.data.items"
+       data-ng-class="{selected: item === selectedItem }">
+      <td data-ng-click="useItem(item)">
+         {{item.title}}
+         <p><small>{{item.description}}</small></p>
       </td>
    </tr>
    </tbody>

@@ -74,7 +74,10 @@ var require = {
           deps: [
               'jquery'
           ],
-          exports: 'Handsontable'
+         init: function() {
+            'use strict';
+            return this.Handsontable;
+         }
       }
    },
    packages: [

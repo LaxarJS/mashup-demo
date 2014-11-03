@@ -7,11 +7,11 @@ define( [
    'angular',
    'laxar',
    'laxar_patterns',
+   'moment',
    'handsontable',
    'css!handsontable',
    'jquery_ui/datepicker'
-], function( ng, ax, patterns ) {
-
+], function( ng, ax, patterns, moment ) {
    'use strict';
 
    var moduleName = 'widgets.chart_demo.table_editor_widget';
@@ -21,29 +21,29 @@ define( [
 
    var EVENT_AFTER_CHANGE = 'axTableEditor.afterChange';
 
-   /* global Handsontable */
 
    Controller.$inject = [ '$scope' ];
 
    function Controller( $scope ) {
 
-      $scope.model = {};
-
-      $scope.model.settings = {
-         rowHeaders: true,
-         colHeaders: true,
-         contextMenu: true,
-         fillHandle: true
+      $scope.model = {
+         settings: {
+            rowHeaders: true,
+            colHeaders: true,
+            contextMenu: true,
+            fillHandle: true
+         },
+         columns: [],
+         tableModel: []
       };
-      $scope.model.columns = [];
-      $scope.model.tableModel = [];
-
       $scope.resources = {};
-      patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'timeSeries', {onUpdateReplace: updateTableModel} );
+      patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'timeSeries', {
+         onUpdateReplace: updateTableModel
+      } );
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      $scope.$on( EVENT_AFTER_CHANGE, function( event ) {
+      $scope.$on( EVENT_AFTER_CHANGE, function() {
          var modifiedResource = getTimeSeriesFromTableModel();
          var patch = patterns.json.createPatch( $scope.resources.timeSeries, modifiedResource );
 
@@ -63,155 +63,57 @@ define( [
 
       function getTimeSeriesFromTableModel() {
          var tableModel = $scope.model.tableModel;
-
-         // Clone original resource to keep attributes that cannot be reproduced by the table model.
          var timeSeries = ax.object.deepClone( $scope.resources.timeSeries );
-         timeSeries.timeGrid = [];
-         timeSeries.series = [];
 
-         var i;
-         var j;
-         if( tableModel.length > 0 ) {
-            for( j = 0; j < tableModel[0].length; ++j ) {
-               if( j > 0 ) {
-                  // First row is expected to be a row of column headers.
-                  if( tableModel[0][j] !== null && tableModel[0][j] !== '' ) {
-                     timeSeries.series.push( { label: tableModel[0][j], values: [] } );
-                  }
-                  // Otherwise (missing column header): drop the series.
-               }
-            }
-            for( i = 1; i < tableModel.length; ++i ) {
-               var seriesIndex = 0;
-               for( j = 0; j < tableModel[i].length; ++j ) {
-                  if( j === 0 ) {
-                     // First column is expected to be a column of row headers.
-                     if( tableModel[i][0] === null || tableModel[i][0] === '' ) {
-                        // Missing time grid tick: drop the tick and all corresponding values.
-                        break;
-                     }
-                     timeSeries.timeGrid.push( dateToIso8601( parseAngloAmerican( tableModel[i][0] ) ) );
-                  }
-                  else {
-                     if( tableModel[0][j] !== null && tableModel[0][j] !== '' ) {
-                        timeSeries.series[seriesIndex].values.push( parseFloat( tableModel[i][j] ) );
-                        seriesIndex++;
-                     }
-                     // Otherwise (missing column header): drop the series.
-                  }
-               }
-            }
-         }
+         timeSeries.timeGrid = tableModel
+            .map( function( row ) {
+               return row[ 0 ] && moment( row[ 0 ], 'MM/DD/YYYY' ).format( 'YYYY-MM-DD' );
+            } )
+            .filter( function( timeTick ) {
+               return timeTick !== null && timeTick !== '';
+            } );
+
+         timeSeries.series = tableModel[ 0 ].map( function( columnLabel ) {
+            return {
+               label: columnLabel
+            };
+         } );
+         timeSeries.series.forEach( function( timeSeries, timeSeriesKey ) {
+            var columnOfTimeSeries = timeSeriesKey;
+            timeSeries.values = tableModel
+               .map( function( row ) {
+                  return row[ columnOfTimeSeries ];
+               } )
+               .filter( function( value, key ) {
+                  return tableModel[ key ][ 0 ] !== null && tableModel[ key ][ 0 ] !== '';
+               } );
+         } );
+         timeSeries.series = timeSeries.series.filter( function( timeSeries ) {
+            return timeSeries.label !== null && timeSeries.label !== '';
+         } );
 
          return timeSeries;
       }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//      function getSpreadsheetFromTableModel() {
-//         var tableModel = $scope.model.tableModel;
-//
-//         // Clone original resource to keep attributes that cannot be reproduced by the table model.
-//         var spreadsheet = ax.object.deepClone( $scope.resources.spreadsheet );
-//
-//         var firstColumn = 0;
-//         spreadsheet.timeGrid = tableModel.map( function( row ) {
-//            return row[ firstColumn ];
-//         } );
-//         spreadsheet.timeGrid = spreadsheet.timeGrid.filter( function( timeTick ) {
-//            return timeTick !== null && timeTick !== '';
-//         } );
-//
-//         var firstRow = 0;
-//         spreadsheet.series = tableModel[ firstRow ].map( function( columnLabel ) {
-//            return {
-//               label: columnLabel
-//            };
-//         } );
-//         spreadsheet.series.forEach( function( timeSeries, timeSeriesKey ) {
-//            var columnOfTimeSeries = timeSeriesKey;
-//            timeSeries.values = tableModel.map( function( row ) {
-//               return row[ columnOfTimeSeries ];
-//            } );
-//            timeSeries.values = timeSeries.values.filter( function( value, key ) {
-//               return tableModel[ key ][ 0 ] !== null && tableModel[ key ][ 0 ] !== '';
-//            } );
-//         } );
-//         spreadsheet.series = spreadsheet.series.filter( function( timeSeries ) {
-//            return timeSeries.label !== null && timeSeries.label !== '';
-//         } );
-//
-//         return spreadsheet;
-//      }
-
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
       function updateTableModel() {
          var timeSeries = $scope.resources.timeSeries;
 
-         // Data area
          $scope.model.tableModel = timeSeries.timeGrid.map( function( rowHeader, row ) {
             var rowData = timeSeries.series.map( function( value, col ) {
                return value.values[ row ];
             } );
-            rowData.unshift( dateToAngloAmerican( parseIso8601( rowHeader ) ) );
+            rowData.unshift( moment( rowHeader, 'YYYY-MM-DD' ).format( 'MM/DD/YYYY' ) );
             return rowData;
          } );
 
-         // Column headers
-         var colHeaders = [];
-         colHeaders = timeSeries.series.map( function( value ) {
+         var colHeaders = [ null ].concat( timeSeries.series.map( function( value ) {
             return value.label;
-         } );
-         colHeaders.unshift( null );
+         } ) );
          $scope.model.tableModel.unshift( colHeaders );
       }
 
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-      function parseAngloAmerican( dateString ) {
-         // Try to parse by Date.parse() first.
-         var date = new Date( dateString );
-         if( !(date instanceof Object) ) {
-            var parts = dateString.split( '-' );
-            date = new Date( parts[0], parts[1] - 1, parts[2] );
-         }
-         return date;
-      }
-
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-      function parseIso8601( dateString ) {
-         // Try to parse by Date.parse() first.
-         var date = new Date( dateString );
-         if( !(date instanceof Object) ) {
-            var parts = dateString.split( '/' );
-            date = new Date( parts[2], parts[0] - 1, parts[1] );
-         }
-         return date;
-      }
-
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-      function dateToAngloAmerican( date ) {
-         var dd = date.getDate();
-         dd = '' + (dd < 10 ? '0' : '') + dd;
-         var mm = date.getMonth() + 1;
-         mm = '' + (mm < 10 ? '0' : '') + mm;
-         var yy = date.getFullYear();
-         return (mm + '/' + dd + '/' + yy);
-      }
-
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-      function dateToIso8601( date ) {
-         var dd = date.getDate();
-         dd = '' + (dd < 10 ? '0' : '') + dd;
-         var mm = date.getMonth() + 1;
-         mm = '' + (mm < 10 ? '0' : '') + mm;
-         var yy = date.getFullYear();
-         return (yy + '-' + mm + '-' + dd);
-      }
    }
 
    module.controller( moduleName + '.Controller', Controller );
@@ -219,7 +121,7 @@ define( [
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    var directiveName = 'axTableEditor';
-   module.directive( directiveName, [ function() {
+   module.directive( directiveName, [ '$window', function( $window ) {
       return {
          scope: {
             axTableEditor: '=',
@@ -274,7 +176,7 @@ define( [
                   if( row > 0 && col === 0 ) {
                      return {
                         type: 'date',
-                        renderer: Handsontable.DateCell.renderer,
+                        renderer: $window.Handsontable.DateCell.renderer,
                         // We can simply pass any options to jquery-ui-datepicker here.
                         dateFormat: 'mm/dd/yy' // Format to be returned by jquery-ui-datepicker.
                      };

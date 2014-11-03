@@ -12,37 +12,32 @@
    "features": {
       "$schema": "http://json-schema.org/draft-04/schema#",
       "type": "object",
-      "required": [ "publish" ],
+      "required": [ "data" ],
       "properties": {
-
-         "publish": {
+         "title": {
             "type": "object",
-            "required": [ "resource" ],
+            "properties": {
+               "htmlLabel": {
+                  "type": "string",
+                  "description": "Title for selection list"
+               }
+            }
+         },
+         "data": {
+            "type": "object",
+            "required": [ "resource", "items" ],
             "properties": {
                "resource": {
                   "type": "string",
                   "description": "ID of resource to publish."
                },
-               "location": {
-                  "type": "string",
-                  "description": "URL to load the resource from on beginLifecycleRequest, which is then published using didReplace."
-               }
-            }
-         },
-
-         "display": {
-            "type": "object",
-            "properties": {
-               "htmlTitle": {
-                  "type": "string",
-                  "description": "Title for selection list."
-               },
-               "dataSets": {
+               "items": {
                   "type": "array",
                   "description": "An array of data sets of which a user can choose one to be published.",
-                  "default": [],
+                  "minItems": 1,
                   "items": {
                      "type": "object",
+                     "required": [ "title", "location" ],
                      "properties": {
                         "title": {
                            "type": "string",

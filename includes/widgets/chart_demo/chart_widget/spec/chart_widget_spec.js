@@ -62,7 +62,10 @@ define( [
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'converts the resource data to chart model and displays the chart', function() {
-            expect( testBed_.scope.model.data ).toEqual( specData.expectedChartModel );
+            console.log(JSON.stringify(testBed_.scope.model.data));
+            //expect( testBed_.scope.model.data ).toEqual( specData.expectedChartModel );
+            console.log( specData.expectedChartModel[ 0 ].values[ 0 ].x, new Date(specData.expectedChartModel[ 0 ].values[ 0 ].x));
+            expect( testBed_.scope.model.data[ 0 ].values[ 0 ].x ).toEqual( new Date(specData.expectedChartModel[ 0 ].values[ 0 ].x) );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
