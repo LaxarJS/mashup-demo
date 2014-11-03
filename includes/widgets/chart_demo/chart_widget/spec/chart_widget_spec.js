@@ -5,7 +5,7 @@
  */
 define( [
    '../chart_widget',
-   'laxar/laxar_testing',
+     'laxar/laxar_testing',
    'json!./spec_data.json'
 ], function( widgetModule, ax, specData ) {
    'use strict';
@@ -14,11 +14,11 @@ define( [
 
       var testBed_;
       var configuration = {
-         display: {
-            resource: 'spreadsheetData',
-            chart: {
-               height: 350
-            }
+         timeSeries: {
+            resource: 'timeSeriesData'
+         },
+         chart: {
+            height: 350
          }
       };
 
@@ -38,12 +38,12 @@ define( [
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      describe( 'with feature display and configured resource', function() {
+      describe( 'with feature timeSeries and feature chart', function() {
 
          beforeEach( function() {
 
-            testBed_.eventBusMock.publish( 'didReplace.spreadsheetData', {
-               resource: 'articles',
+            testBed_.eventBusMock.publish( 'didReplace.timeSeriesData', {
+               resource: 'timeSeriesData',
                data: specData.originalResource
             } );
             jasmine.Clock.tick( 0 );
@@ -53,28 +53,22 @@ define( [
 
          it( 'acts as a slave of the resource and displays the chart', function() {
             expect( testBed_.scope.eventBus.subscribe )
-               .toHaveBeenCalledWith( 'didReplace.spreadsheetData', jasmine.any( Function ) );
+               .toHaveBeenCalledWith( 'didReplace.timeSeriesData', jasmine.any( Function ) );
             expect( testBed_.scope.eventBus.subscribe )
-               .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', jasmine.any( Function ) );
-            expect( testBed_.scope.resources.display ).toEqual( specData.originalResource );
+               .toHaveBeenCalledWith( 'didUpdate.timeSeriesData', jasmine.any( Function ) );
+            expect( testBed_.scope.resources.timeSeries ).toEqual( specData.originalResource );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'converts the resource data to chart model and displays the chart', function() {
-            console.log(JSON.stringify(testBed_.scope.model.data));
-            //expect( testBed_.scope.model.data ).toEqual( specData.expectedChartModel );
-            console.log( specData.expectedChartModel[ 0 ].values[ 0 ].x, new Date(specData.expectedChartModel[ 0 ].values[ 0 ].x));
-            expect( testBed_.scope.model.data[ 0 ].values[ 0 ].x ).toEqual( new Date(specData.expectedChartModel[ 0 ].values[ 0 ].x) );
+            expect( testBed_.scope.model.data ).toEqual( specData.expectedChartModel );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'sets the labels for chart from resource', function() {
-            expect( testBed_.scope.model.options.chart.xAxis ).toEqual( {
-               tickValues: specData.originalResource.timeGrid,
-               axisLabel: specData.originalResource.timeLabel
-            } );
+            expect( testBed_.scope.model.options.chart.xAxis.axisLabel ).toEqual( specData.originalResource.timeLabel );
             expect( testBed_.scope.model.options.chart.yAxis.axisLabel ).toEqual( specData.originalResource.valueLabel );
          } );
          /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -86,12 +80,12 @@ define( [
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'replaces the resource and model after receiving a new resource', function() {
-            testBed_.eventBusMock.publish( 'didReplace.spreadsheetData', {
-               resource: 'spreadsheetData',
+            testBed_.eventBusMock.publish( 'didReplace.timeSeriesData', {
+               resource: 'timeSeriesData',
                data: specData.otherResource
             } );
             jasmine.Clock.tick( 0 );
-            expect( testBed_.scope.resources.display ).toEqual( specData.otherResource );
+            expect( testBed_.scope.resources.timeSeries ).toEqual( specData.otherResource );
             expect( testBed_.scope.model.data ).toEqual( specData.expectedChartModelForOtherResource );
          } );
 

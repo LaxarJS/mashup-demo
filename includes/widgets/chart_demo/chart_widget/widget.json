@@ -12,41 +12,53 @@
    "features": {
       "$schema": "http://json-schema.org/draft-04/schema#",
       "type": "object",
-      "required": [ "display" ],
+      "required": [ "timeSeries" ],
       "properties": {
 
-         "display": {
+         "title": {
+            "type": "object",
+            "properties": {
+               "htmlLabel": {
+                  "type": "string",
+                  "description": "Title for the chart."
+               }
+            }
+         },
+
+         "timeSeries": {
             "type": "object",
             "description": "Provide the data to display in another widget.",
-            "required": [ "resource", "chart" ],
+            "required": [ "resource" ],
             "properties": {
                "resource": {
                   "type": "string",
                   "description": "Name of the data resource",
                   "format": "topic"
+               }
+            }
+         },
+
+         "chart": {
+            "type": "object",
+            "description": "Set options for the chart representation.",
+            "properties": {
+               "type": {
+                  "type": "string",
+                  "default": "lineChart",
+                  "description": "Type of the chart, excepted types are defined in external library NVD3."
                },
-               "htmlTitle": {
-                  "type": "string"
+               "height": {
+                  "type": "number",
+                  "default": 260,
+                  "description": "Height of the chart"
                },
                "caption": {
-                  "type": "string"
-               },
-               "chart": {
-                  "type": "object",
-                  "description": "Set options for the chart representation.",
-                  "properties": {
-                     "type": {
-                        "type": "string",
-                        "default": "lineChart"
-                     },
-                     "height": {
-                        "type": "number",
-                        "default": 260
-                     }
-                  }
+                  "type": "string",
+                  "description": "A text explaining the chart."
                }
             }
          }
+
       }
 
    }

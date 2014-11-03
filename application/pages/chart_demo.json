@@ -74,23 +74,25 @@
          {
             "widget": "chart_demo/chart_widget",
             "features": {
-               "display": {
-                  "resource": "timeSeriesData",
-                  "chart": {
-                  },
-                  "htmlTitle": "<i class='fa fa-line-chart'></i>Line Chart"
+               "title": {
+                  "htmlLabel": "<i class='fa fa-line-chart'></i>Line Chart"
+               },
+               "timeSeries": {
+                  "resource": "timeSeriesData"
                }
             }
          },
          {
             "widget": "chart_demo/chart_widget",
             "features": {
-               "display": {
-                  "resource": "timeSeriesData",
-                  "chart": {
-                     "type": "pieChart"
-                  },
-                  "htmlTitle": "<i class='fa fa-pie-chart'></i>Pie Chart",
+               "title": {
+                  "htmlLabel": "<i class='fa fa-pie-chart'></i>Pie Chart"
+               },
+               "timeSeries": {
+                  "resource": "timeSeriesData"
+               },
+               "chart": {
+                  "type": "pieChart",
                   "caption": "The average of all values of the time series."
                }
             }
@@ -98,12 +100,14 @@
          {
             "widget": "chart_demo/chart_widget",
             "features": {
-               "display": {
-                  "resource": "timeSeriesData",
-                  "chart": {
-                     "type": "multiBarChart"
-                  },
-                  "htmlTitle": "<i class='fa fa-bar-chart'></i>Multi Bar Chart"
+               "title": {
+                  "htmlLabel": "<i class='fa fa-bar-chart'></i>Multi Bar Chart"
+               },
+               "timeSeries": {
+                  "resource": "timeSeriesData"
+               },
+               "chart": {
+                  "type": "multiBarChart"
                }
             }
          }

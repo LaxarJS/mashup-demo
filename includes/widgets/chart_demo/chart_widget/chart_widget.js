@@ -5,11 +5,12 @@
  */
 define( [
    'angular',
+   'moment',
    'laxar',
    'laxar_patterns',
    'angular-nvd3',
    'css!nvd3'
-], function( ng, ax, patterns ) {
+], function( ng, moment, ax, patterns ) {
    'use strict';
 
    var moduleName = 'widgets.chart_demo.chart_widget';
@@ -43,14 +44,14 @@ define( [
 
       var resourceHandler = patterns.resources.handlerFor( $scope );
 
-      if( features.display.chart.type === 'pieChart' ) {
-         resourceHandler.registerResourceFromFeature( 'display', {
+      if( features.chart.type === 'pieChart' ) {
+         resourceHandler.registerResourceFromFeature( 'timeSeries', {
             onReplace: [ updatePie, setOptionsFromResource ],
             onUpdate: [ updatePie ]
          } );
       }
       else {
-         resourceHandler.registerResourceFromFeature( 'display', {
+         resourceHandler.registerResourceFromFeature( 'timeSeries', {
             onReplace: [ convertToChartModel, setOptionsFromResource ],
             onUpdate: [ applyPatches ]
          } );
@@ -63,7 +64,7 @@ define( [
 
       function updatePie() {
          var data = model.data = model.data || [];
-         data.splice.apply( data, [ 0, data.length ].concat( resources.display.series.map( function( ts ) {
+         data.splice.apply( data, [ 0, data.length ].concat( resources.timeSeries.series.map( function( ts ) {
             return {
                x: ts.label,
                y: calculateAverageValue( ts.values )
@@ -103,11 +104,12 @@ define( [
       function convertToChartModel() {
          var data = model.data = model.data || [];
          data.splice( 0, data.length );
-         resources.display.series.forEach( function( seriesObject, key ) {
+         resources.timeSeries.series.forEach( function( seriesObject, key ) {
             var values= [];
+
             seriesObject.values.forEach( function( value, timeTickKey ) {
                values.push( {
-                  x: new Date( resources.display.timeGrid[ timeTickKey ] ),
+                  x: moment( resources.timeSeries.timeGrid[ timeTickKey ], 'YYYY-MM-DD' ).format( 'X' ) * 1000,
                   y: value
                } );
             } );
@@ -135,8 +137,8 @@ define( [
          model.options.chart.xAxis.tickFormat = function( d ) {
             return d3.time.format( '%x' )( new Date( d ) );
          };
-         model.options.chart.xAxis.axisLabel = resources.display.timeLabel;
-         model.options.chart.yAxis.axisLabel =  resources.display.valueLabel;
+         model.options.chart.xAxis.axisLabel = resources.timeSeries.timeLabel;
+         model.options.chart.yAxis.axisLabel =  resources.timeSeries.valueLabel;
          if( $scope.api ) {
             $scope.api.updateWithOptions( model.options );
          }
@@ -147,7 +149,7 @@ define( [
       function setOptions() {
          model.options = {
             chart: {
-               type: features.display.chart.type,
+               type: features.chart.type,
                margin: {
                   top: MARGIN_TOP,
                   right: MARGIN_RIGHT,
@@ -164,11 +166,11 @@ define( [
                forceY: [ FORCE_Y ]
             }
          };
-         model.options.chart.height = features.display.chart.height;
-         if( features.display.caption ) {
+         model.options.chart.height = features.chart.height;
+         if( features.chart.caption ) {
             model.options.caption = {
                enable: true,
-               text: features.display.caption
+               text: features.chart.caption
             };
          }
       }
