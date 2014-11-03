@@ -18,8 +18,8 @@ define( [
       beforeEach( function setup() {
          testBed_ = ax.testing.portalMocksAngular.createControllerTestBed( widgetModule.name );
          testBed_.featuresMock = {
-            spreadsheet: {
-               resource: 'spreadsheetData'
+            timeSeries: {
+               resource: 'timeSeriesData'
             }
          };
 
@@ -35,12 +35,12 @@ define( [
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      describe( 'with feature spreadsheet', function() {
+      describe( 'with feature timeSeries', function() {
 
          beforeEach( function() {
 
-            testBed_.eventBusMock.publish( 'didReplace.spreadsheetData', {
-               resource: 'spreadsheetData',
+            testBed_.eventBusMock.publish( 'didReplace.timeSeriesData', {
+               resource: 'timeSeriesData',
                data: specData.originalResource
             } );
             jasmine.Clock.tick( 0 );
@@ -48,12 +48,12 @@ define( [
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         it( 'acts as a slave for the configured resource.', function() {
+         it( 'acts as a slave for the configured resource', function() {
             expect( testBed_.scope.eventBus.subscribe )
-               .toHaveBeenCalledWith( 'didReplace.spreadsheetData', jasmine.any( Function ) );
+               .toHaveBeenCalledWith( 'didReplace.timeSeriesData', jasmine.any( Function ) );
             expect( testBed_.scope.eventBus.subscribe )
-               .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', jasmine.any( Function ) );
-            expect( testBed_.scope.resources.spreadsheet ).toEqual( specData.originalResource );
+               .toHaveBeenCalledWith( 'didUpdate.timeSeriesData', jasmine.any( Function ) );
+            expect( testBed_.scope.resources.timeSeries ).toEqual( specData.originalResource );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,8 +73,8 @@ define( [
             var patch = patterns.json.createPatch( specData.originalResource, expectedResource );
 
             expect( testBed_.scope.eventBus.publish )
-               .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', {
-                  resource: 'spreadsheetData',
+               .toHaveBeenCalledWith( 'didUpdate.timeSeriesData', {
+                  resource: 'timeSeriesData',
                   patches: patch
                }, jasmine.any( Object ) );
          } );
@@ -89,8 +89,8 @@ define( [
             var patch = patterns.json.createPatch( specData.originalResource, expectedResource );
 
             expect( testBed_.scope.eventBus.publish )
-               .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', {
-                  resource: 'spreadsheetData',
+               .toHaveBeenCalledWith( 'didUpdate.timeSeriesData', {
+                  resource: 'timeSeriesData',
                   patches: patch
                }, jasmine.any( Object ) );
          } );
@@ -105,8 +105,8 @@ define( [
             var patch = patterns.json.createPatch( specData.originalResource, expectedResource );
 
             expect( testBed_.scope.eventBus.publish )
-               .toHaveBeenCalledWith( 'didUpdate.spreadsheetData', {
-                  resource: 'spreadsheetData',
+               .toHaveBeenCalledWith( 'didUpdate.timeSeriesData', {
+                  resource: 'timeSeriesData',
                   patches: patch
                }, jasmine.any( Object ) );
          } );
@@ -114,12 +114,12 @@ define( [
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'replaces the resource and model after receiving a new resource', function() {
-            testBed_.eventBusMock.publish( 'didReplace.spreadsheetData', {
-               resource: 'spreadsheetData',
+            testBed_.eventBusMock.publish( 'didReplace.timeSeriesData', {
+               resource: 'timeSeriesData',
                data: specData.otherResource
             } );
             jasmine.Clock.tick( 0 );
-            expect( testBed_.scope.resources.spreadsheet ).toEqual( specData.otherResource );
+            expect( testBed_.scope.resources.timeSeries ).toEqual( specData.otherResource );
             expect( testBed_.scope.model.tableModel ).toEqual( specData.expectedTableModelForOtherResource );
          } );
       } );

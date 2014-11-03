@@ -18,22 +18,22 @@
    "features": {
       "$schema": "http://json-schema.org/draft-04/schema#",
       "type": "object",
-      "required": [ "spreadsheet" ],
+      "required": [ "timeSeries" ],
 
       "properties": {
-         "spreadsheet": {
+         "htmlTitle": {
+            "type": "string",
+            "description": "Title for the table"
+         },
+         "timeSeries": {
             "type": "object",
-            "description": "Provide the data to display in another widget.",
+            "description": "Shows the time series in an editable table.",
             "required": [ "resource" ],
             "properties": {
                "resource": {
                   "type": "string",
                   "description": "Name of the data resource which should refer to a 2-dimensional array.",
                   "format": "topic"
-               },
-               "htmlTitle": {
-                  "type": "string",
-                  "description": "Title for the table"
                }
             }
          }

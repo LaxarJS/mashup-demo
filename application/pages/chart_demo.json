@@ -8,7 +8,7 @@
             "widget": "chart_demo/headline_widget",
             "features": {
                "headline": {
-                  "htmlText": "ChartDemo"
+                  "htmlText": "MashupDemo"
                }
             }
          }
@@ -60,9 +60,9 @@
          {
             "widget": "chart_demo/table_editor_widget",
             "features": {
-               "spreadsheet": {
-                  "resource": "spreadsheetData",
-                  "htmlTitle": "<i class='fa fa-table'></i>Edit the Data"
+               "htmlTitle": "<i class='fa fa-table'></i>Edit the Data",
+               "timeSeries": {
+                  "resource": "spreadsheetData"
                }
             }
          }
@@ -76,7 +76,7 @@
                   "resource": "spreadsheetData",
                   "chart": {
                   },
-                  "htmlTitle": "Line Chart"
+                  "htmlTitle": "<i class='fa fa-line-chart'></i>Line Chart"
                }
             }
          },
@@ -88,7 +88,7 @@
                   "chart": {
                      "type": "pieChart"
                   },
-                  "htmlTitle": "Pie Chart",
+                  "htmlTitle": "<i class='fa fa-pie-chart'></i>Pie Chart",
                   "caption": "The average of all values of the time series."
                }
             }
@@ -101,7 +101,7 @@
                   "chart": {
                      "type": "multiBarChart"
                   },
-                  "htmlTitle": "Multi Bar Chart"
+                  "htmlTitle": "<i class='fa fa-bar-chart'></i>Multi Bar Chart"
                }
             }
          }

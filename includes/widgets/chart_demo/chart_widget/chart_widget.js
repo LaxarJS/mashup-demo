@@ -20,7 +20,7 @@ define( [
    // Chart Styling
 
    var MARGIN_TOP = 20;
-   var MARGIN_RIGHT = 20;
+   var MARGIN_RIGHT = 60;
    var MARGIN_BOTTOM = 40;
    var MARGIN_LEFT = 55;
    var TRANSITION_DURATION = 250;
@@ -165,12 +165,6 @@ define( [
             }
          };
          model.options.chart.height = features.display.chart.height;
-         if( features.display.title ) {
-            model.options.title = {
-               enable: true,
-               text: features.display.title
-            };
-         }
          if( features.display.caption ) {
             model.options.caption = {
                enable: true,

@@ -39,15 +39,15 @@ define( [
       $scope.model.tableModel = [];
 
       $scope.resources = {};
-      patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'spreadsheet', {onUpdateReplace: updateTableModel} );
+      patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'timeSeries', {onUpdateReplace: updateTableModel} );
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       $scope.$on( EVENT_AFTER_CHANGE, function( event ) {
          var modifiedResource = getSpreadsheetFromTableModel();
-         var patch = patterns.json.createPatch( $scope.resources.spreadsheet, modifiedResource );
+         var patch = patterns.json.createPatch( $scope.resources.timeSeries, modifiedResource );
 
-         var resourceName = $scope.features.spreadsheet.resource;
+         var resourceName = $scope.features.timeSeries.resource;
          $scope.eventBus.publish( 'didUpdate.' + resourceName, {
             resource: resourceName,
             patches: patch
@@ -55,7 +55,7 @@ define( [
             deliverToSender: false
          } );
 
-         $scope.resources.spreadsheet = modifiedResource;
+         $scope.resources.timeSeries = modifiedResource;
 
       } );
 
@@ -65,7 +65,7 @@ define( [
          var tableModel = $scope.model.tableModel;
 
          // Clone original resource to keep attributes that cannot be reproduced by the table model.
-         var spreadsheet = ax.object.deepClone( $scope.resources.spreadsheet );
+         var spreadsheet = ax.object.deepClone( $scope.resources.timeSeries );
          spreadsheet.timeGrid = [];
          spreadsheet.series = [];
 
@@ -152,8 +152,9 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function updateTableModel() {
-         var spreadsheet = $scope.resources.spreadsheet;
+         var spreadsheet = $scope.resources.timeSeries;
 
+         console.log( spreadsheet );
          // Data area
          $scope.model.tableModel = spreadsheet.timeGrid.map( function( rowHeader, row ) {
             var rowData = spreadsheet.series.map( function( value, col ) {
