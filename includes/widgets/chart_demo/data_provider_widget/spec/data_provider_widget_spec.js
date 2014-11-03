@@ -39,7 +39,7 @@ define( [
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         it( 'does not publish a didReplace event for the configured resource at the beginning of the page lifecycle if no location is provided.', inject( function( $httpBackend ) {
+         it( 'does not publish a didReplace event for the configured resource at the beginning of the page lifecycle if no location is provided', inject( function( $httpBackend ) {
             testBed_.featuresMock = {
                publish: {
                   resource: 'spreadsheetData'
@@ -58,7 +58,7 @@ define( [
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         it( 'publishes a didReplace event for the configured resource at the beginning of the page lifecycle if a location is provided.', inject( function( $httpBackend ) {
+         it( 'publishes a didReplace event for the configured resource at the beginning of the page lifecycle if a location is provided', inject( function( $httpBackend ) {
             testBed_.featuresMock = {
                publish: {
                   resource: 'spreadsheetData',
@@ -114,7 +114,7 @@ define( [
             $httpBackend.flush();
          } ) );
 
-         it( 'publishes a didReplace event with the file content of the new location when the corresponding button is pressed.', function() {
+         it( 'publishes a didReplace event with the file content of the new location when the corresponding button is pressed', function() {
 
             $httpBackend.expectGET( 'data-set-2.json' ).respond( specData.dataSet2 );
 
