@@ -19,7 +19,7 @@
             "properties": {
                "htmlLabel": {
                   "type": "string",
-                  "description": "Title for selection list"
+                  "description": "List selection title"
                }
             }
          },
@@ -53,6 +53,18 @@
                         }
                      }
                   }
+               }
+            }
+         },
+
+         "messages": {
+            "type": "object",
+            "description": "Configuration of messages published via didEncounterError or didValidate events.",
+            "properties": {
+               "i18nFailedLoadingResource": {
+                  "type": [ "object", "string" ],
+                  "description": "didEncounterError message to publish when a GET for a resource fails. [resource] is replaced by the actual name of the resource.",
+                  "default": "Could not load resource \"[resource]\""
                }
             }
          }

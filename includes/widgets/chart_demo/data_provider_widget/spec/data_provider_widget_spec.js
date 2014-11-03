@@ -28,6 +28,10 @@ define( [
                   {
                      title: 'Data-Set-2',
                      location: 'data-set-2.json'
+                  },
+                  {
+                     title: 'Data-Set-Non-Existing',
+                     location: 'data-set-non-existing.json'
                   }
                ]
             }
@@ -80,6 +84,21 @@ define( [
                   data: specData.dataSet2
                }, jasmine.any( Object )
             );
+
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+         } ) );
+
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+         it( 'publishes a didEncounterError event if the new location is not available', inject( function( $httpBackend ) {
+            $httpBackend.expectGET( 'data-set-non-existing.json' ).respond( 404, 'Not Found' );
+
+            testBed_.scope.useItem( testBed_.featuresMock.data.items[2] );
+            jasmine.Clock.tick( 0 );
+            $httpBackend.flush();
+
+            expect( testBed_.scope.eventBus.publish ).toHaveBeenCalledWith( 'didEncounterError.HTTP_GET', jasmine.any( Object ), jasmine.any( Object ) );
 
             $httpBackend.verifyNoOutstandingExpectation();
             $httpBackend.verifyNoOutstandingRequest();

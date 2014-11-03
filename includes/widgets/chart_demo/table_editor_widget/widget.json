@@ -21,9 +21,14 @@
       "required": [ "timeSeries" ],
 
       "properties": {
-         "htmlTitle": {
-            "type": "string",
-            "description": "Title for the table"
+         "title": {
+            "type": "object",
+            "properties": {
+               "htmlLabel": {
+                  "type": "string",
+                  "description": "Editable table title"
+               }
+            }
          },
          "timeSeries": {
             "type": "object",

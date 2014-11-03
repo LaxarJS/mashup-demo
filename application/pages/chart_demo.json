@@ -18,11 +18,9 @@
          {
             "widget": "chart_demo/data_provider_widget",
             "features": {
-
                "title": {
                   "htmlLabel": "<i class='fa fa-database'></i>Select a Data Source"
                },
-
                "data": {
                   "resource": "timeSeriesData",
                   "items": [
@@ -34,7 +32,7 @@
                      {
                         "title": "Stock Price Example 2",
                         "description": "This example shows 10 series on a grid spanning 5 years.",
-                        "location": "application/data/stock_price_example_2.json"
+                        "location": "application/data/stock_price_example_x.json"
 
                      },
                      {
@@ -53,13 +51,18 @@
                         "location": "application/data/stock_price_example_5.json"
                      }
                   ]
+               },
+               "messages": {
+                  "i18nFailedLoadingResource": "Could not load resource \"[resource]\""
                }
             }
          },
          {
             "widget": "chart_demo/table_editor_widget",
             "features": {
-               "htmlTitle": "<i class='fa fa-table'></i>Edit the Data",
+               "title": {
+                  "htmlLabel": "<i class='fa fa-table'></i>Edit the Data"
+               },
                "timeSeries": {
                   "resource": "timeSeriesData"
                }

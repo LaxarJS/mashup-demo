@@ -18,6 +18,8 @@ define( [
 
    function Controller( $scope, $http ) {
 
+      var publishError = patterns.errors.errorPublisherForFeature( $scope, 'messages' );
+
       $scope.selectedItem = null;
 
       $scope.eventBus.subscribe( 'beginLifecycleRequest', function() {
@@ -43,9 +45,14 @@ define( [
                   data: data
                }, { deliverToSender: false } );
             } )
-            .error( function( data ) {
-               //patterns.errors.errorPublisherForFeature( $scope, 'data', { localizer: localize } );
-               $scope.eventBus.publish( 'didEncounterError.HTTP_GET' );
+            .error( function( data, status, headers, config ) {
+               publishError( 'HTTP_GET', 'i18nFailedLoadingResource', {
+                  resource: resourceId
+               }, {
+                  data: data,
+                  status: status,
+                  headers: headers
+               } );
             } );
       }
 

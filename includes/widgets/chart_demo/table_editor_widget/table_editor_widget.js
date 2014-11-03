@@ -21,7 +21,6 @@ define( [
 
    var EVENT_AFTER_CHANGE = 'axTableEditor.afterChange';
 
-
    Controller.$inject = [ '$scope' ];
 
    function Controller( $scope ) {
@@ -82,7 +81,7 @@ define( [
             var columnOfTimeSeries = timeSeriesKey;
             timeSeries.values = tableModel
                .map( function( row ) {
-                  return row[ columnOfTimeSeries ];
+                  return parseInt( row[ columnOfTimeSeries ], 10 );
                } )
                .filter( function( value, key ) {
                   return tableModel[ key ][ 0 ] !== null && tableModel[ key ][ 0 ] !== '';
