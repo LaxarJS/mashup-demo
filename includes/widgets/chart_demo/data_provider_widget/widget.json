@@ -33,6 +33,10 @@
          "display": {
             "type": "object",
             "properties": {
+               "htmlTitle": {
+                  "type": "string",
+                  "description": "Title for selection list."
+               },
                "dataSets": {
                   "type": "array",
                   "description": "An array of data sets of which a user can choose one to be published.",
@@ -54,13 +58,7 @@
                         }
                      }
                   }
-               },
-               "submitButtonLabel": {
-                  "type": "string",
-                  "description": "Label for the button that triggers the didReplace event for each data set.",
-                  "default": "Submit"
                }
-
             }
          }
       }

@@ -30,6 +30,10 @@
                   "type": "string",
                   "description": "Name of the data resource which should refer to a 2-dimensional array.",
                   "format": "topic"
+               },
+               "htmlTitle": {
+                  "type": "string",
+                  "description": "Title for the table"
                }
             }
          }

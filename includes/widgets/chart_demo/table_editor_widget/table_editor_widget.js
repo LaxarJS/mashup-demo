@@ -21,32 +21,19 @@ define( [
 
    var EVENT_AFTER_CHANGE = 'axTableEditor.afterChange';
 
+   /* global Handsontable */
+
    Controller.$inject = [ '$scope' ];
 
    function Controller( $scope ) {
 
       $scope.model = {};
 
-      //FIXME: Content modification by callback legal here?
-      //var dateRenderer = function (instance, td, row, col, prop, value, cellProperties) {
-      //   Handsontable.DateCell.renderer.apply(this, [instance, td, row, col, prop, value, cellProperties]);
-      //};
-
       $scope.model.settings = {
          rowHeaders: true,
          colHeaders: true,
          contextMenu: true,
-         fillHandle: true,
-         cells: function (row, col, prop) {
-            if (row > 0 && col === 0) {
-               return {
-                  type: 'date',
-                  renderer: Handsontable.DateCell.renderer, //FIXME: Content modification by callback legal here?
-                  // We can simply pass any options to jquery-ui-datepicker here.
-                  dateFormat: 'mm/dd/yy' // Format to be returned by jquery-ui-datepicker.
-               };
-            }
-         }
+         fillHandle: true
       };
       $scope.model.columns = [];
       $scope.model.tableModel = [];
@@ -289,6 +276,16 @@ define( [
             function completeSettings() {
                var settings = ax.object.options( $scope[ directiveName ], baseSettings );
                var columnSettings = $scope[ directiveName + 'Columns' ];
+               settings.cells = function (row, col, prop) {
+                  if (row > 0 && col === 0) {
+                     return {
+                        type: 'date',
+                        renderer: Handsontable.DateCell.renderer, //FIXME: Content modification by callback legal here?
+                        // We can simply pass any options to jquery-ui-datepicker here.
+                        dateFormat: 'mm/dd/yy' // Format to be returned by jquery-ui-datepicker.
+                     };
+                  }
+               };
                return ax.object.options( {
                   data: $scope[ directiveName + 'Rows' ] || [],
                   columns: columnSettings.length ? columnSettings : undefined

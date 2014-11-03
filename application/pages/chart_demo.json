@@ -16,15 +16,6 @@
 
       "content1a": [
          {
-            "widget": "chart_demo/headline_widget",
-            "features": {
-               "headline": {
-                  "htmlText": "Spreadsheet Data Input",
-                  "level": 2
-               }
-            }
-         },
-         {
             "widget": "chart_demo/data_provider_widget",
             "features": {
 
@@ -34,6 +25,7 @@
                },
 
                "display": {
+                  "htmlTitle": "<i class='fa fa-database'></i>Select a Data Source",
                   "dataSets": [
                      {
                         "title": "Stock Price Example 1",
@@ -61,8 +53,7 @@
                         "description": "This example shows 4 series on a grid spanning 50 years.",
                         "location": "application/data/stock_price_example_5.json"
                      }
-                  ],
-                  "submitButtonLabel": "Show"
+                  ]
                }
             }
          },
@@ -70,7 +61,8 @@
             "widget": "chart_demo/table_editor_widget",
             "features": {
                "spreadsheet": {
-                  "resource": "spreadsheetData"
+                  "resource": "spreadsheetData",
+                  "htmlTitle": "<i class='fa fa-table'></i>Edit the Data"
                }
             }
          }
@@ -84,7 +76,7 @@
                   "resource": "spreadsheetData",
                   "chart": {
                   },
-                  "title": "Line Chart"
+                  "htmlTitle": "Line Chart"
                }
             }
          },
@@ -96,7 +88,7 @@
                   "chart": {
                      "type": "pieChart"
                   },
-                  "title": "Pie Chart",
+                  "htmlTitle": "Pie Chart",
                   "caption": "The average of all values of the time series."
                }
             }
@@ -109,7 +101,7 @@
                   "chart": {
                      "type": "multiBarChart"
                   },
-                  "title": "Multi Bar Chart"
+                  "htmlTitle": "Multi Bar Chart"
                }
             }
          }

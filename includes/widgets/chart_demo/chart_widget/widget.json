@@ -25,7 +25,7 @@
                   "description": "Name of the data resource",
                   "format": "topic"
                },
-               "title": {
+               "htmlTitle": {
                   "type": "string"
                },
                "caption": {

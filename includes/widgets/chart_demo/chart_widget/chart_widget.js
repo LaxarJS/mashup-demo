@@ -28,6 +28,8 @@ define( [
 
    var FORCE_Y = 0;
 
+   /* global d3 */
+
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    Controller.$inject = [ '$scope' ];
@@ -55,6 +57,7 @@ define( [
       }
 
       setOptions();
+      $scope.model.config = { refreshDataOnly: true };
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -130,8 +133,7 @@ define( [
 
       function setOptionsFromResource() {
          model.options.chart.xAxis.tickFormat = function( d ) {
-            return d3.time.format( '%Y-%m-%d' )( new Date( d ) );
-            //return d3.time.format( '%x' )( new Date( d ) );
+            return d3.time.format( '%x' )( new Date( d ) );
          };
          model.options.chart.xAxis.axisLabel = resources.display.timeLabel;
          model.options.chart.yAxis.axisLabel =  resources.display.valueLabel;
