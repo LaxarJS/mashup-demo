@@ -32,7 +32,7 @@
                      {
                         "title": "Stock Price Example 2",
                         "description": "This example shows 10 series on a grid spanning 5 years.",
-                        "location": "application/data/stock_price_example_x.json"
+                        "location": "application/data/stock_price_example_2.json"
 
                      },
                      {
