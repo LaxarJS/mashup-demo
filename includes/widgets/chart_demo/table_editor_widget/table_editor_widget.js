@@ -32,7 +32,6 @@ define( [
             contextMenu: true,
             fillHandle: true
          },
-         columns: [],
          tableModel: []
       };
       $scope.resources = {};
@@ -124,7 +123,6 @@ define( [
       return {
          scope: {
             axTableEditor: '=',
-            axTableEditorColumns: '=',
             axTableEditorRows: '='
          },
          link: function( $scope, $element ) {
@@ -162,15 +160,10 @@ define( [
                $element.handsontable( 'loadData', newRows );
             }, true );
 
-            $scope.$watch( directiveName + 'Columns', function() {
-               $element.handsontable( 'updateSettings', completeSettings() );
-            }, true );
-
             //////////////////////////////////////////////////////////////////////////////////////////////////
 
             function completeSettings() {
                var settings = ax.object.options( $scope[ directiveName ], baseSettings );
-               var columnSettings = $scope[ directiveName + 'Columns' ];
                settings.cells = function( row, col, prop ) {
                   if( row > 0 && col === 0 ) {
                      return {
@@ -182,8 +175,7 @@ define( [
                   }
                };
                return ax.object.options( {
-                  data: $scope[ directiveName + 'Rows' ] || [],
-                  columns: columnSettings.length ? columnSettings : undefined
+                  data: $scope[ directiveName + 'Rows' ] || []
                }, settings );
             }
          }
