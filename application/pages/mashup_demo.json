@@ -5,7 +5,7 @@
 
       "header": [
          {
-            "widget": "chart_demo/headline_widget",
+            "widget": "mashup_demo/headline_widget",
             "features": {
                "headline": {
                   "htmlText": "MashupDemo"
@@ -16,7 +16,7 @@
 
       "content1a": [
          {
-            "widget": "chart_demo/data_provider_widget",
+            "widget": "mashup_demo/data_provider_widget",
             "features": {
                "title": {
                   "htmlLabel": "<i class='fa fa-database'></i>Select a Data Source"
@@ -58,7 +58,7 @@
             }
          },
          {
-            "widget": "chart_demo/table_editor_widget",
+            "widget": "mashup_demo/table_editor_widget",
             "features": {
                "title": {
                   "htmlLabel": "<i class='fa fa-table'></i>Edit the Data"
@@ -72,7 +72,7 @@
 
       "content1b": [
          {
-            "widget": "chart_demo/chart_widget",
+            "widget": "mashup_demo/chart_widget",
             "features": {
                "title": {
                   "htmlLabel": "<i class='fa fa-line-chart'></i>Line Chart"
@@ -83,7 +83,7 @@
             }
          },
          {
-            "widget": "chart_demo/chart_widget",
+            "widget": "mashup_demo/chart_widget",
             "features": {
                "title": {
                   "htmlLabel": "<i class='fa fa-pie-chart'></i>Pie Chart"
@@ -98,7 +98,7 @@
             }
          },
          {
-            "widget": "chart_demo/chart_widget",
+            "widget": "mashup_demo/chart_widget",
             "features": {
                "title": {
                   "htmlLabel": "<i class='fa fa-bar-chart'></i>Multi Bar Chart"

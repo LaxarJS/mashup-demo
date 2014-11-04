@@ -1,5 +1,5 @@
 {
-   "name": "widgets.chart_demo.headline_widget",
+   "name": "widgets.mashup_demo.headline_widget",
    "version": "0.1.0",
    "description": "Display a simple headline",
    "license": "MIT",

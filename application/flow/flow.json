@@ -1,11 +1,11 @@
 {
    "places": {
       "entry": {
-         "redirectTo": "chartDemo"
+         "redirectTo": "mashupDemo"
       },
 
-      "chartDemo": {
-         "page":  "chart_demo"
+      "mashupDemo": {
+         "page":  "mashup_demo"
       }
    }
 }

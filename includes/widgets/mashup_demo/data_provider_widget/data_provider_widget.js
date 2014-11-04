@@ -9,7 +9,7 @@ define( [
 ], function( ng, patterns ) {
    'use strict';
 
-   var moduleName = 'widgets.chart_demo.data_provider_widget';
+   var moduleName = 'widgets.mashup_demo.data_provider_widget';
    var module = ng.module( moduleName, [] );
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -8,7 +8,7 @@ define( [
 ], function( ng ) {
    'use strict';
 
-   var moduleName = 'widgets.chart_demo.headline_widget';
+   var moduleName = 'widgets.mashup_demo.headline_widget';
    var module     = ng.module( moduleName, [] );
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////

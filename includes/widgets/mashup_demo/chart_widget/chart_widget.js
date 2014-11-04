@@ -13,7 +13,7 @@ define( [
 ], function( ng, moment, ax, patterns ) {
    'use strict';
 
-   var moduleName = 'widgets.chart_demo.chart_widget';
+   var moduleName = 'widgets.mashup_demo.chart_widget';
    var module     = ng.module( moduleName, [ 'nvd3' ] );
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////

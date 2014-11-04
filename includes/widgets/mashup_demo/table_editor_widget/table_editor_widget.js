@@ -14,7 +14,7 @@ define( [
 ], function( ng, ax, patterns, moment ) {
    'use strict';
 
-   var moduleName = 'widgets.chart_demo.table_editor_widget';
+   var moduleName = 'widgets.mashup_demo.table_editor_widget';
    var module = ng.module( moduleName, [] );
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////

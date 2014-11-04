@@ -1,5 +1,5 @@
 {
-   "name": "widgets.chart_demo.chart_widget",
+   "name": "widgets.mashup_demo.chart_widget",
    "version": "0.1.0",
    "description": "Widget to display a chart from time series data",
    "private": true,
