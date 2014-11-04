@@ -7,7 +7,7 @@ define( [
    '../table_editor_widget',
    'laxar/laxar_testing',
    'laxar_patterns',
-   'json!./spec_data.json'
+   './spec_data'
 ], function( widgetModule, ax, patterns, specData ) {
    'use strict';
 

@@ -8,7 +8,7 @@ define( [
    '../data_provider_widget',
    'laxar/laxar_testing',
    'laxar_patterns',
-   'json!./spec_data.json'
+   './spec_data'
 ], function( ngMocks, widgetModule, ax, patterns, specData ) {
    'use strict';
 
