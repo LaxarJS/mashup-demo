@@ -4,11 +4,12 @@
  * www.laxarjs.org
  */
 define( [
+   'angular-mocks',
    '../data_provider_widget',
    'laxar/laxar_testing',
    'laxar_patterns',
    'json!./spec_data.json'
-], function( widgetModule, ax, patterns, specData ) {
+], function( ngMocks, widgetModule, ax, patterns, specData ) {
    'use strict';
 
    describe( 'A DataProviderWidget', function() {
@@ -51,9 +52,24 @@ define( [
 
       describe( 'with feature data', function() {
 
+         var $httpBackend;
+
+         beforeEach( function() {
+            ngMocks.inject( function( _$httpBackend_ ) {
+               $httpBackend = _$httpBackend_;
+            } );
+         } );
+
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         it( 'publishes a didReplace event for the configured resource at the beginning of the page lifecycle', inject( function( $httpBackend ) {
+         afterEach( function() {
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+         } );
+
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+         it( 'publishes a didReplace event for the configured resource at the beginning of the page lifecycle', function() {
             $httpBackend.expectGET( 'data-set-1.json' ).respond( specData.dataSet1 );
 
             testBed_.eventBusMock.publish( 'beginLifecycleRequest' );
@@ -65,14 +81,11 @@ define( [
                   data: specData.dataSet1
                }, jasmine.any( Object )
             );
-
-            $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();
-         } ) );
+         } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         it( 'publishes a didReplace event with the file content of the new location when the corresponding button is pressed', inject( function( $httpBackend ) {
+         it( 'publishes a didReplace event with the file content of the new location when the corresponding button is pressed', function() {
             $httpBackend.expectGET( 'data-set-2.json' ).respond( specData.dataSet2 );
 
             testBed_.scope.useItem( testBed_.featuresMock.data.items[1] );
@@ -84,14 +97,11 @@ define( [
                   data: specData.dataSet2
                }, jasmine.any( Object )
             );
-
-            $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();
-         } ) );
+         } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         it( 'publishes a didEncounterError event if the new location is not available', inject( function( $httpBackend ) {
+         it( 'publishes a didEncounterError event if the new location is not available', function() {
             $httpBackend.expectGET( 'data-set-non-existing.json' ).respond( 404, 'Not Found' );
 
             testBed_.scope.useItem( testBed_.featuresMock.data.items[2] );
@@ -99,10 +109,7 @@ define( [
             $httpBackend.flush();
 
             expect( testBed_.scope.eventBus.publish ).toHaveBeenCalledWith( 'didEncounterError.HTTP_GET', jasmine.any( Object ), jasmine.any( Object ) );
-
-            $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();
-         } ) );
+         } );
 
       } );
    } );

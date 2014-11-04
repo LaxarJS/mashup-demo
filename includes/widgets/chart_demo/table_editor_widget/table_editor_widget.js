@@ -77,10 +77,9 @@ define( [
             };
          } );
          timeSeries.series.forEach( function( timeSeries, timeSeriesKey ) {
-            var columnOfTimeSeries = timeSeriesKey;
             timeSeries.values = tableModel
                .map( function( row ) {
-                  return parseFloat( row[ columnOfTimeSeries ] );
+                  return parseFloat( row[ timeSeriesKey ] );
                } )
                .filter( function( value, key ) {
                   return tableModel[ key ][ 0 ] !== null && tableModel[ key ][ 0 ] !== '';

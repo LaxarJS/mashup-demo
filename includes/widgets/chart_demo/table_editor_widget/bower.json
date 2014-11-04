@@ -1,7 +1,7 @@
 {
    "name": "widgets.chart_demo.table_editor_widget",
    "version": "0.1.0",
-   "description": "My new LaxarJS widget",
+   "description": "A widget that provides a spreadsheet-like content editor.",
    "license": "MIT",
    "dependencies": {
       "laxar": "LaxarJS/laxar#0.16",

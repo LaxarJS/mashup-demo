@@ -29,14 +29,16 @@ define( [
 
    var FORCE_Y = 0;
 
-   /* global d3 */
+   var SEARCH_PATTERN = /\/series\/(\d+)\/values\/(\d+)/;
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   Controller.$inject = [ '$scope' ];
+   Controller.$inject = [ '$scope', '$window' ];
 
-   function Controller( $scope ) {
-      $scope.model = {};
+   function Controller( $scope, $window ) {
+      $scope.model = {
+         data: []
+      };
       $scope.resources = {};
       var model = $scope.model;
       var resources = $scope.resources;
@@ -63,7 +65,7 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function updatePie() {
-         var data = model.data = model.data || [];
+         var data = model.data;
          data.splice.apply( data, [ 0, data.length ].concat( resources.timeSeries.series.map( function( ts ) {
             return {
                x: ts.label,
@@ -76,27 +78,19 @@ define( [
 
       function isIncremental( patches ) {
          return patches.every( function( patch ) {
-            //FIXME: Should not include label updates, so we do a regex check to match as tight as possible.
-            //return patch.op === 'replace' && patch.path.indexOf( '/series/') && patch.path.indexOf('/series/label' ) === -1;
-            return patch.op === 'replace' && patch.path.match(/\/series\/(\d+)\/values\/(\d+)/) !== null;
+            return patch.op === 'replace' && SEARCH_PATTERN.exec( patch.path ) !== null;
          } );
       }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function applyPatches( event ) {
+
          if( isIncremental( event.patches ) ) {
-            event.patches.forEach( function ( patch ) {
-               //FIXME: Should not include label updates, so we do a regex check to match as tight as possible.
-               //var path = patch.path.split( '/' ).slice( 1 );
-               //if( path[ 0 ] === 'series' ) {
-               //   var seriesKey = path[ 1 ];
-               //   var valueKey = path[ 3 ];
-               //   model.data[ seriesKey ].values[ valueKey ].y = patch.value;
-               //}
-               var matches = patch.path.match(/\/series\/(\d+)\/values\/(\d+)/);
-               if (matches !== null) {
-                  model.data[ matches[1] ].values[ matches[2] ].y = patch.value;
+            event.patches.forEach( function( patch ) {
+               var matches = SEARCH_PATTERN.exec( patch.path );
+               if( matches !== null ) {
+                  model.data[ matches[ 1 ] ].values[ matches[ 2 ] ].y = patch.value;
                }
             } );
          }
@@ -109,16 +103,14 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function convertToChartModel() {
-         var data = model.data = model.data || [];
+         var data = model.data;
          data.splice( 0, data.length );
          resources.timeSeries.series.forEach( function( seriesObject, key ) {
-            var values= [];
-
-            seriesObject.values.forEach( function( value, timeTickKey ) {
-               values.push( {
+            var values = seriesObject.values.map( function( value, timeTickKey ) {
+               return {
                   x: moment( resources.timeSeries.timeGrid[ timeTickKey ], 'YYYY-MM-DD' ).format( 'X' ) * 1000,
                   y: value
-               } );
+               };
             } );
 
             data.push( {
@@ -131,10 +123,9 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function calculateAverageValue( values ){
-         var sum = 0;
-         values.forEach( function( value ) {
-            sum = sum + value;
-         } );
+         var sum = values.reduce( function( sum, value ) {
+            return sum + value;
+         }, 0 );
          return Math.round( sum * 10 / values.length ) / 10;
       }
 
@@ -142,7 +133,7 @@ define( [
 
       function setOptionsFromResource() {
          model.options.chart.xAxis.tickFormat = function( d ) {
-            return d3.time.format( '%x' )( new Date( d ) );
+            return $window.d3.time.format( '%x' )( new Date( d ) );
          };
          model.options.chart.xAxis.axisLabel = resources.timeSeries.timeLabel;
          model.options.chart.yAxis.axisLabel =  resources.timeSeries.valueLabel;

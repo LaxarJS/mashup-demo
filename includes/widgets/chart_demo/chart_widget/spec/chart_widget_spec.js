@@ -6,28 +6,31 @@
 define( [
    '../chart_widget',
      'laxar/laxar_testing',
-   'json!./spec_data.json'
+   './spec_data'
 ], function( widgetModule, ax, specData ) {
    'use strict';
 
    describe( 'A ChartWidget', function() {
 
       var testBed_;
-      var configuration = {
-         timeSeries: {
-            resource: 'timeSeriesData'
-         },
-         chart: {
-            height: 350
-         }
-      };
 
       beforeEach( function setup() {
          testBed_ = ax.testing.portalMocksAngular.createControllerTestBed( widgetModule.name );
-         testBed_.featuresMock = configuration;
+         testBed_.featuresMock = {
+            timeSeries: {
+               resource: 'timeSeriesData'
+            },
+            chart: {
+               height: 350
+            }
+         };
 
          testBed_.useWidgetJson();
          testBed_.setup();
+
+         testBed_.scope.api = {
+            updateWithOptions: jasmine.createSpy( 'updateWithOptions' )
+         };
       } );
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,12 +44,13 @@ define( [
       describe( 'with feature timeSeries and feature chart', function() {
 
          beforeEach( function() {
-
             testBed_.eventBusMock.publish( 'didReplace.timeSeriesData', {
                resource: 'timeSeriesData',
                data: specData.originalResource
             } );
             jasmine.Clock.tick( 0 );
+
+            testBed_.scope.api.updateWithOptions.reset();
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,9 +72,12 @@ define( [
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'sets the labels for chart from resource', function() {
-            expect( testBed_.scope.model.options.chart.xAxis.axisLabel ).toEqual( specData.originalResource.timeLabel );
-            expect( testBed_.scope.model.options.chart.yAxis.axisLabel ).toEqual( specData.originalResource.valueLabel );
+            expect( testBed_.scope.model.options.chart.xAxis.axisLabel )
+               .toEqual( specData.originalResource.timeLabel );
+            expect( testBed_.scope.model.options.chart.yAxis.axisLabel )
+               .toEqual( specData.originalResource.valueLabel );
          } );
+
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'sets the chart height from feature configuration', function() {
@@ -90,6 +97,26 @@ define( [
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+         it( 'updates the resource after receiving a patch with new values only', function() {
+            testBed_.eventBusMock.publish( 'didUpdate.timeSeriesData', {
+               resource: 'timeSeriesData',
+               patches: specData.patchesWithNewValuesOnly
+            } );
+            jasmine.Clock.tick( 0 );
+            expect( testBed_.scope.api.updateWithOptions ).not.toHaveBeenCalled();
+         } );
+
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+         it( 'updates the resource after receiving a patch with new values and a new label', function() {
+            testBed_.eventBusMock.publish( 'didUpdate.timeSeriesData', {
+               resource: 'timeSeriesData',
+               patches: specData.patchesWithNewValuesAndLabel
+            } );
+            jasmine.Clock.tick( 0 );
+            expect( testBed_.scope.api.updateWithOptions ).toHaveBeenCalled();
+         } );
       } );
    } );
 } );
