@@ -104,20 +104,19 @@ define( [
 
       function convertToChartModel() {
          var data = model.data;
-         data.splice( 0, data.length );
-         resources.timeSeries.series.forEach( function( seriesObject, key ) {
-            var values = seriesObject.values.map( function( value, timeTickKey ) {
+         data.splice.apply( data, [ 0, data.length ].concat( resources.timeSeries.series.map( function( ts ) {
+            var values = ts.values.map( function( value, timeTickKey ) {
                return {
                   x: moment( resources.timeSeries.timeGrid[ timeTickKey ], 'YYYY-MM-DD' ).format( 'X' ) * 1000,
                   y: value
                };
             } );
 
-            data.push( {
+            return {
                values: values,
-               key: seriesObject.label
-            } );
-         } );
+               key: ts.label
+            };
+         } ) ) );
       }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////

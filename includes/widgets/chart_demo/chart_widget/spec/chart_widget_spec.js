@@ -5,7 +5,7 @@
  */
 define( [
    '../chart_widget',
-     'laxar/laxar_testing',
+   'laxar/laxar_testing',
    './spec_data'
 ], function( widgetModule, ax, specData ) {
    'use strict';
@@ -105,6 +105,11 @@ define( [
             } );
             jasmine.Clock.tick( 0 );
             expect( testBed_.scope.api.updateWithOptions ).not.toHaveBeenCalled();
+
+            var modifiedChartModel =  ax.object.deepClone( specData.expectedChartModel );
+            modifiedChartModel[ 0 ].values[ 0 ].y = 32;
+            modifiedChartModel[ 1 ].values[ 2 ].y = 22;
+            expect( testBed_.scope.model.data ).toEqual( modifiedChartModel );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -116,6 +121,12 @@ define( [
             } );
             jasmine.Clock.tick( 0 );
             expect( testBed_.scope.api.updateWithOptions ).toHaveBeenCalled();
+
+            var modifiedChartModel =  ax.object.deepClone( specData.expectedChartModel );
+            modifiedChartModel[ 0 ].values[ 0 ].y = 32;
+            modifiedChartModel[ 1 ].key = 'New Company';
+            modifiedChartModel[ 1 ].values[ 2 ].y = 22;
+            expect( testBed_.scope.model.data ).toEqual( modifiedChartModel );
          } );
       } );
    } );
