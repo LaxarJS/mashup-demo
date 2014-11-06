@@ -4,6 +4,10 @@
  * www.laxarjs.org
  */
 
+.table-editor-widget {
+  margin-bottom: 50px;
+}
+
 .table-editor-widget .abp-active {
   color: #6bbc6b;
 }
