@@ -1,5 +1,5 @@
 {
-   "name": "chart_demo",
+   "name": "mashup_demo",
    "version": "0.1.0",
    "description": "Demo showing the interaction between TableEditorWidget and ChartWidget",
    "license": "MIT",
