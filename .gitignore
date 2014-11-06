@@ -4,4 +4,4 @@ atlassian-ide-plugin.xml
 .sass-cache
 /node_modules
 *.backup.json
-chart_demo-*.zip
+mashup_demo-*.zip
