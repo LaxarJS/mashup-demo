@@ -69,22 +69,6 @@ define( [
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         it( 'publishes a didReplace event for the configured resource at the beginning of the page lifecycle', function() {
-            $httpBackend.expectGET( 'data-set-1.json' ).respond( specData.dataSet1 );
-
-            testBed_.eventBusMock.publish( 'beginLifecycleRequest' );
-            jasmine.Clock.tick( 0 );
-            $httpBackend.flush();
-
-            expect( testBed_.scope.eventBus.publish ).toHaveBeenCalledWith( 'didReplace.timeSeriesData', {
-                  resource: 'timeSeriesData',
-                  data: specData.dataSet1
-               }, jasmine.any( Object )
-            );
-         } );
-
-         /////////////////////////////////////////////////////////////////////////////////////////////////////
-
          it( 'publishes a didReplace event with the file content of the new location when the corresponding button is pressed', function() {
             $httpBackend.expectGET( 'data-set-2.json' ).respond( specData.dataSet2 );
 

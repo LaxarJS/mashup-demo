@@ -21,7 +21,7 @@ define( [
                resource: 'timeSeriesData'
             },
             chart: {
-               height: 350
+               type: 'multiBarChart'
             }
          };
 
@@ -76,12 +76,6 @@ define( [
                .toEqual( specData.originalResource.timeLabel );
             expect( testBed_.scope.model.options.chart.yAxis.axisLabel )
                .toEqual( specData.originalResource.valueLabel );
-         } );
-
-         /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-         it( 'sets the chart height from feature configuration', function() {
-            expect( testBed_.scope.model.options.chart.height ).toEqual( 350 );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
