@@ -5,23 +5,38 @@
  */
 
 .data-provider-widget {
-   position: relative;
+  min-height: 334px;
+}
+
+.data-provider-widget .abp-active {
+  color: #737373;
+}
+
+.data-provider-widget .abp-active i {
+  background-color: #737373;
+}
+
+.data-provider-widget .abp-col-1 {
+  width: 20px;
+}
+
+.data-provider-widget .table {
+  border-radius: 0;
+}
+
+.data-provider-widget tr:first-child > td {
+  border-top: none;
 }
 
 .data-provider-widget tbody > tr.selected > td {
-   color: white;
-   background: #5bc0de;
+  color: white;
+  font-weight: bold;
+  background: #5a97c2;
 }
 
 .data-provider-widget .table-hover > tbody > tr:hover > td {
-   background-color: #b5deea;
-   color: #037a9d;
-}
-
-.data-provider-widget .selectable {
-   cursor: pointer;
-}
-
-.data-provider-widget .clickable {
-   cursor: auto;
+  cursor: pointer;
+  background-color: #c6d7ee;
+  color: #1f77b4;
+  font-weight: bold;
 }

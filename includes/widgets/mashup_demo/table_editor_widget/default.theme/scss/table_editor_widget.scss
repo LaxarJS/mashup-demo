@@ -8,5 +8,58 @@
 @import "variables_all";
 
 .table-editor-widget {
-   overflow-x: auto;
+
+   $abp-color-green-01: #6bbc6b;
+
+   .abp-active {
+      color: $abp-color-green-01;
+
+      i {
+         background-color: $abp-color-green-01;
+      }
+   }
+
+   .abp-no-data {
+      height: 150px;
+      border: 1px dashed #ccc;
+      position: relative;
+
+      &:after {
+         content: "No data, select an example!";
+         font-weight: bold;
+         color: #ccc;
+         display: block;
+         position: relative;
+         top: 50%;
+         transform: translateY(-50%);
+         text-align: center;
+      }
+   }
+
+   .abp-data {
+      overflow: auto;
+      max-height: 620px;
+      position: relative;
+   }
+
+   .handsontable .handsontable table {
+      box-shadow: none;
+   }
+
+   .ht_clone_corner,
+   .ht_clone_left {
+      display: none;
+   }
+
+   .htContainer,
+   .ht_clone_top {
+      width: 100%;
+      table {
+         width: 100%;
+      }
+   }
+   .wtBorder.current.corner {
+      margin-top: -2px;
+      margin-left: -3px;
+   }
 }

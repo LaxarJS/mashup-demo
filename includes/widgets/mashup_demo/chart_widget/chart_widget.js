@@ -20,16 +20,52 @@ define( [
 
    // Chart Styling
 
-   var MARGIN_TOP = 20;
-   var MARGIN_RIGHT = 60;
-   var MARGIN_BOTTOM = 40;
-   var MARGIN_LEFT = 55;
+
    var TRANSITION_DURATION = 250;
    var Y_AXIS_LABEL_DISTANCE = 30;
 
    var FORCE_Y = 0;
 
    var SEARCH_PATTERN = /\/series\/(\d+)\/values\/(\d+)/;
+
+   var chartConfigurations = {
+      pieChart: {
+         chart: {
+            margin: { bottom: 0 },
+            height: 180,
+            pie: {
+               donut: true,
+               showLabels: false,
+               margin: {
+                  top: 0,
+                  bottom: 0
+               }
+            },
+         },
+         caption: {
+            enable: true,
+            text: 'The average of all values of the time series.'
+         }
+      },
+      stackedAreaChart: {
+         chart: {
+            margin: {
+               right: 30,
+               bottom: 40
+            },
+            height: 260
+         }
+      },
+      multiBarChart: {
+         chart: {
+            margin: {
+               right: 0,
+               bottom: 40
+            },
+            height: 260
+         }
+      }
+   };
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -144,32 +180,20 @@ define( [
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       function setOptions() {
-         model.options = {
-            chart: {
-               type: features.chart.type,
-               margin: {
-                  top: MARGIN_TOP,
-                  right: MARGIN_RIGHT,
-                  bottom: MARGIN_BOTTOM,
-                  left: MARGIN_LEFT
-               },
-               useInteractiveGuideline: true,
-               transitionDuration: TRANSITION_DURATION,
-               xAxis: {
-               },
-               yAxis: {
-                  axisLabelDistance: Y_AXIS_LABEL_DISTANCE
-               },
-               forceY: [ FORCE_Y ]
-            }
+         var chartType = features.chart.type;
+         var options = ax.object.deepClone( chartConfigurations[ chartType ] );
+
+         var chartOptions = options.chart;
+         chartOptions.type = chartType;
+         chartOptions.useInteractiveGuideline = true;
+         chartOptions.transitionDuration = TRANSITION_DURATION;
+         chartOptions.xAxis = {};
+         chartOptions.yAxis = {
+            axisLabelDistance: Y_AXIS_LABEL_DISTANCE
          };
-         model.options.chart.height = features.chart.height;
-         if( features.chart.caption ) {
-            model.options.caption = {
-               enable: true,
-               text: features.chart.caption
-            };
-         }
+         chartOptions.forceY = [ FORCE_Y ];
+
+         model.options = options;
       }
    }
 

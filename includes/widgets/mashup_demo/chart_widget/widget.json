@@ -46,17 +46,9 @@
             "properties": {
                "type": {
                   "type": "string",
-                  "default": "lineChart",
+                  "enum": [ "pieChart", "stackedAreaChart", "multiBarChart" ],
+                  "default": "pieChart",
                   "description": "Type of the chart, excepted types are defined in external library NVD3."
-               },
-               "height": {
-                  "type": "number",
-                  "default": 260,
-                  "description": "Height of the chart"
-               },
-               "caption": {
-                  "type": "string",
-                  "description": "A text explaining the chart."
                }
             }
          }

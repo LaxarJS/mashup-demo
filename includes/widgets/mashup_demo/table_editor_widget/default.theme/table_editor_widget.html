@@ -1,4 +1,10 @@
-<h3 data-ng-if="features.title.htmlLabel" data-ng-bind-html="features.title.htmlLabel"></h3>
-<div data-ax-table-editor-rows="model.tableModel"
+<h3 data-ng-class="{ 'abp-active': model.tableModel.length > 0 }"
+    data-ng-if="features.title.htmlLabel"
+    data-ng-bind-html="features.title.htmlLabel"></h3>
+<div class="abp-data"
+     data-ng-if="model.tableModel.length > 0"
+     data-ax-table-editor-rows="model.tableModel"
      data-ax-table-editor="model.settings">
 </div>
+<div class="abp-no-data"
+     data-ng-if="model.tableModel.length == 0"></div>

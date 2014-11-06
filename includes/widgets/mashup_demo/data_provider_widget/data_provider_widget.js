@@ -22,11 +22,6 @@ define( [
 
       $scope.selectedItem = null;
 
-      $scope.eventBus.subscribe( 'beginLifecycleRequest', function() {
-         var data = $scope.features.data;
-         publishResource( data.resource, data.items[ 0 ].location );
-      } );
-
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       $scope.useItem = function( item ) {

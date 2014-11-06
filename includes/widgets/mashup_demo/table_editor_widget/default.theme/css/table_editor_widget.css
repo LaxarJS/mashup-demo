@@ -3,10 +3,61 @@
  * Released under the MIT license.
  * www.laxarjs.org
  */
-@charset "UTF-8";
 
+.table-editor-widget .abp-active {
+  color: #6bbc6b;
+}
 
-.table-editor-widget {
-   overflow-x: auto;
-   overflow-y: hidden;
+.table-editor-widget .abp-active i {
+  background-color: #6bbc6b;
+}
+
+.table-editor-widget .abp-no-data {
+  height: 150px;
+  border: 1px dashed #ccc;
+  position: relative;
+}
+
+.table-editor-widget .abp-no-data:after {
+  content: "No data, select an example!";
+  font-weight: bold;
+  color: #ccc;
+  display: block;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+.table-editor-widget .abp-data {
+  overflow: auto;
+  max-height: 620px;
+  position: relative;
+}
+
+.table-editor-widget .handsontable .handsontable table {
+  box-shadow: none;
+}
+
+.table-editor-widget .ht_clone_corner,
+.table-editor-widget .ht_clone_left {
+  display: none;
+}
+
+.table-editor-widget .htContainer,
+.table-editor-widget .ht_clone_top {
+  width: 100%;
+}
+
+.table-editor-widget .htContainer table,
+.table-editor-widget .ht_clone_top table {
+  width: 100%;
+}
+
+.table-editor-widget .wtBorder.current.corner {
+  margin-top: -2px;
+  margin-left: -3px;
 }

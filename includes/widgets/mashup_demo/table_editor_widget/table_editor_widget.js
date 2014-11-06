@@ -65,7 +65,7 @@ define( [
 
          timeSeries.timeGrid = tableModel
             .map( function( row ) {
-               return row[ 0 ] && moment( row[ 0 ], 'MM/DD/YYYY' ).format( 'YYYY-MM-DD' );
+               return row[ 0 ] && moment( row[ 0 ], 'YYYY-MM-DD' ).format( 'YYYY-MM-DD' );
             } )
             .filter( function( timeTick ) {
                return timeTick !== null && timeTick !== '';
@@ -101,7 +101,7 @@ define( [
             var rowData = timeSeries.series.map( function( value, col ) {
                return value.values[ row ];
             } );
-            rowData.unshift( moment( rowHeader, 'YYYY-MM-DD' ).format( 'MM/DD/YYYY' ) );
+            rowData.unshift( moment( rowHeader, 'YYYY-MM-DD' ).format( 'YYYY-MM-DD' ) );
             return rowData;
          } );
 
@@ -169,7 +169,11 @@ define( [
                         type: 'date',
                         renderer: $window.Handsontable.DateCell.renderer,
                         // We can simply pass any options to jquery-ui-datepicker here.
-                        dateFormat: 'mm/dd/yy' // Format to be returned by jquery-ui-datepicker.
+                        dateFormat: 'yy-mm-dd', // Format to be returned by jquery-ui-datepicker.
+                        showButtonPanel: false,
+                        beforeShow: function( input, datepicker ) {
+                           debugger;
+                        }
                      };
                   }
                };
