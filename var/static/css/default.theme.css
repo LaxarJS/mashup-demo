@@ -10493,6 +10493,7 @@ a,
   border: none;
   margin: 2px;
   padding-top: 0;
+  box-shadow: none;
 }
 
 @media (max-width: 991px) {

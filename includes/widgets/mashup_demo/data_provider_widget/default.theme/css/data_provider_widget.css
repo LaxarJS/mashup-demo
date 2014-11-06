@@ -6,6 +6,8 @@
 
 .data-provider-widget {
   min-height: 334px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid transparent;
 }
 
 .data-provider-widget .abp-active {

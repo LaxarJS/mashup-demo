@@ -1,12 +1,12 @@
 # LaxarJS MashupDemo
 
-The *LaxarJS MashupDemo* is a web application which combines two external libraries, a data grid editor [(Handsontable)](http://handsontable.com/) and a charting library [(Angular-nvD3)](http://krispo.github.io/angular-nvd3) by using the LaxarJS event bus. The MashupDemo is implemented using the [LaxarJS](http://laxarjs.org) web application framework.
+The *LaxarJS MashupDemo* is a web application which combines two external libraries, a data grid editor ([Handsontable](http://handsontable.com/)) and a charting library ([Angular-nvD3](http://krispo.github.io/angular-nvd3)) by using the LaxarJS event bus. The MashupDemo is implemented using the [LaxarJS](http://laxarjs.org) web application framework.
 
 The demo consists of a small set of LaxarJS widgets implemented in AngularJS.
 
 * [Show the live demo](http://laxarjs.github.io/mashup_demo/)
 
-* [Read the tutorial](docs/tutorials/include_external_library.md)
+* [Read the tutorial](docs/mashup_tutorial.md)
 
 * [LaxarJS Homepage](http://laxarjs.org)
 
