@@ -65,10 +65,10 @@ define( [
 
          timeSeries.timeGrid = tableModel
             .map( function( row ) {
-               return row[ 0 ] && moment( row[ 0 ], 'YYYY-MM-DD' ).format( 'YYYY-MM-DD' );
+               return row[ 0 ] &&  moment( row[ 0 ], 'YYYY-MM-DD' ).isValid() && moment( row[ 0 ], 'YYYY-MM-DD' ).format( 'YYYY-MM-DD' );
             } )
-            .filter( function( timeTick ) {
-               return timeTick !== null && timeTick !== '';
+            .filter( function( timeTick, rowIndex ) {
+               return rowIndex > 0 && moment( timeTick, 'YYYY-MM-DD' ).isValid();
             } );
 
          timeSeries.series = tableModel[ 0 ].map( function( columnLabel ) {
@@ -81,8 +81,8 @@ define( [
                .map( function( row ) {
                   return parseFloat( row[ timeSeriesKey ] );
                } )
-               .filter( function( value, key ) {
-                  return tableModel[ key ][ 0 ] !== null && tableModel[ key ][ 0 ] !== '';
+               .filter( function( value, rowIndex ) {
+                  return rowIndex > 0 && moment( tableModel[ rowIndex ][0], 'YYYY-MM-DD' ).isValid();
                } );
          } );
          timeSeries.series = timeSeries.series.filter( function( timeSeries ) {
@@ -101,7 +101,7 @@ define( [
             var rowData = timeSeries.series.map( function( value, col ) {
                return value.values[ row ];
             } );
-            rowData.unshift( moment( rowHeader, 'YYYY-MM-DD' ).format( 'YYYY-MM-DD' ) );
+            rowData.unshift( rowHeader );
             return rowData;
          } );
 
@@ -170,10 +170,7 @@ define( [
                         renderer: $window.Handsontable.DateCell.renderer,
                         // We can simply pass any options to jquery-ui-datepicker here.
                         dateFormat: 'yy-mm-dd', // Format to be returned by jquery-ui-datepicker.
-                        showButtonPanel: false,
-                        beforeShow: function( input, datepicker ) {
-                           debugger;
-                        }
+                        showButtonPanel: false
                      };
                   }
                };
