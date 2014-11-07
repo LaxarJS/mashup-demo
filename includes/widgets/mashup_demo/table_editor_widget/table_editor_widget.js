@@ -79,7 +79,7 @@ define( [
          timeSeries.series.forEach( function( timeSeries, timeSeriesKey ) {
             timeSeries.values = tableModel
                .map( function( row ) {
-                  return parseFloat( row[ timeSeriesKey ] );
+                  return row[ timeSeriesKey ] !== '' ? parseFloat( row[ timeSeriesKey ] ) : null;
                } )
                .filter( function( value, rowIndex ) {
                   return rowIndex > 0 && moment( tableModel[ rowIndex ][0], 'YYYY-MM-DD' ).isValid();
