@@ -11,7 +11,7 @@ define( [
    'handsontable',
    'css!handsontable',
    'jquery_ui/datepicker'
-], function( ng, ax, patterns, moment ) {
+], function( ng, ax, patterns, moment, handsontable ) {
    'use strict';
 
    var moduleName = 'widgets.mashup_demo.table_editor_widget';
@@ -118,7 +118,8 @@ define( [
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    var directiveName = 'axTableEditor';
-   module.directive( directiveName, [ '$window', function( $window ) {
+   module.directive( directiveName, [ function() {
+
       return {
          scope: {
             axTableEditor: '=',
@@ -167,7 +168,7 @@ define( [
                   if( row > 0 && col === 0 ) {
                      return {
                         type: 'date',
-                        renderer: $window.Handsontable.DateCell.renderer,
+                        renderer: handsontable.DateCell.renderer,
                         // We can simply pass any options to jquery-ui-datepicker here.
                         dateFormat: 'yy-mm-dd', // Format to be returned by jquery-ui-datepicker.
                         showButtonPanel: false
