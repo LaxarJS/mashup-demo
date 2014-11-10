@@ -280,7 +280,7 @@ In [require_config.js](../require_config.js) we have to make sure that its direc
 It also depends on the *jQuery UI Datepicker*, if the date type is used in table cells.
 These dependencies have to be configured in a so-called *[shim config](http://requirejs.org/docs/api.html#config-shim)*:
 
-```JSON
+```javascript
 shim: {
    ...
    handsontable: {
@@ -299,7 +299,7 @@ shim: {
 We need to add suitable *[path mappings](http://requirejs.org/docs/api.html#config-paths)* to *Numeral.js* and *Handsontable* as well:
 
 
-```JSON
+```javascript
 paths: {
    ...
    numeral: 'numeral/numeral',
@@ -312,7 +312,7 @@ CSS files are loaded by *[require-css](https://github.com/guybedford/require-css
 We have to make sure, that it's used if we prefix a required module by `css!`.
 We do this by a *[map config](http://requirejs.org/docs/api.html#config-map)*:
 
-```JSON
+```javascript
 map: {
    '*': {
       'css': 'require-css/css'
@@ -323,7 +323,7 @@ map: {
 The following code snippet shows how to include *Handsontable* and the required CSS as well as the
 *jQuery UI Datepicker* in the TableEditorWidget:
 
-```JSON
+```javascript
 define( [
    ...
    'handsontable',
@@ -354,7 +354,7 @@ Angular-nvD3 depends on *[NVD3](http://nvd3.org/)* and *AngularJS* itself.
 NVD3 depends on *[D3](http://d3js.org/)*.
 These dependencies are configured in a shim config:
 
-```JSON
+```javascript
 shim: {
    ...
    d3: {
@@ -385,7 +385,7 @@ shim: {
 
 As in the above case we need to add suitable path mappings as well:
 
-```JSON
+```javascript
 paths: {
    d3: 'd3/d3',
    nvd3: 'nvd3/nv.d3',
@@ -397,7 +397,7 @@ paths: {
 The following code snippet shows how to include *Angular-nvD3* and the required CSS:
 
 
-```JSON
+```javascript
 define( [
    ...
    'angular-nvd3',
