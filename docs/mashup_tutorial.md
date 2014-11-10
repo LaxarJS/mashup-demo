@@ -387,6 +387,7 @@ As in the above case we need to add suitable path mappings as well:
 
 ```javascript
 paths: {
+   ...
    d3: 'd3/d3',
    nvd3: 'nvd3/nv.d3',
    'angular-nvd3': 'angular-nvd3/dist/angular-nvd3',
