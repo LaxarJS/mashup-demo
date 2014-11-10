@@ -14,7 +14,7 @@ define( [
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   Controller.$inject = [ '$scope', '$http' ];
+   Controller.$inject = ['$scope', '$http'];
 
    function Controller( $scope, $http ) {
 
@@ -27,22 +27,19 @@ define( [
       $scope.useItem = function( item ) {
          var data = $scope.features.data;
          $scope.selectedItem = item;
-         publishResource( data.resource, item.location );
+         readAndPublishResource( data.resource, item.location );
       };
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      function publishResource( resourceId, location ) {
+      function readAndPublishResource( resourceName, location ) {
          $http.get( location )
             .success( function( data ) {
-               $scope.eventBus.publish( 'didReplace.' + resourceId, {
-                  resource: resourceId,
-                  data: data
-               }, { deliverToSender: false } );
+               publishResource( resourceName, data );
             } )
-            .error( function( data, status, headers, config ) {
+            .error( function( data, status, headers ) {
                publishError( 'HTTP_GET', 'i18nFailedLoadingResource', {
-                  resource: resourceId
+                  resource: resourceName
                }, {
                   data: data,
                   status: status,
@@ -51,6 +48,14 @@ define( [
             } );
       }
 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      function publishResource( resourceName, data ) {
+         $scope.eventBus.publish( 'didReplace.' + resourceName, {
+            resource: resourceName,
+            data: data
+         }, { deliverToSender: false } );
+      }
    }
 
    module.controller( moduleName + '.Controller', Controller );
