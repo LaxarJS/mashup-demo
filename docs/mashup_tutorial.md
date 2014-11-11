@@ -138,7 +138,7 @@ Further examples of valid event names can be found [here](https://github.com/Lax
 Apart from the event name, an event may also have a *payload*.
 There are two pieces of information that interested parties need: the name of the resource that has been replaced and the new representation.
 Thus we provide an object with the following attributes:
-* `resource`: the name of the resource we configured by the feature `data` of the DataProviderWidget (here `timeSeriesData`) and
+* `resource`: the name of the resource (here: `timeSeriesData`) and
 * `data`: the new representation of the resource.
 
 The event bus delivers this resource to all widgets that have subscribed to replace events: the TableEditorWidget and the three ChartWidgets.
@@ -215,9 +215,8 @@ Let's take a look at the transmitted resource before getting to the update mecha
 The representation of the resource neither equals the internal representation of data in *Handsontable* nor the representation of data in *Angular-nvD3*.
 What we do instead is to convert the data back and forth between the representation of the resource and the internal representations.
 We do this to have a representation that is not strongly connected to one of the libraries but rather fits to a potentially larger number of widgets.
-
-This is done in function `updateTableModel()` of [table_editor_widget.js](../includes/widgets/mashup_demo/table_editor_widget/table_editor_widget.js)
-and function `convertToChartModel()` of [chart_widget.js](../includes/widgets/mashup_demo/chart_widget/chart_widget.js).
+Conversion into the internal representations is done in function `updateTableModel()` of [table_editor_widget.js](../includes/widgets/mashup_demo/table_editor_widget/table_editor_widget.js)
+and functions `convertResourceToPieModel()` and `convertResourceToChartModel()` of [chart_widget.js](../includes/widgets/mashup_demo/chart_widget/chart_widget.js).
 
 ### Resource Update: the TableEditorWidget ###
 
