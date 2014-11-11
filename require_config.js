@@ -62,11 +62,7 @@ var require = {
          exports: 'nv'
       },
       'angular-nvd3': {
-         deps: [ 'angular', 'nvd3' ],
-         init: function ( angular ) {
-            'use strict';
-            return angular;
-         }
+         deps: [ 'angular', 'nvd3' ]
       }
    },
    packages: [
