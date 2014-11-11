@@ -11,28 +11,6 @@ var require = {
          ],
          exports: 'angular'
       },
-      d3: {
-         exports: 'd3',
-         init: function () {
-            'use strict';
-            return this.d3;
-         }
-      },
-      nvd3: {
-         deps: [ 'd3' ],
-         exports: 'nvd3',
-         init: function () {
-            'use strict';
-            return this.nv;
-         }
-      },
-      'angular-nvd3': {
-         deps: [ 'nvd3', 'angular' ],
-         init: function ( angular ) {
-            'use strict';
-            return angular;
-         }
-      },
       'angular-mocks': {
          deps: [
             'angular'
@@ -74,9 +52,20 @@ var require = {
           deps: [
               'jquery', 'numeral'
           ],
-         init: function() {
+         exports: 'Handsontable'
+      },
+      d3: {
+         exports: 'd3'
+      },
+      nvd3: {
+         deps: [ 'd3' ],
+         exports: 'nv'
+      },
+      'angular-nvd3': {
+         deps: [ 'angular', 'nvd3' ],
+         init: function ( angular ) {
             'use strict';
-            return this.Handsontable;
+            return angular;
          }
       }
    },
