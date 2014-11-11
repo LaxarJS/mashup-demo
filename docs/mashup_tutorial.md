@@ -294,10 +294,7 @@ shim: {
       deps: [
          'jquery', 'numeral'
       ],
-      init: function() {
-         'use strict';
-         return this.Handsontable;
-      }
+      exports: 'Handsontable'
    }
    ...
 }
@@ -365,28 +362,16 @@ These dependencies are configured in a shim config:
 shim: {
    ...
    d3: {
-       exports: 'd3',
-       init: function () {
-          'use strict';
-          return this.d3;
-       }
-    },
-    nvd3: {
-       deps: [ 'd3' ],
-       exports: 'nvd3',
-       init: function () {
-          'use strict';
-          return this.nv;
-       }
-    },
-    'angular-nvd3': {
-       deps: [ 'nvd3', 'angular' ],
-       init: function ( angular ) {
-          'use strict';
-          return angular;
-       }
-    }
-    ...
+      exports: 'd3'
+   },
+   nvd3: {
+      deps: [ 'd3' ],
+      exports: 'nv'
+   },
+   'angular-nvd3': {
+      deps: [ 'angular', 'nvd3' ]
+   }
+   ...
 }
 ```
 
