@@ -11,28 +11,6 @@ var require = {
          ],
          exports: 'angular'
       },
-      d3: {
-         exports: 'd3',
-         init: function () {
-            'use strict';
-            return this.d3;
-         }
-      },
-      nvd3: {
-         deps: [ 'd3' ],
-         exports: 'nvd3',
-         init: function () {
-            'use strict';
-            return this.nv;
-         }
-      },
-      'angular-nvd3': {
-         deps: [ 'nvd3', 'angular' ],
-         init: function ( angular ) {
-            'use strict';
-            return angular;
-         }
-      },
       'angular-mocks': {
          deps: [
             'angular'
@@ -72,12 +50,19 @@ var require = {
       },
       handsontable: {
           deps: [
-              'jquery'
+              'jquery', 'numeral'
           ],
-         init: function() {
-            'use strict';
-            return this.Handsontable;
-         }
+         exports: 'Handsontable'
+      },
+      d3: {
+         exports: 'd3'
+      },
+      nvd3: {
+         deps: [ 'd3' ],
+         exports: 'nv'
+      },
+      'angular-nvd3': {
+         deps: [ 'angular', 'nvd3' ]
       }
    },
    packages: [
@@ -131,6 +116,10 @@ var require = {
       'bootstrap-affix': 'bootstrap-sass-official/assets/javascripts/bootstrap/affix',
       trunk8: 'trunk8/trunk8',
 
+      // Spreadsheet-like table and dependencies
+      numeral: 'numeral/numeral',
+      handsontable: 'handsontable/dist/jquery.handsontable',
+
       // Charts
       d3: 'd3/d3',
       nvd3: 'nvd3/nv.d3',
@@ -143,9 +132,6 @@ var require = {
       'laxar-path-widgets': '../includes/widgets',
       'laxar-path-themes': '../includes/themes',
       'laxar-path-flow': '../application/flow/flow.json',
-
-      // Spreadsheet-like table
-      'handsontable': 'handsontable/dist/jquery.handsontable.full',
 
       portal_angular_dependencies: '../var/static/portal_angular_dependencies'
    },

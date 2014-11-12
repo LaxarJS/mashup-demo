@@ -1,25 +1,26 @@
 {
-   "name": "mashup_demo",
-   "version": "0.1.0",
-   "description": "Demo showing the interaction between TableEditorWidget and ChartWidget",
-   "license": "MIT",
-   "dependencies": {
-      "requirejs": "2.1.x",
-      "requirejs-plugins": "1.0.x",
-      "laxar": "LaxarJS/laxar#^0.16.2",
-      "laxar_uikit": "LaxarJS/laxar_uikit#0.17",
-      "laxar_patterns": "LaxarJS/laxar_patterns#0.16",
-      "moment": "moment/moment#2.3.x",
-      "require-css": "#0.1.x",
-      "handsontable": "#0.11.4",
-      "nvd3": "~v1.1.15-beta",
-      "angular-nvd3": "0.0.9"
-   },
-   "devDependencies": {
-      "es5-shim": "2.3.x",
-      "jasmine": "1.3.x"
-   },
-   "resolutions": {
-      "d3": "~3.4"
-   }
+  "name": "mashup_demo",
+  "version": "0.2.0",
+  "description": "Demo showing the interaction between TableEditorWidget and ChartWidget",
+  "license": "MIT",
+  "dependencies": {
+    "requirejs": "2.1.x",
+    "requirejs-plugins": "1.0.x",
+    "laxar": "LaxarJS/laxar#^0.16.2",
+    "laxar_uikit": "LaxarJS/laxar_uikit#0.17",
+    "laxar_patterns": "LaxarJS/laxar_patterns#0.16",
+    "require-css": "#0.1.x",
+    "moment": "moment/moment#2.3.x",
+    "numeral": "#1.5.3",
+    "handsontable": "#0.11.4",
+    "nvd3": "~v1.1.15-beta",
+    "angular-nvd3": "0.0.9"
+  },
+  "devDependencies": {
+    "es5-shim": "2.3.x",
+    "jasmine": "1.3.x"
+  },
+  "resolutions": {
+    "d3": "~3.4"
+  }
 }

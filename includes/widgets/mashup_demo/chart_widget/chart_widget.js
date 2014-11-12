@@ -8,30 +8,28 @@ define( [
    'moment',
    'laxar',
    'laxar_patterns',
+   'd3',
    'angular-nvd3',
    'css!nvd3'
-], function( ng, moment, ax, patterns ) {
+], function( ng, moment, ax, patterns, d3 ) {
    'use strict';
 
    var moduleName = 'widgets.mashup_demo.chart_widget';
-   var module     = ng.module( moduleName, [ 'nvd3' ] );
+   var module = ng.module( moduleName, ['nvd3'] );
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+   var SEARCH_PATTERN = /\/series\/(\d+)\/values\/(\d+)/;
+
    // Chart Styling
-
-
    var TRANSITION_DURATION = 250;
    var Y_AXIS_LABEL_DISTANCE = 30;
-
    var FORCE_Y = 0;
-
-   var SEARCH_PATTERN = /\/series\/(\d+)\/values\/(\d+)/;
 
    var chartConfigurations = {
       pieChart: {
          chart: {
-            margin: { bottom: 0 },
+            margin: {bottom: 0},
             height: 180,
             pie: {
                donut: true,
@@ -40,7 +38,7 @@ define( [
                   top: 0,
                   bottom: 0
                }
-            },
+            }
          },
          caption: {
             enable: true,
@@ -69,45 +67,62 @@ define( [
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   Controller.$inject = [ '$scope', '$window' ];
+   Controller.$inject = ['$scope'];
 
-   function Controller( $scope, $window ) {
+   function Controller( $scope ) {
       $scope.model = {
          data: []
       };
       $scope.resources = {};
+
+      patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'timeSeries', {
+         onReplace: [ replaceChartModel ],
+         onUpdate: [ updateChartModel ]
+      } );
+
+      var features = $scope.features;
       var model = $scope.model;
       var resources = $scope.resources;
-      var features = $scope.features;
-
-      var resourceHandler = patterns.resources.handlerFor( $scope );
-
-      if( features.chart.type === 'pieChart' ) {
-         resourceHandler.registerResourceFromFeature( 'timeSeries', {
-            onReplace: [ updatePie, setOptionsFromResource ],
-            onUpdate: [ updatePie ]
-         } );
-      }
-      else {
-         resourceHandler.registerResourceFromFeature( 'timeSeries', {
-            onReplace: [ convertToChartModel, setOptionsFromResource ],
-            onUpdate: [ applyPatches ]
-         } );
-      }
 
       setOptions();
-      $scope.model.config = { refreshDataOnly: true };
+      model.config = {refreshDataOnly: true};
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      function updatePie() {
-         var data = model.data;
-         data.splice.apply( data, [ 0, data.length ].concat( resources.timeSeries.series.map( function( ts ) {
-            return {
-               x: ts.label,
-               y: calculateAverageValue( ts.values )
-            };
-         } ) ) );
+      function replaceChartModel( event ) {
+         if( features.chart.type === 'pieChart' ) {
+            convertResourceToPieModel();
+         }
+         else {
+            convertResourceToChartModel();
+         }
+         setOptionsFromResource();
+      }
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      function updateChartModel( event ) {
+         if( features.chart.type === 'pieChart' ) {
+            convertResourceToPieModel();
+            if( !isIncremental( event.patches ) ) {
+               setOptionsFromResource();
+            }
+         }
+         else {
+            if( isIncremental( event.patches ) ) {
+               // Update only the values contained in the patch.
+               event.patches.forEach( function( patch ) {
+                  var matches = SEARCH_PATTERN.exec( patch.path );
+                  if( matches !== null ) {
+                     model.data[ matches[ 1 ] ].values[ matches[ 2 ] ].y = patch.value;
+                  }
+               } );
+            }
+            else {
+               convertResourceToChartModel();
+               setOptionsFromResource();
+            }
+         }
       }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,30 +135,24 @@ define( [
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      function applyPatches( event ) {
-
-         if( isIncremental( event.patches ) ) {
-            event.patches.forEach( function( patch ) {
-               var matches = SEARCH_PATTERN.exec( patch.path );
-               if( matches !== null ) {
-                  model.data[ matches[ 1 ] ].values[ matches[ 2 ] ].y = patch.value;
-               }
-            } );
-         }
-         else {
-            convertToChartModel();
-            setOptionsFromResource();
-         }
+      function convertResourceToPieModel() {
+         var data = model.data;
+         data.splice.apply( data, [0, data.length].concat( resources.timeSeries.series.map( function( ts ) {
+            return {
+               x: ts.label,
+               y: calculateAverageValue( ts.values )
+            };
+         } ) ) );
       }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      function convertToChartModel() {
+      function convertResourceToChartModel() {
          var data = model.data;
-         data.splice.apply( data, [ 0, data.length ].concat( resources.timeSeries.series.map( function( ts ) {
+         data.splice.apply( data, [0, data.length].concat( resources.timeSeries.series.map( function( ts ) {
             var values = ts.values.map( function( value, timeTickKey ) {
                return {
-                  x: moment( resources.timeSeries.timeGrid[ timeTickKey ], 'YYYY-MM-DD' ).format( 'X' ) * 1000,
+                  x: moment( resources.timeSeries.timeGrid[timeTickKey], 'YYYY-MM-DD' ).format( 'X' ) * 1000,
                   y: value
                };
             } );
@@ -157,7 +166,7 @@ define( [
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      function calculateAverageValue( values ){
+      function calculateAverageValue( values ) {
          var sum = values.reduce( function( sum, value ) {
             return sum + value;
          }, 0 );
@@ -168,10 +177,10 @@ define( [
 
       function setOptionsFromResource() {
          model.options.chart.xAxis.tickFormat = function( d ) {
-            return $window.d3.time.format( '%x' )( new Date( d ) );
+            return d3.time.format( '%Y-%m-%d' )( new Date( d ) );
          };
          model.options.chart.xAxis.axisLabel = resources.timeSeries.timeLabel;
-         model.options.chart.yAxis.axisLabel =  resources.timeSeries.valueLabel;
+         model.options.chart.yAxis.axisLabel = resources.timeSeries.valueLabel;
          if( $scope.api ) {
             $scope.api.updateWithOptions( model.options );
          }
@@ -181,7 +190,7 @@ define( [
 
       function setOptions() {
          var chartType = features.chart.type;
-         var options = ax.object.deepClone( chartConfigurations[ chartType ] );
+         var options = ax.object.deepClone( chartConfigurations[chartType] );
 
          var chartOptions = options.chart;
          chartOptions.type = chartType;
@@ -191,7 +200,7 @@ define( [
          chartOptions.yAxis = {
             axisLabelDistance: Y_AXIS_LABEL_DISTANCE
          };
-         chartOptions.forceY = [ FORCE_Y ];
+         chartOptions.forceY = [FORCE_Y];
 
          model.options = options;
       }

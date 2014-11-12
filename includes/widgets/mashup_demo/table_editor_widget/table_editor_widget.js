@@ -11,7 +11,7 @@ define( [
    'handsontable',
    'css!handsontable',
    'jquery_ui/datepicker'
-], function( ng, ax, patterns, moment ) {
+], function( ng, ax, patterns, moment, handsontable ) {
    'use strict';
 
    var moduleName = 'widgets.mashup_demo.table_editor_widget';
@@ -21,7 +21,7 @@ define( [
 
    var EVENT_AFTER_CHANGE = 'axTableEditor.afterChange';
 
-   Controller.$inject = [ '$scope' ];
+   Controller.$inject = ['$scope'];
 
    function Controller( $scope ) {
 
@@ -35,6 +35,7 @@ define( [
          tableModel: []
       };
       $scope.resources = {};
+
       patterns.resources.handlerFor( $scope ).registerResourceFromFeature( 'timeSeries', {
          onUpdateReplace: updateTableModel
       } );
@@ -43,19 +44,20 @@ define( [
 
       $scope.$on( EVENT_AFTER_CHANGE, function() {
          var modifiedResource = getTimeSeriesFromTableModel();
-         var patch = patterns.json.createPatch( $scope.resources.timeSeries, modifiedResource );
-
-         var resourceName = $scope.features.timeSeries.resource;
-         $scope.eventBus.publish( 'didUpdate.' + resourceName, {
-            resource: resourceName,
-            patches: patch
-         }, {
-            deliverToSender: false
-         } );
-
+         var patches = patterns.json.createPatch( $scope.resources.timeSeries, modifiedResource );
+         publishUpdate( $scope.features.timeSeries.resource, patches );
          $scope.resources.timeSeries = modifiedResource;
 
       } );
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      function publishUpdate( resourceName, patches ) {
+         $scope.eventBus.publish( 'didUpdate.' + resourceName, {
+            resource: resourceName,
+            patches: patches
+         }, { deliverToSender: false } );
+      }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -65,13 +67,13 @@ define( [
 
          timeSeries.timeGrid = tableModel
             .map( function( row ) {
-               return row[ 0 ] &&  moment( row[ 0 ], 'YYYY-MM-DD' ).isValid() && moment( row[ 0 ], 'YYYY-MM-DD' ).format( 'YYYY-MM-DD' );
+               return row[0] && moment( row[0], 'YYYY-MM-DD' ).isValid() && moment( row[0], 'YYYY-MM-DD' ).format( 'YYYY-MM-DD' );
             } )
             .filter( function( timeTick, rowIndex ) {
                return rowIndex > 0 && moment( timeTick, 'YYYY-MM-DD' ).isValid();
             } );
 
-         timeSeries.series = tableModel[ 0 ].map( function( columnLabel ) {
+         timeSeries.series = tableModel[0].map( function( columnLabel ) {
             return {
                label: columnLabel
             };
@@ -79,10 +81,10 @@ define( [
          timeSeries.series.forEach( function( timeSeries, timeSeriesKey ) {
             timeSeries.values = tableModel
                .map( function( row ) {
-                  return parseFloat( row[ timeSeriesKey ] );
+                  return row[timeSeriesKey] !== '' ? parseFloat( row[timeSeriesKey] ) : null;
                } )
                .filter( function( value, rowIndex ) {
-                  return rowIndex > 0 && moment( tableModel[ rowIndex ][0], 'YYYY-MM-DD' ).isValid();
+                  return rowIndex > 0 && moment( tableModel[rowIndex][0], 'YYYY-MM-DD' ).isValid();
                } );
          } );
          timeSeries.series = timeSeries.series.filter( function( timeSeries ) {
@@ -99,13 +101,13 @@ define( [
 
          $scope.model.tableModel = timeSeries.timeGrid.map( function( rowHeader, row ) {
             var rowData = timeSeries.series.map( function( value, col ) {
-               return value.values[ row ];
+               return value.values[row];
             } );
             rowData.unshift( rowHeader );
             return rowData;
          } );
 
-         var colHeaders = [ null ].concat( timeSeries.series.map( function( value ) {
+         var colHeaders = [null].concat( timeSeries.series.map( function( value ) {
             return value.label;
          } ) );
          $scope.model.tableModel.unshift( colHeaders );
@@ -118,7 +120,8 @@ define( [
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    var directiveName = 'axTableEditor';
-   module.directive( directiveName, [ '$window', function( $window ) {
+   module.directive( directiveName, [function() {
+
       return {
          scope: {
             axTableEditor: '=',
@@ -162,12 +165,12 @@ define( [
             //////////////////////////////////////////////////////////////////////////////////////////////////
 
             function completeSettings() {
-               var settings = ax.object.options( $scope[ directiveName ], baseSettings );
+               var settings = ax.object.options( $scope[directiveName], baseSettings );
                settings.cells = function( row, col, prop ) {
                   if( row > 0 && col === 0 ) {
                      return {
                         type: 'date',
-                        renderer: $window.Handsontable.DateCell.renderer,
+                        renderer: handsontable.DateCell.renderer,
                         // We can simply pass any options to jquery-ui-datepicker here.
                         dateFormat: 'yy-mm-dd', // Format to be returned by jquery-ui-datepicker.
                         showButtonPanel: false
@@ -175,12 +178,12 @@ define( [
                   }
                };
                return ax.object.options( {
-                  data: $scope[ directiveName + 'Rows' ] || []
+                  data: $scope[directiveName + 'Rows'] || []
                }, settings );
             }
          }
       };
-   } ] );
+   }] );
 
    return module;
 
