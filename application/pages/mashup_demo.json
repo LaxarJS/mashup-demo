@@ -3,17 +3,6 @@
 
    "areas": {
 
-      "header": [
-         {
-            "widget": "mashup_demo/headline_widget",
-            "features": {
-               "headline": {
-                  "htmlText": "Mashup<span>Demo</span>"
-               }
-            }
-         }
-      ],
-
       "content1a": [
          {
             "widget": "mashup_demo/data_provider_widget",

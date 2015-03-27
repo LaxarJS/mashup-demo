@@ -7,22 +7,19 @@
 
 @import "variables_all";
 
+$app-color-green-01: #6bbc6b;
+
 .table-editor-widget {
 
-   $abp-color-green-01: #6bbc6b;
 
    margin-bottom: 50px;
 
-   .abp-active {
-      color: $abp-color-green-01;
-
-      i {
-         background-color: $abp-color-green-01;
-      }
+   h3.app-active {
+      color: $app-color-green-01;
    }
 
-   .abp-no-data {
-      height: 150px;
+   .app-no-data {
+      height: 230px;
       border: 1px dashed #ccc;
       position: relative;
 
@@ -38,7 +35,7 @@
       }
    }
 
-   .abp-data {
+   .app-data {
       overflow: auto;
       max-height: 620px;
       position: relative;

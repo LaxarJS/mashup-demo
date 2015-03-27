@@ -2,6 +2,8 @@
 
 ## Last Changes
 
+- [#9](https://github.com/LaxarJS/mashup_demo/issues/9): theme: improved styling
+
 
 ## v0.2.0
 

@@ -7,25 +7,26 @@
 
 @import "variables_all";
 
-.data-provider-widget {
-   $abp-gray-01: #737373;
-   $abp-blue-01: #5a97c2;
-   $abp-blue-02: #c6d7ee;
-   $abp-blue-03: #1f77b4;
+$app-gray-01: #737373 !default;
+$app-blue-01: #5a97c2 !default;
+$app-blue-02: #c6d7ee !default;
+$app-blue-03: #1f77b4 !default;
 
-   min-height: 334px;
+.data-provider-widget {
+
+   min-height: 340px;
+   @media (max-width: $screen-md-min) {
+      min-height: initial;
+   }
+
    margin-bottom: 20px;
    border-bottom: 1px solid transparent;
 
-   .abp-active {
-      color: $abp-gray-01;
-
-      i {
-         background-color: $abp-gray-01;
-      }
+   .app-active {
+      color: $app-gray-01;
    }
 
-   .abp-col-1 { width: 20px; }
+   .app-col-1 { width: 20px; }
 
    .table {
       border-radius: 0;
@@ -38,13 +39,13 @@
    tbody > tr.selected > td {
       color: white;
       font-weight: bold;
-      background: $abp-blue-01;
+      background: $app-blue-01;
    }
 
    .table-hover > tbody > tr:hover > td {
       cursor: pointer;
-      background-color: $abp-blue-02;
-      color: $abp-blue-03;
+      background-color: $app-blue-02;
+      color: $app-blue-03;
       font-weight: bold;
    }
 }
