@@ -3,17 +3,21 @@
  * Released under the MIT license.
  * www.laxarjs.org
  */
+/* line 12, ../../default.theme/scss/table_editor_widget.scss */
 .table-editor-widget {
   margin-bottom: 50px;
 }
+/* line 17, ../../default.theme/scss/table_editor_widget.scss */
 .table-editor-widget h3.app-active {
   color: #6bbc6b;
 }
+/* line 21, ../../default.theme/scss/table_editor_widget.scss */
 .table-editor-widget .app-no-data {
   height: 230px;
   border: 1px dashed #ccc;
   position: relative;
 }
+/* line 26, ../../default.theme/scss/table_editor_widget.scss */
 .table-editor-widget .app-no-data:after {
   content: "No data, select an example!";
   font-weight: bold;
@@ -22,33 +26,42 @@
   position: relative;
   top: 50%;
   -webkit-transform: translateY(-50%);
-     -moz-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
           transform: translateY(-50%);
   text-align: center;
 }
+/* line 38, ../../default.theme/scss/table_editor_widget.scss */
 .table-editor-widget .app-data {
   overflow: auto;
   max-height: 620px;
   position: relative;
 }
+/* line 44, ../../default.theme/scss/table_editor_widget.scss */
 .table-editor-widget .handsontable .handsontable table {
-  -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
 }
+/* line 48, ../../default.theme/scss/table_editor_widget.scss */
 .table-editor-widget .ht_clone_corner,
 .table-editor-widget .ht_clone_left {
   display: none;
 }
+/* line 53, ../../default.theme/scss/table_editor_widget.scss */
 .table-editor-widget .htContainer,
 .table-editor-widget .ht_clone_top {
   width: 100%;
 }
+/* line 56, ../../default.theme/scss/table_editor_widget.scss */
 .table-editor-widget .htContainer table,
 .table-editor-widget .ht_clone_top table {
   width: 100%;
 }
+/* line 60, ../../default.theme/scss/table_editor_widget.scss */
 .table-editor-widget .wtBorder.current.corner {
   margin-top: -2px;
   margin-left: -3px;
+}
+
+/* line 12, ../scss/table_editor_widget.scss */
+.table-editor-widget h3.app-active i {
+  background-color: #6bbc6b;
 }
