@@ -1,8 +1,7 @@
 var require = {
    baseUrl: 'bower_components',
    deps: [
-      'es5-shim/es5-shim',
-      'modernizr/modernizr'
+      'es5-shim/es5-shim'
    ],
    shim: {
       angular: {
@@ -50,9 +49,13 @@ var require = {
       },
       handsontable: {
           deps: [
-              'jquery', 'numeral'
+              'jquery', 'numeral', 'pikaday/pikaday', 'css!pikaday/css/pikaday'
           ],
-         exports: 'Handsontable'
+         exports: 'Handsontable',
+         init: function(numeral, moment, pikaday) {
+            // Handsontable needs Pikaday in global scope.
+            this.Pikaday = pikaday;
+         }
       },
       d3: {
          exports: 'd3'
@@ -61,11 +64,19 @@ var require = {
          deps: [ 'd3' ],
          exports: 'nv'
       },
+      pikaday: {
+         exports: 'pikaday'
+      },
       'angular-nvd3': {
          deps: [ 'angular', 'nvd3' ]
       }
    },
    packages: [
+      {
+         name: 'laxar-application',
+         location: '..',
+         main: 'init'
+      },
       {
          name: 'laxar',
          location: 'laxar',
@@ -74,7 +85,7 @@ var require = {
       {
          name: 'laxar_patterns',
          location: 'laxar_patterns',
-         main: 'laxar_patterns'
+         main: 'laxar-patterns'
       },
       {
          name: 'laxar_uikit',
@@ -118,22 +129,24 @@ var require = {
 
       // Spreadsheet-like table and dependencies
       numeral: 'numeral/numeral',
-      handsontable: 'handsontable/dist/jquery.handsontable',
+      handsontable: 'handsontable/dist/handsontable',
 
       // Charts
       d3: 'd3/d3',
-      nvd3: 'nvd3/nv.d3',
+      nvd3: 'nvd3/build/nv.d3',
       'angular-nvd3': 'angular-nvd3/dist/angular-nvd3',
+      pikaday: 'pikaday',
 
       // App Parts:
       'laxar-path-root': '..',
+      'laxar-path-controls': '../includes/controls',
       'laxar-path-layouts': '../application/layouts',
       'laxar-path-pages': '../application/pages',
       'laxar-path-widgets': '../includes/widgets',
       'laxar-path-themes': '../includes/themes',
       'laxar-path-flow': '../application/flow/flow.json',
 
-      portal_angular_dependencies: '../var/static/portal_angular_dependencies'
+      'laxar-application-dependencies': '../var/static/laxar_application_dependencies'
    },
    map: {
       '*': {

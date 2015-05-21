@@ -24,20 +24,13 @@ It's a good idea to explore the ShopDemo as well, as it introduces you to the co
 
 ## The Widgets ##
 
-The demo makes use of four widgets:
-* the HeadlineWidget,
+The demo makes use of three widgets:
 * the DataProviderWidget,
 * the TableEditorWidget and
 * the ChartWidget.
 
 Each of these widgets will be introduced below. Note that each of these widgets can be instantiated multiple
 times on each page as is the case with the ChartWidget.
-
-
-### HeadlineWidget ##
-
-The HeadlineWidget displays a simple headline and an optional teaser.
-In our application we use it to complete the layout with the title "MashupDemo" in the upper right corner.
 
 
 ### DataProviderWidget ##

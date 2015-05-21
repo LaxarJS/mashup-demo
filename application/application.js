@@ -1,5 +1,5 @@
 // See https://github.com/LaxarJS/laxar/blob/master/docs/manuals/configuration.md
-window.laxar = ( function() {
+window.laxar = (function() {
    'use strict';
 
    var modeAttribute = 'data-ax-application-mode';
@@ -9,19 +9,15 @@ window.laxar = ( function() {
       name: 'LaxarJS MashupDemo',
       description: 'Demo showing the interaction between TableEditorWidget and ChartWidget.',
 
-      portal: {
-         theme: 'cube',
-         useMergedCss: mode === 'RELEASE'
-      },
+      theme: 'cube',
+      useMergedCss: mode === 'RELEASE',
 
-      file_resource_provider: {
-         fileListings: {
-            'application': 'var/listing/application_resources.json',
-            'bower_components': 'var/listing/bower_components_resources.json',
-            'includes': 'var/listing/includes_resources.json'
-         },
-         useEmbedded: mode === 'RELEASE'
+      fileListings: {
+         'application': 'var/listing/application_resources.json',
+         'bower_components': 'var/listing/bower_components_resources.json',
+         'includes': 'var/listing/includes_resources.json'
       },
+      useEmbedded: mode === 'RELEASE',
 
       i18n: {
          locales: {
@@ -31,4 +27,4 @@ window.laxar = ( function() {
 
    };
 
-} )();
+})();
