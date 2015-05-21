@@ -2,6 +2,8 @@
 
 ## Last Changes
 
+- [#11](https://github.com/LaxarJS/mashup_demo/issues/11): Fixed `resolutions` of bower configuration
+
 
 ## v0.3.0
 
