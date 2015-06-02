@@ -21,7 +21,7 @@ To fetch the required tools and libraries, make sure that you have `npm` (comes 
 Use a shell to issue the following commands:
 
 ```sh
-git clone https://github.com/LaxarJS/mashup_demo.git
+git clone --recursive https://github.com/LaxarJS/mashup_demo.git
 cd mashup_demo
 npm install
 npm start
