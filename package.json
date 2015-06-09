@@ -1,6 +1,6 @@
 {
    "name": "mashup_demo",
-   "version": "1.0.0-pre",
+   "version": "1.1.0-pre",
    "description": "Demo showing the interaction between TableEditorWidget and ChartWidget",
    "license": "MIT",
    "scripts": {
