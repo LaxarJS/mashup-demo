@@ -2,6 +2,9 @@
 
 ## Last Changes
 
+
+## v1.0.0
+
 - [#12](https://github.com/LaxarJS/mashup_demo/issues/12): Add favicon
 - [#10](https://github.com/LaxarJS/mashup_demo/issues/10): Upgraded to LaxarJS major version and fixed breaking changes
 - [#11](https://github.com/LaxarJS/mashup_demo/issues/11): Fixed `resolutions` of bower configuration
