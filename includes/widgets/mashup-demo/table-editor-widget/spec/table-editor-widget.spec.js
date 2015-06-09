@@ -4,9 +4,9 @@
  * www.laxarjs.org
  */
 define( [
-   '../table_editor_widget',
+   '../table-editor-widget',
    'laxar/laxar_testing',
-   'laxar_patterns',
+   'laxar-patterns',
    './spec_data'
 ], function( widgetModule, ax, patterns, specData ) {
    'use strict';
@@ -16,7 +16,7 @@ define( [
       var testBed_;
 
       beforeEach( function setup() {
-         testBed_ = ax.testing.portalMocksAngular.createControllerTestBed( widgetModule.name );
+         testBed_ = ax.testing.portalMocksAngular.createControllerTestBed( 'mashup-demo/table-editor-widget' );
          testBed_.featuresMock = {
             timeSeries: {
                resource: 'timeSeriesData'

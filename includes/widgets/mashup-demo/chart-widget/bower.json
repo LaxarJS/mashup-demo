@@ -4,9 +4,9 @@
    "description": "Widget to display a chart from time series data",
    "private": true,
    "dependencies": {
-      "laxar": "LaxarJS/laxar#^1.0.0",
-      "laxar_uikit": "LaxarJS/laxar_uikit#1.0",
-      "laxar_patterns": "LaxarJS/laxar_patterns#1.0",
+      "laxar": "^1.0.0",
+      "laxar-patterns": "^1.0.0",
+      "laxar-uikit": "^1.0.0",
       "moment": "moment/moment#2.9.x",
       "nvd3": "#1.7.x",
       "angular-nvd3": "1.0.0-beta"

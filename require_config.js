@@ -1,8 +1,6 @@
 var require = {
    baseUrl: 'bower_components',
-   deps: [
-      'es5-shim/es5-shim'
-   ],
+   deps: [],
    shim: {
       angular: {
          deps: [
@@ -78,21 +76,6 @@ var require = {
          main: 'init'
       },
       {
-         name: 'laxar',
-         location: 'laxar',
-         main: 'laxar'
-      },
-      {
-         name: 'laxar_patterns',
-         location: 'laxar_patterns',
-         main: 'laxar-patterns'
-      },
-      {
-         name: 'laxar_uikit',
-         location: 'laxar_uikit',
-         main: 'laxar_uikit'
-      },
-      {
          name: 'moment',
          location: 'moment',
          main: 'moment'
@@ -146,11 +129,20 @@ var require = {
       'laxar-path-themes': '../includes/themes',
       'laxar-path-flow': '../application/flow/flow.json',
 
-      'laxar-application-dependencies': '../var/static/laxar_application_dependencies'
+      'laxar-application-dependencies': '../var/static/laxar_application_dependencies',
+
+      'laxar': 'laxar/dist/laxar',
+      'laxar/laxar_testing': 'laxar/dist/laxar_testing',
+      'laxar-patterns': 'laxar-patterns/dist/laxar-patterns',
+      'laxar-uikit': 'laxar-uikit/dist/laxar-uikit',
+      'laxar-uikit/controls': 'laxar-uikit/dist/controls',
+      'laxar-path-default-theme': 'laxar-uikit/dist/themes/default.theme'
    },
    map: {
       '*': {
-         'css': 'require-css/css' // or whatever the path to require-css is
+         'css': 'require-css/css', // or whatever the path to require-css is
+         'laxar_uikit': 'laxar-uikit',
+         'laxar_patterns': 'laxar-patterns'
       }
    }
 };

@@ -4,8 +4,8 @@
  * www.laxarjs.org
  */
 define( [
-   '../chart_widget',
-   '../../../../../bower_components/laxar/laxar_testing',
+   '../chart-widget',
+   'laxar/laxar_testing',
    './spec_data'
 ], function( widgetModule, ax, specData ) {
    'use strict';
@@ -15,7 +15,7 @@ define( [
       var testBed_;
 
       beforeEach( function setup() {
-         testBed_ = ax.testing.portalMocksAngular.createControllerTestBed( widgetModule.name );
+         testBed_ = ax.testing.portalMocksAngular.createControllerTestBed( 'mashup-demo/chart-widget' );
          testBed_.featuresMock = {
             timeSeries: {
                resource: 'timeSeriesData'

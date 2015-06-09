@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="PhantomJS 1.9.8 (Linux)" package="includes.widgets.mashup-demo.data-provider-widget" timestamp="2015-06-09T14:25:05" id="0" hostname="dpcl068.ac.aixigo.de" tests="2" errors="0" failures="0" time="0.033">
+    <properties>
+      <property name="browser.fullName" value="Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.8 Safari/534.34"/>
+    </properties>
+    <testcase name="publishes a didReplace event with the file content of the new location when the corresponding button is pressed" time="0.026" classname="includes.widgets.mashup-demo.data-provider-widget PhantomJS 1.9.8 (Linux).A DataProviderWidget with feature data"/>
+    <testcase name="publishes a didEncounterError event if the new location is not available" time="0.007" classname="includes.widgets.mashup-demo.data-provider-widget PhantomJS 1.9.8 (Linux).A DataProviderWidget with feature data"/>
+    <system-out><![CDATA[
+]]></system-out>
+    <system-err/>
+  </testsuite>
+</testsuites>

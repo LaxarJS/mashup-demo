@@ -4,9 +4,9 @@
    "description": "Widget that provides other widgets with data.",
    "license": "MIT",
    "dependencies": {
-      "laxar": "LaxarJS/laxar#^1.0.0",
-      "laxar_uikit": "LaxarJS/laxar_uikit#1.0",
-      "laxar_patterns": "LaxarJS/laxar_patterns#1.0"
+      "laxar": "^1.0.0",
+      "laxar-patterns": "^1.0.0",
+      "laxar-uikit": "^1.0.0"
    },
    "devDependencies": {
       "es5-shim": "2.3.x",

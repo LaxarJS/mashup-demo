@@ -10,9 +10,10 @@
    "dependencies": {
       "requirejs": "2.1.x",
       "requirejs-plugins": "1.0.x",
-      "laxar": "LaxarJS/laxar#1.0.0-alpha.14",
-      "laxar_patterns": "LaxarJS/laxar_patterns#^1.0.0-alpha.3",
-      "laxar_uikit": "LaxarJS/laxar_uikit#1.0.0-alpha.6",
+      "laxar": "^1.0.0",
+      "laxar-patterns": "^1.0.0",
+      "laxar-uikit": "^1.0.0",
+      "laxar-date-picker-control": "^1.0.0",
       "require-css": "#0.1.x",
       "moment": "moment/moment#2.9.x",
       "numeral": "#1.5.3",

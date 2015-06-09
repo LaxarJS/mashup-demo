@@ -7,7 +7,7 @@
    },
 
    "controls": [
-      "laxar_uikit/controls/date_picker"
+      "laxar-date-picker-control"
    ],
 
    "compatibility": [ "json-patch" ],

@@ -1,7 +1,7 @@
 /**
  * Copyright 2015 LaxarJS
  * Released under the MIT license.
- * www.laxarjs.org
+ * http://laxarjs.org/license
  */
 /*global module,__dirname,__filename */
 module.exports = function( grunt ) {

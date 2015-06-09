@@ -7,7 +7,7 @@ define( [
    'angular',
    'moment',
    'laxar',
-   'laxar_patterns',
+   'laxar-patterns',
    'd3',
    'angular-nvd3',
    'css!nvd3'

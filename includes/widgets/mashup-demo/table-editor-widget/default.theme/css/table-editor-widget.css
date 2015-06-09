@@ -28,7 +28,7 @@
   text-align: center;
 }
 .table-editor-widget .app-data {
-  overflow: auto;
+  overflow: scroll;
   max-height: 620px;
   position: relative;
 }

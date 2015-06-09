@@ -6,11 +6,11 @@
 define( [
    'angular',
    'laxar',
-   'laxar_patterns',
+   'laxar-patterns',
    'moment',
    'handsontable',
    'css!handsontable',
-   'jquery_ui/datepicker'
+   'jquery-ui/ui/datepicker'
 ], function( ng, ax, patterns, moment, handsontable ) {
    'use strict';
 
@@ -30,7 +30,8 @@ define( [
             rowHeaders: true,
             colHeaders: true,
             contextMenu: true,
-            fillHandle: true
+            fillHandle: true,
+            stretchH: 'all'
          },
          tableModel: []
       };
