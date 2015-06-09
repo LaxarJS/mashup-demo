@@ -1,6 +1,6 @@
 {
    "name": "mashup_demo",
-   "version": "0.4.0-pre",
+   "version": "1.0.0-pre",
    "description": "Demo showing the interaction between TableEditorWidget and ChartWidget",
    "license": "MIT",
    "repository": {
@@ -10,21 +10,20 @@
    "dependencies": {
       "requirejs": "2.1.x",
       "requirejs-plugins": "1.0.x",
-      "laxar": "LaxarJS/laxar#^0.23.x",
-      "laxar_patterns": "LaxarJS/laxar_patterns#^0.19.0",
-      "laxar_uikit": "LaxarJS/laxar_uikit#^0.21.0",
+      "laxar": "^1.0.0",
+      "laxar-patterns": "^1.0.0",
+      "laxar-uikit": "^1.0.0",
+      "laxar-date-picker-control": "^1.0.0",
       "require-css": "#0.1.x",
-      "moment": "moment/moment#2.3.x",
+      "moment": "moment/moment#2.9.x",
       "numeral": "#1.5.3",
-      "handsontable": "#0.11.4",
-      "nvd3": "~v1.1.15-beta",
-      "angular-nvd3": "0.0.9"
+      "handsontable": "#0.14.1",
+      "nvd3": "#1.7.x",
+      "angular-nvd3": "1.0.0-beta",
+      "pikaday": "1.3.0"
    },
    "devDependencies": {
       "es5-shim": "2.3.x",
       "jasmine": "1.3.x"
-   },
-   "resolutions": {
-      "d3": "~3.4"
    }
 }
