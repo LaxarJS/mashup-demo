@@ -7,3 +7,4 @@ atlassian-ide-plugin.xml
 /bower_components
 *.backup.json
 mashup_demo-*.zip
+test-results.xml
