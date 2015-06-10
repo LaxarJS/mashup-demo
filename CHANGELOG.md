@@ -2,6 +2,7 @@
 
 ## Last Changes
 
+- [#14](https://github.com/LaxarJS/mashup_demo/issues/14): Fixed `index.html` and refactored `debug.html` and `require.js`
 - [#13](https://github.com/LaxarJS/mashup_demo/issues/13): Removed test-results.xml of widgets
 
 
