@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="PhantomJS 1.9.8 (Linux)" package="includes.widgets.mashup-demo.table-editor-widget" timestamp="2015-06-10T13:27:35" id="0" hostname="dpcl068.ac.aixigo.de" tests="6" errors="0" failures="0" time="0.062">
+    <properties>
+      <property name="browser.fullName" value="Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.8 Safari/534.34"/>
+    </properties>
+    <testcase name="acts as a slave for the configured resource" time="0.033" classname="includes.widgets.mashup-demo.table-editor-widget PhantomJS 1.9.8 (Linux).A TableEditorWidget with feature timeSeries"/>
+    <testcase name="shows the published resource as the data model of the table" time="0.004" classname="includes.widgets.mashup-demo.table-editor-widget PhantomJS 1.9.8 (Linux).A TableEditorWidget with feature timeSeries"/>
+    <testcase name="publishes a didUpdate event after the user changed a data value" time="0.006" classname="includes.widgets.mashup-demo.table-editor-widget PhantomJS 1.9.8 (Linux).A TableEditorWidget with feature timeSeries"/>
+    <testcase name="ignores rows on which the time grid tick is removed in the didUpdate event data" time="0.004" classname="includes.widgets.mashup-demo.table-editor-widget PhantomJS 1.9.8 (Linux).A TableEditorWidget with feature timeSeries"/>
+    <testcase name="ignores columns on which the series label is removed in the didUpdate event data" time="0.011" classname="includes.widgets.mashup-demo.table-editor-widget PhantomJS 1.9.8 (Linux).A TableEditorWidget with feature timeSeries"/>
+    <testcase name="replaces the resource and model after receiving a new resource" time="0.004" classname="includes.widgets.mashup-demo.table-editor-widget PhantomJS 1.9.8 (Linux).A TableEditorWidget with feature timeSeries"/>
+    <system-out><![CDATA[
+]]></system-out>
+    <system-err/>
+  </testsuite>
+</testsuites>

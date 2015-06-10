@@ -1,26 +1,29 @@
 {
-  "name": "mashup_demo",
-  "version": "0.2.0",
-  "description": "Demo showing the interaction between TableEditorWidget and ChartWidget",
-  "license": "MIT",
-  "dependencies": {
-    "requirejs": "2.1.x",
-    "requirejs-plugins": "1.0.x",
-    "laxar": "LaxarJS/laxar#^0.16.2",
-    "laxar_uikit": "LaxarJS/laxar_uikit#0.17",
-    "laxar_patterns": "LaxarJS/laxar_patterns#0.16",
-    "require-css": "#0.1.x",
-    "moment": "moment/moment#2.3.x",
-    "numeral": "#1.5.3",
-    "handsontable": "#0.11.4",
-    "nvd3": "~v1.1.15-beta",
-    "angular-nvd3": "0.0.9"
-  },
-  "devDependencies": {
-    "es5-shim": "2.3.x",
-    "jasmine": "1.3.x"
-  },
-  "resolutions": {
-    "d3": "~3.4"
-  }
+   "name": "mashup_demo",
+   "version": "1.0.1",
+   "description": "Demo showing the interaction between TableEditorWidget and ChartWidget",
+   "license": "MIT",
+   "repository": {
+      "type": "https",
+      "url": "https://github.com/LaxarJS/mashup_demo.git"
+   },
+   "dependencies": {
+      "requirejs": "2.1.x",
+      "requirejs-plugins": "1.0.x",
+      "laxar": "^1.0.0",
+      "laxar-patterns": "^1.0.0",
+      "laxar-uikit": "^1.0.0",
+      "laxar-date-picker-control": "^1.0.0",
+      "require-css": "#0.1.x",
+      "moment": "moment/moment#2.9.x",
+      "numeral": "#1.5.3",
+      "handsontable": "#0.14.1",
+      "nvd3": "#1.7.x",
+      "angular-nvd3": "1.0.0-beta",
+      "pikaday": "1.3.0"
+   },
+   "devDependencies": {
+      "es5-shim": "2.3.x",
+      "jasmine": "1.3.x"
+   }
 }

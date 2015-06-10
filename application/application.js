@@ -1,23 +1,30 @@
-window.laxar = {
-   name: 'chart_demo',
-   description: 'Demo showing the interaction between TableEditorWidget and ChartWidget',
+// See https://github.com/LaxarJS/laxar/blob/master/docs/manuals/configuration.md
+window.laxar = (function() {
+   'use strict';
 
-   theme: 'default',
+   var modeAttribute = 'data-ax-application-mode';
+   var mode = document.querySelector( 'script[' + modeAttribute + ']' ).getAttribute( modeAttribute );
 
-   locales: {
-      'default': 'de_DE',
-      // for i18n-demos:
-      'alternative': 'en_US'
-   },
+   return {
+      name: 'LaxarJS MashupDemo',
+      description: 'Demo showing the interaction between TableEditorWidget and ChartWidget.',
 
-   logThreshold: 'DEVELOP',
+      theme: 'cube',
+      useMergedCss: mode === 'RELEASE',
 
-   // relative to laxar-path-root
-   fileListings: {
-      'bower_components/laxar_uikit/themes': 'var/listing/laxar_uikit_themes.json',
-      'bower_components/laxar_uikit/controls': 'var/listing/laxar_uikit_controls.json',
-      'includes/themes': 'var/listing/includes_themes.json',
-      'includes/widgets': 'var/listing/includes_widgets.json',
-      'application/layouts': 'var/listing/application_layouts.json'
-   }
-};
+      fileListings: {
+         'application': 'var/listing/application_resources.json',
+         'bower_components': 'var/listing/bower_components_resources.json',
+         'includes': 'var/listing/includes_resources.json'
+      },
+      useEmbedded: mode === 'RELEASE',
+
+      i18n: {
+         locales: {
+            'default': 'en'
+         }
+      }
+
+   };
+
+})();

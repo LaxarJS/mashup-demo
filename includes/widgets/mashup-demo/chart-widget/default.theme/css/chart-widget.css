@@ -1,0 +1,45 @@
+/**
+ * Copyright 2014 LaxarJS
+ * Released under the MIT license.
+ * www.laxarjs.org
+ */
+.chart-widget {
+  margin-bottom: 50px;
+}
+.chart-widget .abp-active {
+  color: #737373;
+}
+.chart-widget .abp-data {
+  opacity: 0;
+  height: 0px;
+  overflow: hidden;
+  -webkit-transition: opacity 1s ease-in, height 0.2s ease-in;
+     -moz-transition: opacity 1s ease-in, height 0.2s ease-in;
+          transition: opacity 1s ease-in, height 0.2s ease-in;
+}
+.chart-widget .abp-data.abp-active {
+  height: auto;
+  opacity: 1;
+}
+.chart-widget .abp-data.abp-active,
+.chart-widget .abp-no-data {
+  border: 1px dashed #ccc;
+  padding: 1em;
+}
+.chart-widget .abp-no-data {
+  height: 230px;
+  position: relative;
+}
+.chart-widget .abp-no-data:after {
+  content: "No data, select an example!";
+  font-weight: bold;
+  color: #ccc;
+  display: block;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+     -moz-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  text-align: center;
+}

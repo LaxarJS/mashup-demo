@@ -1,0 +1,14 @@
+<h3 class="ax-function-point"
+    data-ng-class="{ 'abp-active': model.data.length > 0 }"
+    data-ng-if="features.title.htmlLabel"
+    data-ng-bind-html="features.title.htmlLabel"></h3>
+<div class="abp-data"
+     data-ng-class="{ 'abp-active': model.data.length > 0 }"
+     nvd3
+     options="model.options"
+     data="model.data"
+     config="model.config"
+     api="api"></div>
+<div class="abp-no-data"
+     data-ng-class="{ 'abp-active': model.data.length == 0 }"
+     data-ng-if="model.data.length == 0"></div>

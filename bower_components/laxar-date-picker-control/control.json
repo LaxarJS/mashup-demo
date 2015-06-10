@@ -1,0 +1,7 @@
+{
+   "name": "ax-date-picker-control",
+
+   "integration": {
+      "technology": "angular"
+   }
+}
