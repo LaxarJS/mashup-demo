@@ -1,11 +1,11 @@
 {
-   "name": "mashup_demo",
-   "version": "1.0.1",
+   "name": "mashup-demo",
+   "version": "1.1.0",
    "description": "Demo showing the interaction between TableEditorWidget and ChartWidget",
    "license": "MIT",
    "repository": {
       "type": "https",
-      "url": "https://github.com/LaxarJS/mashup_demo.git"
+      "url": "https://github.com/LaxarJS/mashup-demo.git"
    },
    "dependencies": {
       "requirejs": "2.1.x",

@@ -4,4 +4,5 @@ atlassian-ide-plugin.xml
 .sass-cache
 /node_modules
 *.backup.json
-mashup_demo-*.zip
+mashup-demo-*.zip
+test-results.xml
