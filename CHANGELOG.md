@@ -2,6 +2,9 @@
 
 ## Last Changes
 
+
+## v1.1.0
+
 - [#15](https://github.com/LaxarJS/mashup-demo/issues/15): Renamed `mashup_demo` to `mashup-demo`
 - [#14](https://github.com/LaxarJS/mashup_demo/issues/14): Fixed `index.html` and refactored `debug.html` and `require.js`
 - [#13](https://github.com/LaxarJS/mashup_demo/issues/13): Removed test-results.xml of widgets
