@@ -5,7 +5,7 @@ The MashupDemo is implemented using the [LaxarJS](http://laxarjs.org) web applic
 
 The demo consists of a small set of LaxarJS widgets implemented in AngularJS.
 
-* [Show the live demo](http://laxarjs.github.io/mashup_demo/)
+* [Show the live demo](http://laxarjs.github.io/mashup-demo/)
 
 * [Read the tutorial](docs/mashup_tutorial.md)
 
@@ -21,8 +21,8 @@ To fetch the required tools and libraries, make sure that you have `npm` (comes 
 Use a shell to issue the following commands:
 
 ```sh
-git clone --recursive https://github.com/LaxarJS/mashup_demo.git
-cd mashup_demo
+git clone --recursive https://github.com/LaxarJS/mashup-demo.git
+cd mashup-demo
 npm install
 npm start
 ```
@@ -40,8 +40,8 @@ npm start
 
 Now you can browse the optimized demo at [http://localhost:8001/index.html](http://localhost:8001/index.html).
 
-Instead of using `npm start`, you can use any web server on your machine by having it serve the `mashup_demo` directory.
+Instead of using `npm start`, you can use any web server on your machine by having it serve the `mashup-demo` directory.
 
-Try modifying the widgets under `includes/widgets/mashup_demo` to get a feel for how a LaxarJS application works.
+Try modifying the widgets under `includes/widgets/mashup-demo` to get a feel for how a LaxarJS application works.
 
 Read the [tutorial](docs/mashup_tutorial.md) to get further information about how this application was implemented.

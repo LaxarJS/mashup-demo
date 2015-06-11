@@ -6,5 +6,5 @@ atlassian-ide-plugin.xml
 /node_modules
 /bower_components
 *.backup.json
-mashup_demo-*.zip
+mashup-demo-*.zip
 test-results.xml

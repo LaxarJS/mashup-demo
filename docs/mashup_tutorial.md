@@ -19,7 +19,7 @@ Not strictly necessary, but useful are these additional documents:
 
 It's a good idea to explore the ShopDemo as well, as it introduces you to the core concepts of LaxarJS:
 
-* [The ShopDemo](https://github.com/LaxarJS/shop_demo)
+* [The ShopDemo](https://github.com/LaxarJS/shop-demo)
 
 
 ## The Widgets ##
@@ -110,7 +110,7 @@ In this tutorial we use patterns from the resources family. Further details on p
 
 When the user selects an example from the DataProviderWidget, it publishes the corresponding time series data as a resource under the name `timeSeriesData`.
 We do this by sending a so-called *didReplace* event.
-See function `publishResource()` in [data_provider_widget.js](../includes/widgets/mashup_demo/data_provider_widget/data_provider_widget.js) with the following code snippet:
+See function `publishResource()` in [data_provider_widget.js](../includes/widgets/mashup-demo/data_provider_widget/data_provider_widget.js) with the following code snippet:
 
 ```javascript
 $scope.eventBus.publish( 'didReplace.' + resourceName, {
@@ -208,14 +208,14 @@ Let's take a look at the transmitted resource before getting to the update mecha
 The representation of the resource neither equals the internal representation of data in *Handsontable* nor the representation of data in *Angular-nvD3*.
 What we do instead is to convert the data back and forth between the representation of the resource and the internal representations.
 We do this to have a representation that is not strongly connected to one of the libraries but rather fits to a potentially larger number of widgets.
-Conversion into the internal representations is done in function `updateTableModel()` of [table_editor_widget.js](../includes/widgets/mashup_demo/table_editor_widget/table_editor_widget.js)
-and functions `convertResourceToPieModel()` and `convertResourceToChartModel()` of [chart_widget.js](../includes/widgets/mashup_demo/chart_widget/chart_widget.js).
+Conversion into the internal representations is done in function `updateTableModel()` of [table_editor_widget.js](../includes/widgets/mashup-demo/table_editor_widget/table_editor_widget.js)
+and functions `convertResourceToPieModel()` and `convertResourceToChartModel()` of [chart_widget.js](../includes/widgets/mashup-demo/chart_widget/chart_widget.js).
 
 ### Resource Update: the TableEditorWidget ###
 
 As the TableEditorWidget acts as a slave widget, we are not allowed to replace the entire resource when the user modifies a value.
 What we do instead is to publish an update event to which we attach patching information.
-We do this by sending a so-called *didUpdate* event. See function `publishUpdate()` of [table_editor_widget.js](../includes/widgets/mashup_demo/table_editor_widget/table_editor_widget.js) with the following code snippet:
+We do this by sending a so-called *didUpdate* event. See function `publishUpdate()` of [table_editor_widget.js](../includes/widgets/mashup-demo/table_editor_widget/table_editor_widget.js) with the following code snippet:
 
 ```javascript
 $scope.eventBus.publish( 'didUpdate.' + resourceName, {
@@ -405,6 +405,6 @@ Communication is performed via a publish/subscribe mechanism.
 This way widgets are completely separated from each other.
 Although we used only a couple of widgets in this tutorial, this approach can be used for a large number of widgets provided that the payload is not too large.
 
-Please feel free to check out the live demo at GitHub: [MashupDemo](http://laxarjs.github.io/mashup_demo/#/mashupDemo).
+Please feel free to check out the live demo at GitHub: [MashupDemo](http://laxarjs.github.io/mashup-demo/#/mashupDemo).
 
 Go ahead and develop your own application!
