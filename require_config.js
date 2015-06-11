@@ -30,13 +30,6 @@ var require = {
       'json-patch': {
          exports: 'jsonpatch'
       },
-      //underscore: {
-      //   exports: '_',
-      //   init: function () {
-      //      'use strict';
-      //      return this._.noConflict();
-      //   }
-      //},
       handsontable: {
          deps: [ 'jquery', 'numeral', 'pikaday/pikaday', 'css!pikaday/css/pikaday' ],
          exports: 'Handsontable',
@@ -81,10 +74,6 @@ var require = {
       'angular-mocks': 'angular-mocks/angular-mocks',
       'angular-route': 'angular-route/angular-route',
       'angular-sanitize': 'angular-sanitize/angular-sanitize',
-
-      //underscore: 'underscore/underscore',
-      //jjv: 'jjv/lib/jjv',
-      //jjve: 'jjve/jjve',
 
       // LaxarJS Core (tests only):
       'laxar/laxar_testing': 'laxar/dist/laxar_testing',
