@@ -5,7 +5,20 @@
 
       "content1a": [
          {
+            "widget": "amd:laxar-developer-tools-widget",
+            "features": {
+               "button": {
+                  "enabled": false
+               },
+               "open": {
+                  "onActions": [ "showDevTools" ],
+                  "onGlobalMethod": "goDevelop"
+               }
+            }
+         },
+         {
             "widget": "mashup-demo/data-provider-widget",
+            "id": "dataProvider",
             "features": {
                "title": {
                   "htmlLabel": "<i class='fa fa-database'></i> Select a Data Example"
@@ -38,6 +51,7 @@
          },
          {
             "widget": "mashup-demo/table-editor-widget",
+            "id": "tableEditor",
             "features": {
                "title": {
                   "htmlLabel": "<i class='fa fa-table'></i> Edit the Data Source"
@@ -52,6 +66,7 @@
       "content1b": [
          {
             "widget": "mashup-demo/chart-widget",
+            "id": "pieChart",
             "features": {
                "title": {
                   "htmlLabel": "<i class='fa fa-pie-chart'></i> Pie Chart"
@@ -66,6 +81,7 @@
          },
          {
             "widget": "mashup-demo/chart-widget",
+            "id": "stackedAreaChart",
             "features": {
                "title": {
                   "htmlLabel": "<i class='fa fa-line-chart'></i> Line Chart"
@@ -80,6 +96,7 @@
          },
          {
             "widget": "mashup-demo/chart-widget",
+            "id": "multiBarChart",
             "features": {
                "title": {
                   "htmlLabel": "<i class='fa fa-bar-chart'></i> Multi Bar Chart"

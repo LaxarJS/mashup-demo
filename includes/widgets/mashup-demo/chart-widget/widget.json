@@ -3,7 +3,8 @@
    "description": "Widget to display a chart from time series data",
 
    "integration": {
-      "type": "angular"
+      "technology": "angular",
+      "type": "widget"
    },
 
    "compatibility": [ "json-patch" ],
@@ -31,8 +32,9 @@
             "properties": {
                "resource": {
                   "type": "string",
-                  "description": "Name of the data resource",
-                  "format": "topic"
+                  "format": "topic",
+                  "axRole": "intlet",
+                  "description": "Name of the data resource"
                }
             }
          },

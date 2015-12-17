@@ -2,6 +2,8 @@
 
 ## Last Changes
 
+- [#16](https://github.com/LaxarJS/mashup-demo/issues/16): Expanded widget definitions and updated laxar
+
 
 ## v1.1.0
 

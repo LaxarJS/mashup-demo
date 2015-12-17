@@ -3,7 +3,8 @@
    "description": "Widget that provides other widgets with data.",
 
    "integration": {
-      "type": "angular"
+      "technology": "angular",
+      "type": "widget"
    },
 
    "compatibility": [ "json-patch" ],
@@ -28,6 +29,8 @@
             "properties": {
                "resource": {
                   "type": "string",
+                  "format": "topic",
+                  "axRole": "outlet",
                   "description": "ID of resource to publish."
                },
                "items": {
