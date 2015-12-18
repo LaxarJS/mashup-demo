@@ -1,5 +1,5 @@
 {
-   "name": "TableEditorWidget",
+   "name": "table-editor-widget",
    "description": "A widget that provides a spreadsheet-like content editor.",
 
    "integration": {

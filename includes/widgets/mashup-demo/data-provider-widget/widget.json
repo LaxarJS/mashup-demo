@@ -1,5 +1,5 @@
 {
-   "name": "DataProviderWidget",
+   "name": "data-provider-widget",
    "description": "Widget that provides other widgets with data.",
 
    "integration": {

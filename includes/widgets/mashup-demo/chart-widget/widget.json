@@ -1,5 +1,5 @@
 {
-   "name": "ChartWidget",
+   "name": "chart-widget",
    "description": "Widget to display a chart from time series data",
 
    "integration": {
