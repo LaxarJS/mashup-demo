@@ -1,9 +1,10 @@
 {
-   "name": "TableEditorWidget",
+   "name": "table-editor-widget",
    "description": "A widget that provides a spreadsheet-like content editor.",
 
    "integration": {
-      "type": "angular"
+      "technology": "angular",
+      "type": "widget"
    },
 
    "controls": [
@@ -35,7 +36,8 @@
                "resource": {
                   "type": "string",
                   "description": "Name of the data resource which should refer to a 2-dimensional array.",
-                  "format": "topic"
+                  "format": "topic",
+                  "axRole": "inlet"
                }
             }
          }
