@@ -2,6 +2,7 @@
 
 ## Last Changes
 
+- [#17](https://github.com/LaxarJS/mashup-demo/issues/17): using laxar-mocks instead of laxar-testing now
 - [#16](https://github.com/LaxarJS/mashup-demo/issues/16): Expanded widget definitions and updated laxar
 
 

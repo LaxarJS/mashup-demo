@@ -81,6 +81,11 @@ var require = {
       jasmine: 'jasmine/lib/jasmine-core/jasmine',
       q_mock: 'q_mock/q',
 
+      // LaxarJS Testing:
+      'laxar-mocks': 'laxar-mocks/dist/laxar-mocks',
+      jasmine2: 'jasmine2/lib/jasmine-core/jasmine',
+      'promise-polyfill': 'promise-polyfill/Promise',
+
       // LaxarJS Patterns:
       'laxar-patterns': 'laxar-patterns/dist/laxar-patterns',
       'json-patch': 'fast-json-patch/src/json-patch-duplex',
