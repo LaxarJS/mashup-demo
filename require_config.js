@@ -1,69 +1,6 @@
 var require = {
    baseUrl: 'bower_components',
    deps: [],
-   shim: {
-      angular: {
-         deps: [ 'jquery' ],
-         exports: 'angular'
-      },
-      'angular-mocks': {
-         deps: [ 'angular' ],
-         init: function ( angular ) {
-            'use strict';
-            return angular.mock;
-         }
-      },
-      'angular-route': {
-         deps: [ 'angular' ],
-         init: function ( angular ) {
-            'use strict';
-            return angular;
-         }
-      },
-      'angular-sanitize': {
-         deps: [ 'angular' ],
-         init: function ( angular ) {
-            'use strict';
-            return angular;
-         }
-      },
-      'json-patch': {
-         exports: 'jsonpatch'
-      },
-      handsontable: {
-         deps: [ 'jquery', 'numeral', 'pikaday/pikaday', 'css!pikaday/css/pikaday' ],
-         exports: 'Handsontable',
-         init: function(numeral, moment, pikaday) {
-            // Handsontable needs Pikaday in global scope.
-            this.Pikaday = pikaday;
-         }
-      },
-      d3: {
-         exports: 'd3'
-      },
-      nvd3: {
-         deps: [ 'd3' ],
-         exports: 'nv'
-      },
-      pikaday: {
-         exports: 'pikaday'
-      },
-      'angular-nvd3': {
-         deps: [ 'angular', 'nvd3' ]
-      }
-   },
-   packages: [
-      {
-         name: 'laxar-application',
-         location: '..',
-         main: 'init'
-      },
-      {
-         name: 'moment',
-         location: 'moment',
-         main: 'moment'
-      }
-   ],
    paths: {
       // LaxarJS Core and dependencies:
       laxar: 'laxar/dist/laxar.with-deps',
@@ -119,6 +56,69 @@ var require = {
       // App Parts:
       'laxar-path-controls': '../includes/controls'
 
+   },
+   packages: [
+      {
+         name: 'laxar-application',
+         location: '..',
+         main: 'init'
+      },
+      {
+         name: 'moment',
+         location: 'moment',
+         main: 'moment'
+      }
+   ],
+   shim: {
+      angular: {
+         deps: [ 'jquery' ],
+         exports: 'angular'
+      },
+      'angular-mocks': {
+         deps: [ 'angular' ],
+         init: function ( angular ) {
+            'use strict';
+            return angular.mock;
+         }
+      },
+      'angular-route': {
+         deps: [ 'angular' ],
+         init: function ( angular ) {
+            'use strict';
+            return angular;
+         }
+      },
+      'angular-sanitize': {
+         deps: [ 'angular' ],
+         init: function ( angular ) {
+            'use strict';
+            return angular;
+         }
+      },
+      'json-patch': {
+         exports: 'jsonpatch'
+      },
+      handsontable: {
+         deps: [ 'jquery', 'numeral', 'pikaday/pikaday', 'css!pikaday/css/pikaday' ],
+         exports: 'Handsontable',
+         init: function(numeral, moment, pikaday) {
+            // Handsontable needs Pikaday in global scope.
+            this.Pikaday = pikaday;
+         }
+      },
+      d3: {
+         exports: 'd3'
+      },
+      nvd3: {
+         deps: [ 'd3' ],
+         exports: 'nv'
+      },
+      pikaday: {
+         exports: 'pikaday'
+      },
+      'angular-nvd3': {
+         deps: [ 'angular', 'nvd3' ]
+      }
    },
    map: {
       '*': {
