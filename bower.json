@@ -1,6 +1,6 @@
 {
   "name": "mashup-demo",
-  "version": "1.2.0-pre",
+  "version": "1.2.0",
   "description": "Demo showing the interaction between TableEditorWidget and ChartWidget",
   "license": "MIT",
   "repository": {
@@ -26,5 +26,8 @@
   "devDependencies": {
     "laxar-mocks": "~1.0.0",
     "angular-mocks": "~1.4.3"
+  },
+  "resolutions": {
+    "d3": "~3.3.13"
   }
 }
