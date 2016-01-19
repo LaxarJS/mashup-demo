@@ -1,20 +1,16 @@
 {
   "name": "angular-nvd3",
-  "version": "1.0.0-beta",
+  "version": "1.0.5",
   "description": "An AngularJS directive for NVD3.js reusable charting library (based on D3.js)",
   "main": [
-    "dist/angular-nvd3.min.js"
+    "dist/angular-nvd3.js"
   ],
   "license": "MIT",
   "keywords": [
     "d3",
-    "d3-",
     "nvd3",
-    "nvd3-",
     "angular",
-    "angular-",
     "angular-nvd3",
-    "nvd3-angular",
     "directives",
     "visualization",
     "charts",
@@ -30,8 +26,8 @@
   },
   "dependencies": {
     "angular": "^1.x",
-    "d3": "~3.3.13",
-    "nvd3": "~v1.7"
+    "d3": "^3.3.13",
+    "nvd3": "^1.7.1"
   },
   "ignore": [
     "**/.*",
@@ -43,13 +39,13 @@
     "lib",
     "examples"
   ],
-  "_release": "1.0.0-beta",
+  "_release": "1.0.5",
   "_resolution": {
     "type": "version",
-    "tag": "v1.0.0-beta",
-    "commit": "da7016d3fd6894932d824a708f2ced1170d2c372"
+    "tag": "v1.0.5",
+    "commit": "b05a859f73653158544008e5027d6f9933949565"
   },
   "_source": "git://github.com/krispo/angular-nvd3.git",
-  "_target": "1.0.0-beta",
+  "_target": "1.0.5",
   "_originalSource": "angular-nvd3"
 }

@@ -1,6 +1,6 @@
 {
    "name": "laxar-date-picker-control",
-   "version": "1.0.0",
+   "version": "1.0.1",
    "description": "Wraps the jQuery UI datepicker component as an AngularJS directive, for LaxarJS widgets.",
    "authors": [],
    "license": "MIT",

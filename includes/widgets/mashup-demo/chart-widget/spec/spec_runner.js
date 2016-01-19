@@ -1,14 +1,16 @@
 /**
- * Copyright 2014 LaxarJS
+ * Copyright 2016 aixigo AG
  * Released under the MIT license.
- * www.laxarjs.org
+ * http://www.laxarjs.org
  */
 ( function( global ) {
    'use strict';
    global.laxarSpec = {
-      title: 'ChartWidget Specification',
+      title: 'chart-widget Specification',
       tests: [
          'chart-widget.spec'
-      ]
+      ],
+      testRunner: 'laxar-mocks',
+      jasmineMajorVersion: 2
    };
 } )( this );

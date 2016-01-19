@@ -1,0 +1,316 @@
+{
+   "flows": [
+      {
+         "path": "application/flow/flow.json",
+         "resources": {
+            "watch": [
+               "."
+            ],
+            "embed": [
+               "."
+            ],
+            "list": []
+         },
+         "references": {
+            "local": {
+               "self": "application/flow/flow.json"
+            }
+         }
+      }
+   ],
+   "themes": [
+      {
+         "path": "bower_components/laxar-uikit/dist/themes/default.theme",
+         "name": "default.theme",
+         "resources": {
+            "watch": [
+               "css/theme.css"
+            ],
+            "list": [
+               "css/theme.css"
+            ],
+            "embed": []
+         },
+         "references": {
+            "local": {
+               "self": "default.theme"
+            }
+         }
+      },
+      {
+         "path": "includes/themes/cube.theme",
+         "name": "cube.theme",
+         "resources": {
+            "watch": [
+               "css/theme.css"
+            ],
+            "list": [
+               "css/theme.css"
+            ],
+            "embed": []
+         },
+         "references": {
+            "local": {
+               "self": "cube.theme"
+            }
+         }
+      }
+   ],
+   "pages": [
+      {
+         "path": "application/pages/mashup_demo.json",
+         "resources": {
+            "watch": [
+               "."
+            ],
+            "embed": [
+               "."
+            ],
+            "list": []
+         },
+         "references": {
+            "local": {
+               "self": "mashup_demo"
+            }
+         },
+         "pages": [],
+         "widgets": [
+            "amd:laxar-developer-tools-widget",
+            "mashup-demo/data-provider-widget",
+            "mashup-demo/table-editor-widget",
+            "mashup-demo/chart-widget"
+         ]
+      }
+   ],
+   "layouts": [
+      {
+         "resources": {
+            "list": [
+               "/includes/themes/cube.theme/layouts/application/css/application.css",
+               "/application/layouts/application/cube.theme/css/application.css",
+               "/application/layouts/application/default.theme/css/application.css"
+            ],
+            "watch": [
+               "/includes/themes/cube.theme/layouts/application/css/application.css",
+               "/application/layouts/application/cube.theme/css/application.css",
+               "/application/layouts/application/default.theme/css/application.css",
+               "/includes/themes/cube.theme/layouts/application/application.html",
+               "/application/layouts/application/cube.theme/application.html",
+               "/application/layouts/application/default.theme/application.html"
+            ],
+            "embed": [
+               "/includes/themes/cube.theme/layouts/application/application.html",
+               "/application/layouts/application/cube.theme/application.html",
+               "/application/layouts/application/default.theme/application.html"
+            ]
+         },
+         "references": {
+            "local": {
+               "self": "application"
+            }
+         }
+      }
+   ],
+   "widgets": [
+      {
+         "path": "bower_components/laxar-developer-tools-widget",
+         "integration": {
+            "technology": "angular",
+            "type": "widget"
+         },
+         "resources": {
+            "watch": [
+               "/includes/themes/cube.theme/widgets/ax-developer-tools-widget/ax-developer-tools-widget.html",
+               "/includes/themes/cube.theme/widgets/ax-developer-tools-widget/css/ax-developer-tools-widget.css",
+               "widget.json",
+               "*.theme/ax-developer-tools-widget.html",
+               "*.theme/css/ax-developer-tools-widget.css",
+               "ax-developer-tools-widget.js"
+            ],
+            "embed": [
+               "/includes/themes/cube.theme/widgets/ax-developer-tools-widget/ax-developer-tools-widget.html",
+               "widget.json",
+               "*.theme/ax-developer-tools-widget.html"
+            ],
+            "list": [
+               "/includes/themes/cube.theme/widgets/ax-developer-tools-widget/css/ax-developer-tools-widget.css",
+               "*.theme/css/ax-developer-tools-widget.css"
+            ]
+         },
+         "references": {
+            "local": {
+               "self": "../../bower_components/laxar-developer-tools-widget"
+            },
+            "amd": {
+               "self": "laxar-developer-tools-widget",
+               "module": "laxar-developer-tools-widget/ax-developer-tools-widget"
+            }
+         },
+         "controls": [],
+         "referencedAs": {
+            "byUser": "amd:laxar-developer-tools-widget",
+            "derivedScheme": "amd",
+            "derivedReference": "laxar-developer-tools-widget"
+         }
+      },
+      {
+         "path": "includes/widgets/mashup-demo/chart-widget",
+         "integration": {
+            "technology": "angular",
+            "type": "widget"
+         },
+         "resources": {
+            "watch": [
+               "/includes/themes/cube.theme/widgets/mashup-demo/chart-widget/chart-widget.html",
+               "/includes/themes/cube.theme/widgets/mashup-demo/chart-widget/css/chart-widget.css",
+               "widget.json",
+               "*.theme/chart-widget.html",
+               "*.theme/css/chart-widget.css",
+               "chart-widget.js"
+            ],
+            "embed": [
+               "/includes/themes/cube.theme/widgets/mashup-demo/chart-widget/chart-widget.html",
+               "widget.json",
+               "*.theme/chart-widget.html"
+            ],
+            "list": [
+               "/includes/themes/cube.theme/widgets/mashup-demo/chart-widget/css/chart-widget.css",
+               "*.theme/css/chart-widget.css"
+            ]
+         },
+         "references": {
+            "local": {
+               "self": "mashup-demo/chart-widget"
+            },
+            "amd": {
+               "self": "../includes/widgets/mashup-demo/chart-widget",
+               "module": "laxar-application/includes/widgets/mashup-demo/chart-widget/chart-widget"
+            }
+         },
+         "controls": [],
+         "referencedAs": {
+            "byUser": "mashup-demo/chart-widget",
+            "derivedReference": "mashup-demo/chart-widget"
+         }
+      },
+      {
+         "path": "includes/widgets/mashup-demo/data-provider-widget",
+         "integration": {
+            "technology": "angular",
+            "type": "widget"
+         },
+         "resources": {
+            "watch": [
+               "/includes/themes/cube.theme/widgets/mashup-demo/data-provider-widget/data-provider-widget.html",
+               "/includes/themes/cube.theme/widgets/mashup-demo/data-provider-widget/css/data-provider-widget.css",
+               "widget.json",
+               "*.theme/data-provider-widget.html",
+               "*.theme/css/data-provider-widget.css",
+               "data-provider-widget.js"
+            ],
+            "embed": [
+               "/includes/themes/cube.theme/widgets/mashup-demo/data-provider-widget/data-provider-widget.html",
+               "widget.json",
+               "*.theme/data-provider-widget.html"
+            ],
+            "list": [
+               "/includes/themes/cube.theme/widgets/mashup-demo/data-provider-widget/css/data-provider-widget.css",
+               "*.theme/css/data-provider-widget.css"
+            ]
+         },
+         "references": {
+            "local": {
+               "self": "mashup-demo/data-provider-widget"
+            },
+            "amd": {
+               "self": "../includes/widgets/mashup-demo/data-provider-widget",
+               "module": "laxar-application/includes/widgets/mashup-demo/data-provider-widget/data-provider-widget"
+            }
+         },
+         "controls": [],
+         "referencedAs": {
+            "byUser": "mashup-demo/data-provider-widget",
+            "derivedReference": "mashup-demo/data-provider-widget"
+         }
+      },
+      {
+         "path": "includes/widgets/mashup-demo/table-editor-widget",
+         "integration": {
+            "technology": "angular",
+            "type": "widget"
+         },
+         "resources": {
+            "watch": [
+               "/includes/themes/cube.theme/widgets/mashup-demo/table-editor-widget/table-editor-widget.html",
+               "/includes/themes/cube.theme/widgets/mashup-demo/table-editor-widget/css/table-editor-widget.css",
+               "widget.json",
+               "*.theme/table-editor-widget.html",
+               "*.theme/css/table-editor-widget.css",
+               "table-editor-widget.js"
+            ],
+            "embed": [
+               "/includes/themes/cube.theme/widgets/mashup-demo/table-editor-widget/table-editor-widget.html",
+               "widget.json",
+               "*.theme/table-editor-widget.html"
+            ],
+            "list": [
+               "/includes/themes/cube.theme/widgets/mashup-demo/table-editor-widget/css/table-editor-widget.css",
+               "*.theme/css/table-editor-widget.css"
+            ]
+         },
+         "references": {
+            "local": {
+               "self": "mashup-demo/table-editor-widget"
+            },
+            "amd": {
+               "self": "../includes/widgets/mashup-demo/table-editor-widget",
+               "module": "laxar-application/includes/widgets/mashup-demo/table-editor-widget/table-editor-widget"
+            }
+         },
+         "controls": [
+            "laxar-date-picker-control"
+         ],
+         "referencedAs": {
+            "byUser": "mashup-demo/table-editor-widget",
+            "derivedReference": "mashup-demo/table-editor-widget"
+         }
+      }
+   ],
+   "controls": [
+      {
+         "path": "bower_components/laxar-date-picker-control",
+         "integration": {
+            "technology": "angular",
+            "type": "control"
+         },
+         "resources": {
+            "watch": [
+               "/includes/themes/cube.theme/controls/ax-date-picker-control/css/ax-date-picker-control.css",
+               "*.theme/css/ax-date-picker-control.css",
+               "ax-date-picker-control.js"
+            ],
+            "embed": [
+               "control.json"
+            ],
+            "list": [
+               "/includes/themes/cube.theme/controls/ax-date-picker-control/css/ax-date-picker-control.css",
+               "*.theme/css/ax-date-picker-control.css"
+            ]
+         },
+         "references": {
+            "local": {
+               "self": "../../bower_components/laxar-date-picker-control"
+            },
+            "amd": {
+               "self": "laxar-date-picker-control",
+               "module": "laxar-date-picker-control/ax-date-picker-control"
+            }
+         },
+         "referencedAs": {
+            "byUser": "laxar-date-picker-control",
+            "derivedScheme": "amd",
+            "derivedReference": "laxar-date-picker-control"
+         }
+      }
+   ]
+}

@@ -1,0 +1,45 @@
+{
+   "cssmin": {
+      "laxar-flow-main": {
+         "files": [
+            {
+               "src": [
+                  "bower_components/laxar-uikit/dist/themes/default.theme/css/theme.css",
+                  "includes/widgets/mashup-demo/chart-widget/default.theme/css/chart-widget.css",
+                  "includes/widgets/mashup-demo/data-provider-widget/default.theme/css/data-provider-widget.css",
+                  "includes/widgets/mashup-demo/table-editor-widget/default.theme/css/table-editor-widget.css",
+                  "bower_components/laxar-date-picker-control/default.theme/css/ax-date-picker-control.css",
+                  "application/layouts/application/default.theme/css/application.css"
+               ],
+               "dest": "var/flows/main/dist/default.theme.css"
+            },
+            {
+               "src": [
+                  "includes/themes/cube.theme/css/theme.css",
+                  "includes/widgets/mashup-demo/chart-widget/cube.theme/css/chart-widget.css",
+                  "includes/widgets/mashup-demo/data-provider-widget/cube.theme/css/data-provider-widget.css",
+                  "includes/widgets/mashup-demo/table-editor-widget/cube.theme/css/table-editor-widget.css",
+                  "bower_components/laxar-date-picker-control/default.theme/css/ax-date-picker-control.css",
+                  "application/layouts/application/default.theme/css/application.css"
+               ],
+               "dest": "var/flows/main/dist/cube.theme.css"
+            }
+         ],
+         "options": {
+            "sourceMap": true,
+            "rebase": true,
+            "target": "var/flows/main/dist",
+            "keepSpecialComments": 0,
+            "saveConfig": true,
+            "tasks": [
+               "cssmin:laxar-flow-main"
+            ],
+            "flow": {
+               "target": "main",
+               "src": "application/flow/flow.json"
+            },
+            "testDirectory": "var/tests"
+         }
+      }
+   }
+}

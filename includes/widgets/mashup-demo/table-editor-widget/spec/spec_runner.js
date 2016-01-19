@@ -1,14 +1,16 @@
 /**
- * Copyright 2014 LaxarJS
+ * Copyright 2016 aixigo AG
  * Released under the MIT license.
- * www.laxarjs.org
+ * http://www.laxarjs.org
  */
 ( function( global ) {
    'use strict';
    global.laxarSpec = {
-      title: 'TableEditorWidget Specification',
+      title: 'table-editor-widget Specification',
       tests: [
          'table-editor-widget.spec'
-      ]
+      ],
+      testRunner: 'laxar-mocks',
+      jasmineMajorVersion: 2
    };
 } )( this );

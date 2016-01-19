@@ -1,0 +1,13 @@
+{
+   "laxar-test-merge-results": {
+      "main": {
+         "src": [
+            "var/tests/bower_components/laxar-developer-tools-widget/test-results.xml",
+            "var/tests/includes/widgets/mashup-demo/chart-widget/test-results.xml",
+            "var/tests/includes/widgets/mashup-demo/data-provider-widget/test-results.xml",
+            "var/tests/includes/widgets/mashup-demo/table-editor-widget/test-results.xml"
+         ],
+         "dest": "var/flows/main/tooling/test-results.xml"
+      }
+   }
+}
