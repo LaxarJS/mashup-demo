@@ -1,0 +1,50 @@
+/**
+ * Copyright 2016 aixigo AG
+ * Released under the MIT license.
+ * http://laxarjs.org/license
+ */
+
+
+@charset "UTF-8";
+
+$app-color-green-01: #6bbc6b;
+
+.table-editor-widget {
+
+   margin-bottom: 50px;
+
+   h3.app-active {
+      color: $app-color-green-01;
+   }
+
+      .app-no-data {
+         height: 230px;
+         border: 1px dashed #ccc;
+         position: relative;
+
+         &:after {
+            content: "No data, select an example!";
+            font-weight: bold;
+            color: #ccc;
+            display: block;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+         }
+      }
+
+       .app-data {
+         overflow-x: auto;
+         display: block;
+
+         .ht_master.handsontable {
+           overflow: visible;
+         }
+
+         .wtHolder {
+           width: auto !important;
+           height: auto !important;
+         }
+       }
+}

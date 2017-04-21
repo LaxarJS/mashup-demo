@@ -2,9 +2,10 @@
 atlassian-ide-plugin.xml
 *.orig
 .sass-cache
-/var
+/dist
+/build
+/spec-output
 /node_modules
-/bower_components
+/tmp
 *.backup.json
-mashup-demo-*.zip
-test-results.xml
+npm-debug.log

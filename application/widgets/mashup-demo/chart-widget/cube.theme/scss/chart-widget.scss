@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+@import "../../default.theme/scss/chart-widget";
+
+.chart-widget {
+   .abp-active {
+      i {
+         background-color: #737373;
+      }
+   }
+}

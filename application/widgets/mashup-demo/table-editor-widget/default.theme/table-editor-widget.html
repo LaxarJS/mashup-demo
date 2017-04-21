@@ -1,0 +1,11 @@
+<h3 class="ax-function-point"
+    data-ng-class="{ 'app-active': model.tableModel.length > 0 }"
+    data-ng-if="features.title.htmlLabel"
+    data-ng-bind-html="features.title.htmlLabel"></h3>
+<div class="app-data"
+     data-ng-if="model.tableModel.length > 0"
+     data-ax-table-editor-rows="model.tableModel"
+     data-ax-table-editor="model.settings">
+</div>
+<div class="app-no-data"
+     data-ng-if="model.tableModel.length == 0"></div>

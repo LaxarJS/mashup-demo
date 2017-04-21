@@ -2,6 +2,8 @@
 
 ## Last Changes
 
+- [#20](https://github.com/LaxarJS/mashup_demo/issues/20): Upgraded to LaxarJS 2 and upgraded dependencies
+
 
 ## v1.2.0
 

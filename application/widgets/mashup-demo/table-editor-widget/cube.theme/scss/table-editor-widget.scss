@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+@import "../../default.theme/scss/table-editor-widget";
+
+.table-editor-widget {
+   h3.app-active {
+      i {
+         background-color: $app-color-green-01;
+      }
+   }
+}
