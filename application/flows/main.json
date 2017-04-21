@@ -1,0 +1,9 @@
+{
+   "places": {
+
+      "mashup-demo": {
+         "patterns": [ "/", "/:argument" ],
+         "page": "mashup-demo"
+      }
+   }
+}
