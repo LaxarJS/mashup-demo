@@ -35,34 +35,16 @@ $app-color-green-01: #6bbc6b;
       }
 
        .app-data {
-          //overflow: hidden;
-          //width: 430px;
-          //height: 500px;
-          overflow-x: scroll;
-          overflow-y: auto;
-          max-height: 620px;
-          position: relative;
-       }
+         overflow-x: auto;
+         display: block;
 
-       .handsontable .handsontable table {
-          box-shadow: none;
-       }
+         .ht_master.handsontable {
+           overflow: visible;
+         }
 
-       .ht_clone_corner,
-       .ht_clone_left {
-          display: none;
+         .wtHolder {
+           width: auto !important;
+           height: auto !important;
+         }
        }
-
-       .htContainer,
-       .ht_clone_top {
-          width: 100%;
-          table {
-             width: 100%;
-          }
-       }
-       .wtBorder.current.corner {
-          margin-top: -2px;
-          margin-left: -3px;
-       }
-
 }

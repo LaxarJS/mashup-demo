@@ -25,6 +25,7 @@ function Controller( $scope ) {
          colHeaders: true,
          contextMenu: true,
          fillHandle: true,
+         renderAllRows: true,
          stretchH: 'all'//,
          //tableClassName: ['table', 'table-hover', 'table-striped'],
 
