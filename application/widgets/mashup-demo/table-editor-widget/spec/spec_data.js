@@ -1,8 +1,8 @@
-define( {
+export const specData = {
    'originalResource': {
       'timeLabel': 'Time',
       'valueLabel': 'Stock Value',
-      'timeGrid': ['2011-02-01', '2012-03-02', '2013-04-03', '2014-05-04'],
+      'timeGrid': [ '2011-02-01', '2012-03-02', '2013-04-03', '2014-05-04' ],
       'series': [
          {
             'label': 'Company A',
@@ -25,16 +25,16 @@ define( {
       ]
    },
    'expectedTableModel': [
-      [null, 'Company A', 'Company B', 'Company C'],
-      ['2011-02-01', 1, 1.0000001, 1000000.1],
-      ['2012-03-02', 2, 2.0000002, 1000000.2],
-      ['2013-04-03', 3, 3.0000003, 1000000.3],
-      ['2014-05-04', 4, 4.0000004, 1000000.4]
+      [ null, 'Company A', 'Company B', 'Company C' ],
+      [ '2011-02-01', 1, 1.0000001, 1000000.1 ],
+      [ '2012-03-02', 2, 2.0000002, 1000000.2 ],
+      [ '2013-04-03', 3, 3.0000003, 1000000.3 ],
+      [ '2014-05-04', 4, 4.0000004, 1000000.4 ]
    ],
    'expectedResourceWithRemovedTimeGridTick': {
       'timeLabel': 'Time',
       'valueLabel': 'Stock Value',
-      'timeGrid': ['2011-02-01', '2013-04-03', '2014-05-04'],
+      'timeGrid': [ '2011-02-01', '2013-04-03', '2014-05-04' ],
       'series': [
          {
             'label': 'Company A',
@@ -59,7 +59,7 @@ define( {
    'expectedResourceWithRemovedSeriesLabel': {
       'timeLabel': 'Time',
       'valueLabel': 'Stock Value',
-      'timeGrid': ['2011-02-01', '2012-03-02', '2013-04-03', '2014-05-04'],
+      'timeGrid': [ '2011-02-01', '2012-03-02', '2013-04-03', '2014-05-04' ],
       'series': [
          {
             'label': 'Company A',
@@ -100,4 +100,4 @@ define( {
       [ '1991-01-01', 2, 3 ],
       [ '1992-01-01', 3, 2 ]
    ]
-} );
+};

@@ -1,5 +1,5 @@
 /**
- * Copyright 2016 aixigo AG
+ * Copyright 2017 aixigo AG
  * Released under the MIT license.
  * http://laxarjs.org/license
  */
@@ -13,9 +13,9 @@ import Handsontable from 'handsontable';
 import 'handsontable.css';
 import 'laxar-uikit';
 
-var EVENT_AFTER_CHANGE = 'axTableEditor.afterChange';
+const EVENT_AFTER_CHANGE = 'axTableEditor.afterChange';
 
-Controller.$inject = ['$scope'];
+Controller.$inject = [ '$scope' ];
 
 function Controller( $scope ) {
 
@@ -40,9 +40,9 @@ function Controller( $scope ) {
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   $scope.$on( EVENT_AFTER_CHANGE, function() {
-      var modifiedResource = getTimeSeriesFromTableModel();
-      var patches = patterns.json.createPatch( $scope.resources.timeSeries, modifiedResource );
+   $scope.$on( EVENT_AFTER_CHANGE, () => {
+      const modifiedResource = getTimeSeriesFromTableModel();
+      const patches = patterns.json.createPatch( $scope.resources.timeSeries, modifiedResource );
       publishUpdate( $scope.features.timeSeries.resource, patches );
       $scope.resources.timeSeries = modifiedResource;
 
@@ -51,41 +51,42 @@ function Controller( $scope ) {
    ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    function publishUpdate( resourceName, patches ) {
-      $scope.eventBus.publish( 'didUpdate.' + resourceName, {
+      $scope.eventBus.publish( `didUpdate.${resourceName}`, {
          resource: resourceName,
-         patches: patches
+         patches
       }, { deliverToSender: false } );
    }
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    function getTimeSeriesFromTableModel() {
-      var tableModel = $scope.model.tableModel;
-      var timeSeries = ax.object.deepClone( $scope.resources.timeSeries );
+      const tableModel = $scope.model.tableModel;
+      const timeSeries = ax.object.deepClone( $scope.resources.timeSeries );
 
       timeSeries.timeGrid = tableModel
-         .map( function( row ) {
-            return row[0] && moment( row[0], 'YYYY-MM-DD' ).isValid() && moment( row[0], 'YYYY-MM-DD' ).format( 'YYYY-MM-DD' );
+         .map( row => {
+            return row[ 0 ] && moment( row[ 0 ], 'YYYY-MM-DD' ).isValid() &&
+                   moment( row[ 0 ], 'YYYY-MM-DD' ).format( 'YYYY-MM-DD' );
          } )
-         .filter( function( timeTick, rowIndex ) {
+         .filter( ( timeTick, rowIndex ) => {
             return rowIndex > 0 && moment( timeTick, 'YYYY-MM-DD' ).isValid();
          } );
 
-      timeSeries.series = tableModel[0].map( function( columnLabel ) {
+      timeSeries.series = tableModel[ 0 ].map( columnLabel => {
          return {
             label: columnLabel
          };
       } );
-      timeSeries.series.forEach( function( timeSeries, timeSeriesKey ) {
+      timeSeries.series.forEach( ( timeSeries, timeSeriesKey ) => {
          timeSeries.values = tableModel
-            .map( function( row ) {
-               return row[timeSeriesKey] !== '' ? parseFloat( row[timeSeriesKey] ) : null;
+            .map( row => {
+               return row[ timeSeriesKey ] !== '' ? parseFloat( row[ timeSeriesKey ] ) : null;
             } )
-            .filter( function( value, rowIndex ) {
-               return rowIndex > 0 && moment( tableModel[rowIndex][0], 'YYYY-MM-DD' ).isValid();
+            .filter( ( value, rowIndex ) => {
+               return rowIndex > 0 && moment( tableModel[ rowIndex ][ 0 ], 'YYYY-MM-DD' ).isValid();
             } );
       } );
-      timeSeries.series = timeSeries.series.filter( function( timeSeries ) {
+      timeSeries.series = timeSeries.series.filter( timeSeries => {
          return timeSeries.label !== null && timeSeries.label !== '';
       } );
 
@@ -95,17 +96,17 @@ function Controller( $scope ) {
    ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    function updateTableModel() {
-      var timeSeries = $scope.resources.timeSeries;
+      const timeSeries = $scope.resources.timeSeries;
 
-      $scope.model.tableModel = timeSeries.timeGrid.map( function( rowHeader, row ) {
-         var rowData = timeSeries.series.map( function( value, col ) {
-            return value.values[row];
+      $scope.model.tableModel = timeSeries.timeGrid.map( ( rowHeader, row ) => {
+         const rowData = timeSeries.series.map( value => {
+            return value.values[ row ];
          } );
          rowData.unshift( rowHeader );
          return rowData;
       } );
 
-      var colHeaders = [null].concat( timeSeries.series.map( function( value ) {
+      const colHeaders = [ null ].concat( timeSeries.series.map( value => {
          return value.label;
       } ) );
       $scope.model.tableModel.unshift( colHeaders );
@@ -115,62 +116,63 @@ function Controller( $scope ) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-var axTableEditorDirectiveName = 'axTableEditor';
+const axTableEditorDirectiveName = 'axTableEditor';
 const axTableEditorDirective = () => {
    return {
       scope: {
          axTableEditor: '=',
          axTableEditorRows: '='
       },
-      link: function( $scope, $element ) {
+      link( $scope, $element ) {
 
-         var baseSettings = {
-            afterChange: function( changes ) {
+         const baseSettings = {
+            afterChange( changes ) {
                // changes is defined if loadData was not used:
                if( changes ) {
                   $scope.$emit( EVENT_AFTER_CHANGE );
                }
             },
-            afterRemoveCol: function() {
+            afterRemoveCol() {
                $scope.$emit( EVENT_AFTER_CHANGE );
             },
-            afterRemoveRow: function() {
+            afterRemoveRow() {
                $scope.$emit( EVENT_AFTER_CHANGE );
             },
-            afterCreateCol: function() {
+            afterCreateCol() {
                $scope.$emit( EVENT_AFTER_CHANGE );
             },
-            afterCreateRow: function() {
+            afterCreateRow() {
                $scope.$emit( EVENT_AFTER_CHANGE );
             }
          };
 
-         const handsontable = Handsontable( $element[0], completeSettings() );
+         const handsontable = Handsontable( $element[ 0 ], completeSettings() );
 
-         $scope.$watch( axTableEditorDirectiveName, function( newSettings ) {
+         $scope.$watch( axTableEditorDirectiveName, newSettings => {
             if( newSettings ) {
                handsontable.updateSettings( completeSettings() );
             }
          }, true );
 
-         $scope.$watch( axTableEditorDirectiveName + 'Rows', function( newRows ) {
+         $scope.$watch( `${axTableEditorDirectiveName}Rows`, newRows => {
             handsontable.loadData( newRows );
          }, true );
 
          //////////////////////////////////////////////////////////////////////////////////////////////////
 
          function completeSettings() {
-            var settings = ax.object.options( $scope[axTableEditorDirectiveName], baseSettings );
-            settings.cells = function( row, col, prop ) {
+            const settings = ax.object.options( $scope[ axTableEditorDirectiveName ], baseSettings );
+            settings.cells = function( row, col ) {
                if( row > 0 && col === 0 ) {
                   return {
                      type: 'date',
                      dateFormat: 'YYYY-MM-DD'
                   };
                }
+               return undefined;
             };
             return ax.object.options( {
-               data: $scope[axTableEditorDirectiveName + 'Rows'] || []
+               data: $scope[ `${axTableEditorDirectiveName}Rows` ] || []
             }, settings );
          }
       }

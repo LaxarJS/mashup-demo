@@ -10,7 +10,7 @@ import { create } from 'laxar';
 import * as angularAdapter from 'laxar-angular-adapter';
 import artifacts from 'laxar-loader/artifacts?flow=main&theme=cube';
 
-var configuration = {
+const configuration = {
    name: 'mashup-demo',
    logging: { threshold: 'TRACE' },
    theme: 'cube',

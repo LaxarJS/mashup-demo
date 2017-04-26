@@ -3,55 +3,73 @@
  * Released under the MIT license
  * https://laxarjs.org
  */
+
+/* eslint-env node */
+
 const path = require( 'path' );
 const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
 const WebpackJasmineHtmlRunnerPlugin = require( 'webpack-jasmine-html-runner-plugin' );
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-module.exports = ( env = {} ) => {
+module.exports = ( env = {} ) =>
+   env.browserSpec ?
+      Object.assign( config( env ), {
+         entry: WebpackJasmineHtmlRunnerPlugin.entry( './application/widgets/**/spec/*.spec.js' ),
+         output: {
+            path: resolve( 'spec-output' ),
+            publicPath: '/spec-output/',
+            filename: '[name].bundle.js'
+         }
+      } ) :
+      config( env );
 
+function config( env ) {
    const publicPath = env.production ? '/dist/' : '/build/';
 
    return {
       devtool: '#source-map',
-      entry: {
-         'app': './init.js'
-      },
+      entry: { 'init': './init.js' },
 
       output: {
          path: path.resolve( __dirname, `./${publicPath}` ),
          publicPath,
-         filename: env.production ? '[name].bundle.min.js' : '[name].bundle.js'
+         filename: env.production ? '[name].bundle.min.js' : '[name].bundle.js',
+         chunkFilename: env.production ? '[name].bundle.min.js' : '[name].bundle.js'
       },
 
-      plugins: [
-         ...( env.production ? [ new ExtractTextPlugin( { filename: '[name].bundle.css' } ) ] : [] )
-      ],
+      plugins: env.production ? [ new ExtractTextPlugin( { filename: '[name].bundle.css' } ) ] :
+         [ new WebpackJasmineHtmlRunnerPlugin() ],
 
       resolve: {
-         modules: [ path.resolve( __dirname, 'node_modules' ) ],
+         modules: [ resolveModule() ],
          extensions: [ '.js' ],
          alias: {
             'default.theme': 'laxar-uikit/themes/default.theme',
             'cube.theme': 'laxar-cube.theme',
-            'handsontable': path.join(__dirname, 'node_modules/handsontable/dist/handsontable.full.js'),
-            'handsontable.css': path.join(__dirname, 'node_modules/handsontable/dist/handsontable.full.css'),
-            'handsontable.bootstrap.css': path.join(__dirname, 'node_modules/handsontable/plugins/bootstrap/handsontable.bootstrap.css'),
-            'angular-nvd3': path.join(__dirname, 'node_modules/angular-nvd3/dist/angular-nvd3.js'),
-            'nv.d3': path.join(__dirname, 'node_modules/nvd3/build/nv.d3.js'),
-            'nv.d3.css': path.join(__dirname, 'node_modules/nvd3/build/nv.d3.css')
+            'handsontable': resolve( 'node_modules/handsontable/dist/handsontable.full.js' ),
+            'handsontable.css': resolve( 'node_modules/handsontable/dist/handsontable.full.css' ),
+            'handsontable.bootstrap.css': resolve(
+               'node_modules/handsontable/plugins/bootstrap/handsontable.bootstrap.css' ),
+            'angular-nvd3': resolve( 'node_modules/angular-nvd3/dist/angular-nvd3.js' ),
+            'nv.d3': resolve( 'node_modules/nvd3/build/nv.d3.js' ),
+            'nv.d3.css': resolve( 'node_modules/nvd3/build/nv.d3.css' )
          }
       },
 
       module: {
          noParse: [
-            path.join(__dirname, 'node_modules/handsontable/dist/handsontable.full.js')
+            path.join( __dirname, 'node_modules/handsontable/dist/handsontable.full.js' )
          ],
          rules: [
             {
+               test: /\.js$/,
+               exclude: resolveModule(),
+               loader: 'babel-loader'
+            },
+            {
                test: /.spec.js$/,
-               exclude: /node_modules/,
+               exclude: resolveModule(),
                loader: 'laxar-mocks/spec-loader'
             },
             {  // load styles, images and fonts with the file-loader
@@ -86,5 +104,7 @@ module.exports = ( env = {} ) => {
          ]
       }
    };
+}
 
-};
+function resolveModule( p ) { return path.resolve( resolve( './node_modules' ), p || '' ); }
+function resolve( p ) { return path.resolve( __dirname, p ); }

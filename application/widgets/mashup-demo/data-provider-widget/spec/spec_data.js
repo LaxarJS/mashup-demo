@@ -1,8 +1,8 @@
-define( {
+export const specData = {
    'dataSet1': {
       'timeLabel': 'Time',
       'valueLabel': 'Stock Value',
-      'timeGrid': ['2011', '2012', '2013', '2014'],
+      'timeGrid': [ '2011', '2012', '2013', '2014' ],
       'series': [
          {
             'label': 'Company A',
@@ -27,7 +27,7 @@ define( {
    'dataSet2': {
       'timeLabel': 'The Nineties',
       'valueLabel': 'Stock Exchange Value',
-      'timeGrid': ['1990', '1991', '1992', '1993', '1994'],
+      'timeGrid': [ '1990', '1991', '1992', '1993', '1994' ],
       'series': [
          {
             'label': 'Company A',
@@ -55,4 +55,4 @@ define( {
          }
       ]
    }
-} );
+};

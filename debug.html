@@ -2,11 +2,18 @@
 <html>
 <head>
    <meta charset="utf-8">
-   <title>mashup-demo</title>
+   <meta http-equiv="x-ua-compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>LaxarJS MashupDemo</title>
+
+   <link rel="icon" href="./favicon.ico" type="image/vnd.microsoft.icon">
+
 </head>
 <body>
-   <div data-ax-page></div>
+<div data-ax-page></div>
 
-   <script src="build/app.bundle.js"></script>
+<script src="node_modules/source-map-support/browser-source-map-support.js"></script>
+<script>sourceMapSupport.install();</script>
+<script src="build/init.bundle.js"></script>
 </body>
 </html>

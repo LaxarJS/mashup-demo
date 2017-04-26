@@ -1,8 +1,8 @@
-define( {
+export const specData = {
    'originalResource': {
       'timeLabel': 'Time',
       'valueLabel': 'Stock Value',
-      'timeGrid': ['2011-02-01', '2012-03-02', '2013-04-03', '2014-05-04'],
+      'timeGrid': [ '2011-02-01', '2012-03-02', '2013-04-03', '2014-05-04' ],
       'series': [
          {
             'label': 'Company A',
@@ -173,4 +173,4 @@ define( {
          'value': 22
       }
    ]
-} );
+};

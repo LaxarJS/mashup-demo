@@ -1,110 +1,99 @@
 /**
- * Copyright 2016 aixigo AG
+ * Copyright 2017 aixigo AG
  * Released under the MIT license.
  * http://laxarjs.org/license
  */
-define( [
-   'json!../widget.json',
-   'laxar-mocks',
-   'angular-mocks',
-   'laxar-patterns',
-   './spec_data'
-], function(descriptor, axMocks, ngMocks, patterns, specData ) {
-   'use strict';
 
-   describe( 'A data-provider-widget', function() {
-      var $httpBackend;
-      var $provide;
-      var widgetEventBus;
-      var widgetScope;
-      var testEventBus;
+import * as axMocks from 'laxar-mocks';
+import angular from 'angular';
+import 'angular-mocks';
+import { specData } from './spec_data';
 
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+describe( 'A data-provider-widget', () => {
+   let $httpBackend;
+   let widgetEventBus;
+   let widgetScope;
 
-      var widgetConfiguration = {
-         data: {
-            resource: 'timeSeriesData',
-               items: [
-               {
-                  title: 'Data-Set-1',
-                  location: 'data-set-1.json'
-               },
-               {
-                  title: 'Data-Set-2',
-                  location: 'data-set-2.json'
-               },
-               {
-                  title: 'Data-Set-Non-Existing',
-                  location: 'data-set-non-existing.json'
-               }
-            ]
-         }
-      };
+   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      beforeEach( function() {
-         ngMocks.module( function( _$provide_ ) {
-            $provide = _$provide_;
-         } );
-      } );
+   const widgetConfiguration = {
+      data: {
+         resource: 'timeSeriesData',
+         items: [
+            {
+               title: 'Data-Set-1',
+               location: 'data-set-1.json'
+            },
+            {
+               title: 'Data-Set-2',
+               location: 'data-set-2.json'
+            },
+            {
+               title: 'Data-Set-Non-Existing',
+               location: 'data-set-non-existing.json'
+            }
+         ]
+      }
+   };
 
-      beforeEach( axMocks.createSetupForWidget( descriptor ) );
+   beforeEach( axMocks.setupForWidget() );
 
-      beforeEach( function() {
-         axMocks.widget.configure( widgetConfiguration );
-      } );
-
-      beforeEach( axMocks.widget.load );
-
-      beforeEach( function() {
-         widgetScope = axMocks.widget.$scope;
-         widgetEventBus = axMocks.widget.axEventBus;
-         testEventBus = axMocks.eventBus;
-         ngMocks.inject( function( $injector ) {
+   beforeEach( () => {
+      axMocks.widget.configure( widgetConfiguration );
+      axMocks.widget.whenServicesAvailable( () => {
+         angular.mock.inject( $injector => {
             $httpBackend = $injector.get( '$httpBackend' );
          } );
       } );
+   } );
 
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+   beforeEach( axMocks.widget.load );
 
-      afterEach( function() {
-         axMocks.tearDown();
+   beforeEach( () => {
+      widgetScope = axMocks.widget.$scope;
+      widgetEventBus = axMocks.widget.axEventBus;
+   } );
+
+   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+   afterEach( axMocks.tearDown );
+
+   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+   describe( 'with feature data', () => {
+
+      afterEach( () => {
+         $httpBackend.verifyNoOutstandingExpectation();
+         $httpBackend.verifyNoOutstandingRequest();
       } );
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      describe( 'with feature data', function() {
+      it( 'publishes a didReplace event with the file content of the new location' +
+          'when the corresponding button is pressed', () => {
+         $httpBackend.expectGET( 'data-set-2.json' ).respond( specData.dataSet2 );
 
-         afterEach( function() {
-            $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();
-         } );
+         widgetScope.useItem(widgetConfiguration.data.items[ 1 ] );
+         $httpBackend.flush();
 
-         /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-         it( 'publishes a didReplace event with the file content of the new location when the corresponding button is pressed', function() {
-            $httpBackend.expectGET( 'data-set-2.json' ).respond( specData.dataSet2 );
-
-            widgetScope.useItem (widgetConfiguration.data.items[ 1 ] );
-            $httpBackend.flush();
-
-            expect( widgetEventBus.publish ).toHaveBeenCalledWith( 'didReplace.timeSeriesData', {
-                  resource: 'timeSeriesData',
-                  data: specData.dataSet2
-               }, jasmine.any( Object )
-            );
-         } );
-
-         /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-         it( 'publishes a didEncounterError event if the new location is not available', function() {
-            $httpBackend.expectGET( 'data-set-non-existing.json' ).respond( 404, 'Not Found' );
-
-            widgetScope.useItem (widgetConfiguration.data.items[ 2 ] );
-            $httpBackend.flush();
-
-            expect( widgetEventBus.publish ).toHaveBeenCalledWith( 'didEncounterError.HTTP_GET', jasmine.any( Object ), jasmine.any( Object ) );
-         } );
-
+         expect( widgetEventBus.publish ).toHaveBeenCalledWith( 'didReplace.timeSeriesData', {
+            resource: 'timeSeriesData',
+            data: specData.dataSet2
+         }, jasmine.any( Object )
+         );
       } );
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      it( 'publishes a didEncounterError event if the new location is not available', () => {
+         $httpBackend.expectGET( 'data-set-non-existing.json' ).respond( 404, 'Not Found' );
+
+         widgetScope.useItem(widgetConfiguration.data.items[ 2 ] );
+         $httpBackend.flush();
+
+         expect( widgetEventBus.publish ).toHaveBeenCalledWith(
+            'didEncounterError.HTTP_GET', jasmine.any( Object ), jasmine.any( Object ) );
+      } );
+
    } );
 } );
