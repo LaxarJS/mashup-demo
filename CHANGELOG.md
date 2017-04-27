@@ -2,6 +2,7 @@
 
 ## Last Changes
 
+- [#21](https://github.com/LaxarJS/mashup_demo/issues/21): Removed unnecessary alias in webpack configuration
 - [#20](https://github.com/LaxarJS/mashup_demo/issues/20): Upgraded to LaxarJS 2 and upgraded dependencies
 
 

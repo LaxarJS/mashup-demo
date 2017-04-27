@@ -13,6 +13,7 @@ import Handsontable from 'handsontable';
 import 'handsontable.css';
 import 'laxar-uikit';
 
+
 const EVENT_AFTER_CHANGE = 'axTableEditor.afterChange';
 
 Controller.$inject = [ '$scope' ];
@@ -26,9 +27,7 @@ function Controller( $scope ) {
          contextMenu: true,
          fillHandle: true,
          renderAllRows: true,
-         stretchH: 'all'//,
-         //tableClassName: ['table', 'table-hover', 'table-striped'],
-
+         stretchH: 'all'
       },
       tableModel: []
    };

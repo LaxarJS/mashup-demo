@@ -42,7 +42,7 @@ function config( env ) {
          [ new WebpackJasmineHtmlRunnerPlugin() ],
 
       resolve: {
-         modules: [ resolveModule() ],
+         modules: [ resolve( 'node_modules' ) ],
          extensions: [ '.js' ],
          alias: {
             'default.theme': 'laxar-uikit/themes/default.theme',
@@ -51,9 +51,7 @@ function config( env ) {
             'handsontable.css': resolve( 'node_modules/handsontable/dist/handsontable.full.css' ),
             'handsontable.bootstrap.css': resolve(
                'node_modules/handsontable/plugins/bootstrap/handsontable.bootstrap.css' ),
-            'angular-nvd3': resolve( 'node_modules/angular-nvd3/dist/angular-nvd3.js' ),
-            'nv.d3': resolve( 'node_modules/nvd3/build/nv.d3.js' ),
-            'nv.d3.css': resolve( 'node_modules/nvd3/build/nv.d3.css' )
+            'nvd3.css': resolve( 'node_modules/nvd3/build/nv.d3.css' )
          }
       },
 
@@ -64,12 +62,12 @@ function config( env ) {
          rules: [
             {
                test: /\.js$/,
-               exclude: resolveModule(),
+               exclude: resolve( 'node_modules' ),
                loader: 'babel-loader'
             },
             {
                test: /.spec.js$/,
-               exclude: resolveModule(),
+               exclude: resolve( 'node_modules' ),
                loader: 'laxar-mocks/spec-loader'
             },
             {  // load styles, images and fonts with the file-loader
@@ -106,5 +104,4 @@ function config( env ) {
    };
 }
 
-function resolveModule( p ) { return path.resolve( resolve( './node_modules' ), p || '' ); }
 function resolve( p ) { return path.resolve( __dirname, p ); }

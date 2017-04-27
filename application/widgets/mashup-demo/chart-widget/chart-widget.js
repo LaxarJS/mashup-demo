@@ -10,8 +10,8 @@ import * as ax from 'laxar';
 import * as patterns from 'laxar-patterns';
 import * as d3 from 'd3';
 import 'angular-nvd3';
-import 'nv.d3';
-import 'nv.d3.css';
+import 'nvd3';
+import 'nvd3.css';
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
