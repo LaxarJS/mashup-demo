@@ -33,8 +33,9 @@ Afterwards, open the demo at [http://localhost:8001/debug.html](http://localhost
 ## Next Steps
 
 For an optimized version more suitable for production, stop the server (using `Ctrl-C`) and run:
+
 ```sh
-npm run-script dist
+npm run dist
 npm start
 ```
 
