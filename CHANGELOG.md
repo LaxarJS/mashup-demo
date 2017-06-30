@@ -2,6 +2,9 @@
 
 ## Last Changes
 
+
+## v2.0.0
+
 - [#24](https://github.com/LaxarJS/mashup-demo/issues/24): Updated tutorial for LaxarJS v2
 - [#21](https://github.com/LaxarJS/mashup-demo/issues/21): Fixed headline height
 - [#22](https://github.com/LaxarJS/mashup-demo/issues/22): Removed unnecessary alias in webpack configuration

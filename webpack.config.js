@@ -82,22 +82,34 @@ function config( env ) {
                test: /\.(gif|jpe?g|png|svg)$/,
                loader: 'img-loader?progressive=true'
             },
-            {  // ... and resolving CSS url(s) with the css loader
+            {  // ... and resolving CSS url()s with the css loader
                // (extract-loader extracts the CSS string from the JS module returned by the css-loader)
                test: /\.(css|s[ac]ss)$/,
                loader: env.production ?
-                  ExtractTextPlugin.extract( { fallback: 'style-loader', use: 'css-loader' } ) :
-                  'style-loader!css-loader'
+                  ExtractTextPlugin.extract( {
+                     fallback: 'style-loader',
+                     use: env.production ? 'css-loader' : 'css-loader?sourceMap',
+                     publicPath: ''
+                  } ) :
+                  'style-loader!css-loader?sourceMap'
             },
             {
                test: /[/]default[.]theme[/].*[.]s[ac]ss$/,
                loader: 'sass-loader',
-               options: require( 'laxar-uikit/themes/default.theme/sass-options' )
+               options: Object.assign(
+                  {},
+                  require( 'laxar-uikit/themes/default.theme/sass-options' ),
+                  { sourceMap: true }
+               )
             },
             {
                test: /[/](laxar-)?cube[.]theme[/].*[.]s[ac]ss$/,
                loader: 'sass-loader',
-               options: require( 'laxar-cube.theme/sass-options' )
+               options: Object.assign(
+                  {},
+                  require( 'laxar-cube.theme/sass-options' ),
+                  { sourceMap: true }
+               )
             }
          ]
       }
