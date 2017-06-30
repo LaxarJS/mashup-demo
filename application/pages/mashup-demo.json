@@ -3,6 +3,17 @@
 
    "areas": {
 
+      "axActivities": [
+         {
+            "widget": "laxar-developer-tools-widget",
+            "features": {
+               "open": {
+                  "onGlobalMethod": "goDevelop"
+               }
+            }
+         }
+      ],
+
       "content1a": [
          {
             "widget": "mashup-demo/data-provider-widget",

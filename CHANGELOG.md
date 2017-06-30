@@ -2,6 +2,8 @@
 
 ## Last Changes
 
+- [#23](https://github.com/LaxarJS/mashup-demo/issues/23): Fixes for deployment to gh-pages
+
 
 ## v2.0.0
 

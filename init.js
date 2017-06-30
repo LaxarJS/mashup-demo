@@ -9,10 +9,10 @@ import 'laxar/dist/polyfills';
 import { create } from 'laxar';
 import * as angularAdapter from 'laxar-angular-adapter';
 import artifacts from 'laxar-loader/artifacts?flow=main&theme=cube';
+import debugInfo from 'laxar-loader/debug-info?flow=main&theme=cube';
 
 const configuration = {
    name: 'mashup-demo',
-   logging: { threshold: 'TRACE' },
    theme: 'cube',
    router: {
       query: { enabled: true },
@@ -21,6 +21,6 @@ const configuration = {
 };
 
 create( [ angularAdapter ], artifacts, configuration )
-   .tooling( require( 'laxar-loader/debug-info?flow=main&theme=cube' ) )
+   .tooling( debugInfo )
    .flow( 'main', document.querySelector( '[data-ax-page]' ) )
    .bootstrap();

@@ -3872,6 +3872,12 @@ laxar-cube.theme@^2.0.0:
     laxar-uikit "^2.0.0"
     pkg-dir "^1.0.0"
 
+laxar-developer-tools-widget@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/laxar-developer-tools-widget/-/laxar-developer-tools-widget-3.0.0.tgz#ee25cf579a92dd5bae440df4b0302a46b29a6c44"
+  dependencies:
+    laxar "^2.0.0"
+
 laxar-infrastructure@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/laxar-infrastructure/-/laxar-infrastructure-2.0.0.tgz#be7350bde99542caf712201e070702fa514ea358"

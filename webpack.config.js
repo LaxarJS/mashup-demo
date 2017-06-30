@@ -7,6 +7,7 @@
 /* eslint-env node */
 
 const path = require( 'path' );
+const webpack = require( 'webpack' );
 const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
 const WebpackJasmineHtmlRunnerPlugin = require( 'webpack-jasmine-html-runner-plugin' );
 
@@ -19,7 +20,8 @@ module.exports = ( env = {} ) =>
          output: {
             path: resolve( 'spec-output' ),
             publicPath: '/spec-output/',
-            filename: '[name].bundle.js'
+            filename: '[name].bundle.js',
+            chunkFilename: env.production ? '[name].bundle.min.js' : '[name].bundle.js'
          }
       } ) :
       config( env );
@@ -38,8 +40,12 @@ function config( env ) {
          chunkFilename: env.production ? '[name].bundle.min.js' : '[name].bundle.js'
       },
 
-      plugins: env.production ? [ new ExtractTextPlugin( { filename: '[name].bundle.css' } ) ] :
-         [ new WebpackJasmineHtmlRunnerPlugin() ],
+      plugins: env.production ? [
+         new ExtractTextPlugin( { filename: '[name].bundle.css' } ),
+         new webpack.optimize.UglifyJsPlugin()
+      ] : [
+         new WebpackJasmineHtmlRunnerPlugin()
+      ],
 
       resolve: {
          modules: [ resolve( 'node_modules' ) ],
