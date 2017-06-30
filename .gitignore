@@ -1,8 +1,0 @@
-.idea
-atlassian-ide-plugin.xml
-*.orig
-.sass-cache
-/node_modules
-*.backup.json
-mashup-demo-*.zip
-test-results.xml
